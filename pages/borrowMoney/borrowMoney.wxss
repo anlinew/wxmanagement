@@ -1,0 +1,37 @@
+/* pages/borrowMoney/borrowMoney.wxss */
+.weui-panel__ft{
+  border-bottom:1rpx solid #eee;
+}
+.weui-panel__hd {
+  text-align:right;
+  border-top:1rpx solid #eee;
+}
+.weui-cell__bd {
+  color: #333
+}
+.zebra {
+  margin-top:20px;
+}
+.time {
+  color: #999;
+  padding-left:10px; 
+}
+
+.texticon{
+  background:rgb(64, 171, 0);
+  color:#fff;
+  border-radius:50%;
+  display:inline-block;
+  width:24px;
+  height:24px;
+  line-height:24px;
+  text-align:center;
+  margin-right: 5px;
+
+}
+.way {
+  background:rgb(0, 183, 239);
+}
+.end {
+  background:rgb(244, 79, 0);
+}

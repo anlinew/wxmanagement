@@ -1,0 +1,46 @@
+.weui-navbar {
+  background: #fff;
+}
+.zebra {
+  margin-top:20px;
+}
+.phcolor{  
+    color: #999999;
+}
+.createdDispatch {
+  margin-top:100px;
+  background:#3E85FF !important;
+  border-radius:25px;
+  width:90%;
+}
+.weui-form-preview {
+  margin-top: 20px;
+}
+.weui-form-preview__label {
+  color: #000;
+  font-size:14px;
+}
+.weui-form-preview__value_in-hd {
+  font-size: 14px;
+  color: #999;
+}
+.liceniseNum {
+  color: #3E85FF;
+}
+.driverBtn {
+  border-color:rgb(252, 101, 81) !important;
+  border-radius:28px;
+  color:rgb(252, 101, 81)  !important;
+  font-size: 14px;
+  margin-right:10px;
+}
+.createdfull {
+  border-color:#3E85FF !important;
+  border-radius:28px;
+  color:#3E85FF !important;
+  font-size: 14px;
+  margin-right:10px;
+}
+ .weui-form-preview__ft {
+  padding: 10px 0;
+}

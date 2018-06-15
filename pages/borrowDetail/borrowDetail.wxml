@@ -1,0 +1,93 @@
+<view class='page'>
+  <view class="preview">
+    <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">申请日期</view>
+            <view class="weui-form-preview__value_in-hd">06-09  20:00</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__bd">
+        <view class="weui-media-box weui-media-box_appmsg">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <text class="iconfont icon-fukuanshenqing" style="font-size: 80rpx;;color:#fff"></text>
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__desc">张晓丽</view>
+                <view class="weui-media-box__desc">申请200元  <text class='boroowtype'>(在途补油)</text></view>
+            </view>
+        </view>
+        <view class="weui-form-preview__item other">
+            <view class="weui-form-preview__label">借款原因：油量不足</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__ft">
+        <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" >拒绝申请</button>
+        <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true" bindtap="powerDrawer" data-statu="close">同意申请</button></view>
+
+    </view>
+  </view>
+  <view class="preview">
+    <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">申请日期</view>
+            <view class="weui-form-preview__value_in-hd">06-09  20:00</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__bd">
+      <view class="weui-media-box weui-media-box_appmsg">
+          <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+              <text class="iconfont icon-fukuanshenqing" style="font-size: 80rpx;;color:#fff"></text>
+          </view>
+          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+              <view class="weui-media-box__desc">张晓丽<text class="weui-badge" style="margin-left: 5px;">已同意</text></view>
+              <view class="weui-media-box__desc">申请200元  <text class='boroowtype'>(在途补油)</text></view>
+          </view>
+        </view>
+        <view class="weui-form-preview__item boroowresaze">
+          <view class="weui-form-preview__label">借款原因：油量不足</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">审核人员：姚建华</view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">审核时间：2018-06-09 20:30</view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">审核备注：请合理使用资金</view>
+        </view>
+    </view>
+  </view>
+
+
+  <!--使用animation属性指定需要执行的动画-->  
+  <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}"> 
+   
+  <!--drawer content-->  
+    <view class="drawer_title">弹窗标题</view> 
+    <view class="drawer_content"> 
+      <view class="top grid"> 
+        <label class="title col-0">标题</label> 
+        <input class="input_base input_h30 col-1" name="rName" value="可自行定义内容"></input> 
+      </view> 
+      <view class="top grid"> 
+        <label class="title col-0">标题</label> 
+        <input class="input_base input_h30 col-1" name="mobile" value="110"></input> 
+      </view> 
+      <view class="top grid"> 
+        <label class="title col-0">标题</label> 
+        <input class="input_base input_h30 col-1" name="phone" value="拒绝伸手党"></input> 
+      </view> 
+      <view class="top grid"> 
+        <label class="title col-0">标题</label> 
+        <input class="input_base input_h30 col-1" name="Email" value="仅供学习使用"></input> 
+      </view> 
+      <view class="top bottom grid"> 
+        <label class="title col-0">备注</label> 
+        <input class="input_base input_h30 col-1" name="bz"></input> 
+      </view> 
+    </view> 
+    <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view> 
+  </view>
+</view>

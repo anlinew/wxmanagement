@@ -1,0 +1,12 @@
+.weui-tab__panel {
+  padding-top:0; 
+}
+.createdDispatch {
+  margin-top:100px;
+  background:#3E85FF !important;
+  border-radius:25px;
+  width:90%;
+}
+.phcolor{  
+    color: #999999;
+}

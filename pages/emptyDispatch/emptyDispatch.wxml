@@ -1,0 +1,67 @@
+<view class="page">
+  <view class="weui-tab__content" >
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">司机</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" value='{{driver}}' placeholder="司机姓名" placeholder-class="phcolor" disabled="true"/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">车牌号</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" value='{{license}}' placeholder="请输入手机号" placeholder-class="phcolor" disabled="true"/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">手机号</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" value='{{phone}}' placeholder="请输入手机号" placeholder-class="phcolor" disabled="true"/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">开始站点</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" value='{{phone}}' placeholder="开始站点" placeholder-class="phcolor" disabled="true"/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label">到达站点</view>
+            </view>
+            <view class="weui-cell__bd">
+                <picker bindchange="bindEndSiteChange" value="{{endSiteIndex}}" range="{{endSite}}">
+                    <view class="weui-select weui-select_in-select-after">{{endSite[endSiteIndex]}}</view>
+                </picker>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">发车时间</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" value='{{planArriveTime}}' placeholder="发车时间" placeholder-class="phcolor" disabled="true"/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label">到达时间</view>
+            </view>
+            <view class="weui-cell__bd">
+              <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+                  <view class="weui-select weui-select_in-select-after">{{date}}</view>
+              </picker>
+            </view>
+        </view>
+    </view>
+    <button class="weui-btn createdDispatch" type="primary">创建并下发</button>
+  </view>
+</view>

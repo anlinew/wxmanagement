@@ -1,0 +1,52 @@
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__ft">
+        <view class="weui-cell weui-cell_access weui-cell_link">
+          <view class="weui-cell__bd">调度单号：JWD1234567890(1360KM)</view>
+          <text>审核中</text>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </view>
+      </view>
+      <view class="weui-panel__bd">
+      <navigator url="../borrowDetail/borrowDetail" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+            <view class="weui-media-box__desc">申请金额：1360元</view>
+          </view>
+        </navigator>
+        <navigator url="../borrowDetail/borrowDetail" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+            <view class="weui-media-box__desc"><text class='texticon'>起</text>成都<text class='time'>2018-06-13 23:44:55</text></view>
+            <view class="weui-media-box__desc"><text class='texticon way'>途</text>成都<text class='time'>2018-06-13 23:44:55</text></view>
+            <view class="weui-media-box__desc"><text class='texticon end'>终</text>成都<text class='time'>2018-06-13 23:44:55</text></view>
+          </view>
+        </navigator>
+      </view>
+      <view class="weui-panel__hd">2018-06-13 23:44:55</view>
+    </view>
+    <view class="weui-panel weui-panel_access zebra">
+      <view class="weui-panel__ft">
+        <view class="weui-cell weui-cell_access weui-cell_link">
+          <view class="weui-cell__bd">调度单号：JWD1234567890(1360KM)</view>
+          <text>审核中</text>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </view>
+      </view>
+      <view class="weui-panel__bd">
+      <navigator url="../borrowDetail/borrowDetail" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+            <view class="weui-media-box__desc">申请金额：1360元</view>
+          </view>
+        </navigator>
+        <navigator url="../borrowDetail/borrowDetail" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+            <view class="weui-media-box__desc"><text class='texticon'>起</text>成都<text class='time'>2018-06-13 23:44:55</text></view>
+            <view class="weui-media-box__desc"><text class='texticon way'>途</text>成都<text class='time'>2018-06-13 23:44:55</text></view>
+            <view class="weui-media-box__desc"><text class='texticon end'>终</text>成都<text class='time'>2018-06-13 23:44:55</text></view>
+          </view>
+        </navigator>
+      </view>
+      <view class="weui-panel__hd">2018-06-13 23:44:55</view>
+    </view>
+  </view>
+</view>

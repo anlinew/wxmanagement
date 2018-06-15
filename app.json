@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/createDispatch/createDispatch",
+    "pages/searchLicense/searchLicense",
+    "pages/emptyDispatch/emptyDispatch",
+    "pages/carRepair/carRepair",
+    "pages/borrowMoney/borrowMoney",
+    "pages/borrowDetail/borrowDetail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#3E85FF",
+    "navigationBarTitleText": "轿好运管理端",
+    "navigationBarTextStyle": "white"
+  }
+}
