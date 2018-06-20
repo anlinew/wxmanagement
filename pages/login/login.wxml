@@ -10,7 +10,7 @@
     <view class="input" style='borer-bottm:1rpx solid #ededed'>
       <view class="weui-cell__bd">
         <view class='loginfont icon-Password'></view>
-        <input class="weui-input" value='{{password}}' name="password" placeholder="请输入密码" />
+        <input class="weui-input" value='{{password}}' type='password'  name="password" placeholder="请输入密码" />
       </view>
     </view>
     <button class="weui-btn createdDispatch" type="primary" formType="submit">登录</button>
