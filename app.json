@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/logs/logs",
     "pages/createDispatch/createDispatch",
@@ -7,7 +8,10 @@
     "pages/emptyDispatch/emptyDispatch",
     "pages/carRepair/carRepair",
     "pages/borrowMoney/borrowMoney",
-    "pages/borrowDetail/borrowDetail"
+    "pages/borrowDetail/borrowDetail",
+    "pages/onwayRepair/onwayRepair",
+    "pages/driverLeave/driverLeave",
+    "pages/documentReview/documentReview"
   ],
   "window": {
     "backgroundTextStyle": "light",

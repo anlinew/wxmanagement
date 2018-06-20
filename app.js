@@ -12,18 +12,6 @@ App({
       baseURL: 'http://182.61.48.201:8080',
     })
     this.interceptors()
-    this.WxRequest.postRequest('api/pub/tms/login', {
-      data: {
-        account: '13245456969',
-        password: '123456'
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-    .then(res => {
-      console.log(res)
-    })
     return this.WxRequest;
   },
   interceptors() {

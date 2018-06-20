@@ -1,9 +1,9 @@
 <view class='page'>
-  <view class="preview">
+  <view class="preview" wx:if="{{status==='待审核'}}">
     <view class="weui-form-preview__hd">
         <view class="weui-form-preview__item">
             <view class="weui-form-preview__label">申请日期</view>
-            <view class="weui-form-preview__value_in-hd">06-09  20:00</view>
+            <view class="weui-form-preview__value_in-hd">{{details.createTime}}</view>
         </view>
     </view>
     <view class="weui-form-preview__bd">
@@ -12,25 +12,25 @@
                 <text class="iconfont icon-fukuanshenqing" style="font-size: 80rpx;;color:#fff"></text>
             </view>
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                <view class="weui-media-box__desc">张晓丽</view>
-                <view class="weui-media-box__desc">申请200元  <text class='boroowtype'>(在途补油)</text></view>
+                <view class="weui-media-box__desc">{{details.driverName}}</view>
+                <view class="weui-media-box__desc">申请{{details.money/100}}元  <text class='boroowtype'>({{details.typeName}})</text></view>
             </view>
         </view>
         <view class="weui-form-preview__item other">
-            <view class="weui-form-preview__label">借款原因：油量不足</view>
+            <view class="weui-form-preview__label">借款原因：{{details.description}}</view>
         </view>
     </view>
     <view class="weui-form-preview__ft">
-        <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" >拒绝申请</button>
-        <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true" bindtap="powerDrawer" data-statu="close">同意申请</button></view>
+        <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" bindtap="showM" data-examineStatus='3'>拒绝申请</button>
+        <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true" bindtap="powerDrawer"bindtap="showM" data-examineStatus='2'>同意申请</button></view>
 
     </view>
   </view>
-  <view class="preview">
+  <view class="preview" wx:if="{{status!=='待审核'}}">
     <view class="weui-form-preview__hd">
         <view class="weui-form-preview__item">
             <view class="weui-form-preview__label">申请日期</view>
-            <view class="weui-form-preview__value_in-hd">06-09  20:00</view>
+            <view class="weui-form-preview__value_in-hd">{{details.createTime}}</view>
         </view>
     </view>
     <view class="weui-form-preview__bd">
@@ -39,55 +39,46 @@
               <text class="iconfont icon-fukuanshenqing" style="font-size: 80rpx;;color:#fff"></text>
           </view>
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-              <view class="weui-media-box__desc">张晓丽<text class="weui-badge" style="margin-left: 5px;">已同意</text></view>
-              <view class="weui-media-box__desc">申请200元  <text class='boroowtype'>(在途补油)</text></view>
+              <view class="weui-media-box__desc">{{details.driverName}}<text class="weui-badge {{status==='已驳回'?'disagree':''}}" style="margin-left: 5px;">{{status}}</text></view>
+              <view class="weui-media-box__desc">申请{{details.money/100}}元  <text class='boroowtype'>({{details.typeName}})</text></view>
           </view>
         </view>
         <view class="weui-form-preview__item boroowresaze">
-          <view class="weui-form-preview__label">借款原因：油量不足</view>
+          <view class="weui-form-preview__label">借款原因：{{details.description}}</view>
         </view>
     </view>
     <view class="weui-form-preview__bd">
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">审核人员：姚建华</view>
+            <view class="weui-form-preview__label">审核人员：{{details.examineUserName}}</view>
         </view>
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">审核时间：2018-06-09 20:30</view>
+            <view class="weui-form-preview__label">审核时间：{{details.examineTime}}</view>
         </view>
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">审核备注：请合理使用资金</view>
+            <view class="weui-form-preview__label">审核备注：{{details.examineRemark?details.examineRemark:''}}</view>
         </view>
     </view>
   </view>
 
-
-  <!--使用animation属性指定需要执行的动画-->  
-  <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}"> 
-   
-  <!--drawer content-->  
-    <view class="drawer_title">弹窗标题</view> 
-    <view class="drawer_content"> 
-      <view class="top grid"> 
-        <label class="title col-0">标题</label> 
-        <input class="input_base input_h30 col-1" name="rName" value="可自行定义内容"></input> 
-      </view> 
-      <view class="top grid"> 
-        <label class="title col-0">标题</label> 
-        <input class="input_base input_h30 col-1" name="mobile" value="110"></input> 
-      </view> 
-      <view class="top grid"> 
-        <label class="title col-0">标题</label> 
-        <input class="input_base input_h30 col-1" name="phone" value="拒绝伸手党"></input> 
-      </view> 
-      <view class="top grid"> 
-        <label class="title col-0">标题</label> 
-        <input class="input_base input_h30 col-1" name="Email" value="仅供学习使用"></input> 
-      </view> 
-      <view class="top bottom grid"> 
-        <label class="title col-0">备注</label> 
-        <input class="input_base input_h30 col-1" name="bz"></input> 
-      </view> 
-    </view> 
-    <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view> 
+  <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modalDlg" wx:if="{{showModal}}">
+   <form bindsubmit="examine">
+     <view class='mtitle'><text>借款明细-{{examineStatus==='3'?"拒绝":"同意"}}</text><text class='iconfont icon-cc-close-circle close' bindtap='close'></text></view>
+     <view class='content'>
+      <view>申请类型：{{details.typeName}}</view>
+      <view>申请金额：{{details.money/100}}元</view>
+      <view class='exmoney'><text>审批金额：</text><input class="weui-input" placeholder-class="phcolor" value="{{examineMoney}}" name="examineMoney" placeholder="请输入审批金额"/></view>
+      <view>
+       <textarea class="weui-textarea" placeholder-class="phcolor" value='{{examineRemark}}' name="examineRemark" placeholder="请输入审批备注" style="height: 180rpx" />
+      </view>
+      <view>备注审批</view>
+      <view class='license'>
+        <block wx:for-items="{{examineStatus==='3'?disagreeArr:agreeArr}}" wx:key="{{index}}">
+            <view bindtap="getLicense" data-remark="{{item}}"><text>{{item}}</text></view>
+            </block>
+      </view>
+     </view>
+      <button class="weui-btn exmbtn {{examineStatus==='3'?'disagreeexm':''}}" type="primary" formType="submit">{{examineStatus==='3'?"拒绝":"同意"}}申请</button>
+    </form>
   </view>
 </view>

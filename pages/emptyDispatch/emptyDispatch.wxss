@@ -10,3 +10,10 @@
 .phcolor{  
     color: #999999;
 }
+.ontime {
+  display: flex;
+}
+.ondate {
+  padding-right: 10px;
+  border-right: none;
+}

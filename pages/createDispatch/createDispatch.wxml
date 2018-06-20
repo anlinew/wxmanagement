@@ -9,7 +9,7 @@
         <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
     </view>
     <view class="weui-tab__panel">
-        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+      <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
         <form bindsubmit="createDispatch">
           <view class="weui-cells weui-cells_after-title zebra">
               <view class="weui-cell weui-cell_select">
@@ -62,48 +62,53 @@
                   </view>
                   <view class="weui-cell__bd">
                     <navigator url="../searchLicense/searchLicense" hover-class="none">
-                      <input class="weui-select weui-select_in-select-after {{license?'':'phcolor'}}" placeholder='请选择车牌号' value='{{license}}' disabled='true'></input>
+                      <input class="weui-select weui-select_in-select-after {{license?'':'phcolor'}}" placeholder='请选择车牌号' value='{{license}}' name="license" disabled='true'></input>
                     </navigator>
                   </view>
               </view>
           </view>
           <button class="weui-btn createdDispatch" type="primary" formType="submit">创建并下发</button>
-           </form>
-        </view>
-        <!-- 选项二的内容 -->
-        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-          <block wx:for-items="{{waybillList}}" wx:key="{{index}}">
-            <view class="weui-form-preview">
-              <view class="weui-form-preview__hd">
-                  <view class="weui-form-preview__item">
-                      <view class="weui-form-preview__label">调度单号：{{item.num}}</view>
-                      <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>{{item.createTime}}</view>
-                  </view>
-              </view>
-              <view class="weui-form-preview__bd">
-                  <view class="weui-form-preview__item">
-                      <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckLicense}}）</text></view>
-                  </view>
-                  <view class="weui-form-preview__item">
-                      <view class="weui-form-preview__label">状态：{{item.status}}</view>
-                  </view>
-                  <view class="weui-form-preview__item"  >
-                    <view class="weui-form-preview__label">实际发车时间：{{item.actualDepartureTime?item.actualDepartureTime:''}}</view>
-                  </view>
-                  <view class="weui-form-preview__item" wx:if="{{item.status==='已完成'}}">
-                    <view class="weui-form-preview__label">实际到达时间：{{item.actualArriveTime?item.actualArriveTime:''}}</view>
-                  </view>
-                  <view class="weui-form-preview__item" wx:else>
-                    <view class="weui-form-preview__label">计划到达时间：{{item.planArriveTime?item.planArriveTime:''}}</view>
-                  </view>
-              </view>
-              <view class="weui-form-preview__ft">
-                  <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" >联系司机</button>
-                  <navigator url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}" hover-class="none"><button class="weui-btn mini-btn createdfull" type="primary" plain="true" >新增空载</button></navigator>
-              </view>
+        </form>
+      </view>
+      <!-- 选项二的内容 -->
+      <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+        <block wx:for-items="{{waybillList}}" wx:key="{{index}}">
+          <view class="weui-form-preview">
+            <view class="weui-form-preview__hd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">调度单号：{{item.num}}</view>
+                    <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>{{item.createTime}}</view>
+                </view>
             </view>
-          </block>
-        </view>
+            <view class="weui-form-preview__bd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckLicense}}）</text></view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">线路：{{item.routeName}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">状态：{{item.status}}</view>
+                </view>
+                <view class="weui-form-preview__item"  >
+                  <view class="weui-form-preview__label">实际发车时间：{{item.actualDepartureTime?item.actualDepartureTime:''}}</view>
+                </view>
+                <view class="weui-form-preview__item" wx:if="{{item.status==='已完成'}}">
+                  <view class="weui-form-preview__label">实际到达时间：{{item.actualArriveTime?item.actualArriveTime:''}}</view>
+                </view>
+                <view class="weui-form-preview__item" wx:else>
+                  <view class="weui-form-preview__label">计划到达时间：{{item.planArriveTime?item.planArriveTime:''}}</view>
+                </view>
+            </view>
+            <view class="weui-form-preview__ft">
+              <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" >联系司机</button>
+              <navigator wx:if="{{item.status==='已完成'}}" url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}" hover-class="none">
+                <button class="weui-btn mini-btn createdfull" type="primary" plain="true" >新增空载</button>
+              </navigator>
+            </view>
+          </view>
+        </block>
+      </view>
     </view>
   </view>
 </view>

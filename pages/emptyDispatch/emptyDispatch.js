@@ -4,43 +4,102 @@ import utils from '../../utils/util.js'
 import moment from '../../utils/moment.js'
 import WxValidate from '../../plugins/wx-validate/WxValidate';
 
+const app = getApp()
+const request = app.WxRequest;
+
 Page({
   data: {
+    waybillId:'',
     driver:'',
-    date: moment().format('YYYY-MM-DD HH:mm:ss'),
+    date: moment().format('YYYY-MM-DD'),
+    time: "12:00:00",
     license: '',
     phone:'',
     planArriveTime:'',
-    startSite: ["成都市", "上海市", "北京市"],
-    startSiteIndex: 0,
-    endSite: ["成都市", "济南市", "铜陵市"],
-    endSiteIndex: 0,
-   
+    actualArriveTime:'',
+    startName:'',
+    route: [],
+    routeIndex: 0,
+    routeId:''
   },
-  onLoad: function (option) {
+  onLoad(option) {
+    let routeName = option.routeName.split('-');
+    let startName = routeName[routeName.length-1]
     this.setData({
       driver: option.driverName,
       phone: option.driverPhone,
       license: option.truckLicense,
-      planArriveTime: option.planArriveTime
+      planArriveTime: option.planArriveTime,
+      actualArriveTime: option.actualArriveTime,
+      startName: startName,
+      waybillId: option.waybillId
     })
+    this.getRoutes(startName)
   },
-  bindStartSiteChange: function (e) {
-    console.log('picker country 发生选择改变，携带值为', e.detail.value);
+  bindrouteChange: function (e) {
+    var index = e.detail.value;
+    console.log(e.detail.value)
+    var routeId = this.data.route[index].id; // 这个id就是选中项的id
     this.setData({
-      startSiteIndex: e.detail.value
+      routeIndex: e.detail.value,
+      routeId: routeId
     })
   },
-  bindEndSiteChange: function (e) {
-    console.log('picker country 发生选择改变，携带值为', e.detail.value);
-    this.setData({
-      endSiteIndex: e.detail.value
-    })
-  },
-  bindDateChange: function (e) {
+  bindDateChange(e) {
     this.setData({
       date: e.detail.value
     })
   },
-  
+  bindTimeChange(e) {
+    this.setData({
+      time: e.detail.value + ':00'
+    })
+  },
+  addEmptyFun(){
+    let schedule = [];
+    schedule[0] = this.data.actualArriveTime == "null" || this.data.actualArriveTime == "" ? this.data.planArriveTime : this.data.actualArriveTime;
+    let endtime = this.data.date +' '+ this.data.time
+    schedule[1] = endtime;
+    let opt = {
+      remark: 'remark',
+      routeId: this.data.routeId, // 线路id
+      schedule: schedule,
+      waybillId: this.data.waybillId // 调度单id
+    };
+    request.postRequest(api.addEmptyFunWaybill, {
+      data: opt,
+      header: {
+        'Accept': 'application/json, text/plain, */*'
+      },
+    }).then(res => {
+      if (res.result) {
+        wx.showModal({
+          confirmColor: '#666',
+          content: '创建成功',
+          showCancel: false,
+        })
+        setTimeout(function () {
+          wx.navigateTo({ url: '../createDispatch/createDispatch?activeIndex=1' })
+        }, 1000)
+      
+      } else {
+        wx.showModal({
+          confirmColor: '#666',
+          content: res.message,
+          showCancel: false,
+        })
+      }
+      console.log(res)
+    })
+  },
+  getRoutes(startName) {
+    console.log(startName)
+    request.getRequest(api.routeListApi).then(res => {
+      let routeList = res.data.filter(item => item.name.indexOf(this.data.startName) !== -1 && item.dispatchType === 1)
+      this.setData({
+        route: routeList,
+        routeId: routeList[this.data.routeIndex].id
+      });
+    });
+  },
 });

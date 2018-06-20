@@ -5,17 +5,17 @@
         <view class="weui-panel__ft">
           <view class="weui-cell weui-cell_access weui-cell_link">
             <view class="weui-cell__bd">调度单号：{{item.waybillNum}}({{item.mileage}}KM)</view>
-            <text>{{item.examineStatus}}</text>
+            <text>{{item.waybillStatus}}</text>
             <view class="weui-cell__ft weui-cell__ft_in-access"></view>
           </view>
         </view>
         <view class="weui-panel__bd">
-        <navigator url="../borrowDetail/borrowDetail?id={{item.id}}&status={{item.examineStatus}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+        <navigator url="../borrowDetail/borrowDetail?id={{item.id}}&status={{item.waybillStatus}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
               <view class="weui-media-box__desc">申请金额：{{item.money/100}}元</view>
             </view>
           </navigator>
-          <navigator url="../borrowDetail/borrowDetail?id={{item.id}}&status={{item.examineStatus}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+          <navigator url="../borrowDetail/borrowDetail?id={{item.id}}&status={{item.waybillStatus}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
               <block wx:for="{{item.routesite}}" wx:key="{{index}}" wx:for-item="items">
                 <view class="weui-media-box__desc">

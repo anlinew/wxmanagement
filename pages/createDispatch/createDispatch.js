@@ -45,7 +45,10 @@ Page({
     // 创建实例对象
     this.WxValidate = new WxValidate(rules, messages)
   },
-  onLoad() {
+  onLoad(option) {
+    if(option){
+      this.data.activeIndex = option.activeIndex;
+    }
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
@@ -108,29 +111,19 @@ Page({
   },
   createDispatch(e){
     const that = this;
-    // if (!that.WxValidate.checkForm(e)) {
-    //   const error = that.WxValidate.errorList[0]
-    //   wx.showModal({
-    //     confirmColor: '#666',
-    //     content: error.msg,
-    //     showCancel: false,
-    //   })
-    //   return false
-    // }
-    if (that.data.license == '') {
+    if (!that.WxValidate.checkForm(e)) {
+      const error = that.WxValidate.errorList[0]
       wx.showModal({
         confirmColor: '#666',
-        content: '车牌号不可为空',
+        content: error.msg,
         showCancel: false,
       })
       return false
     }
     const params = { startSiteId: that.data.startSiteId, waySiteId: that.data.waySiteId, endSiteId: that.data.endSiteId, date: that.data.date, license: that.data.license};
-    console.log(params)
   },
   getWaybillList(){
     request.getRequest(api.waybillList).then(res => {
-      console.log(res.data)
       res.data.forEach(function (item, i) {
         if (item.status === 0) {
           item.status = '待下发';

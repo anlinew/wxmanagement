@@ -8,24 +8,17 @@ const request = app.WxRequest;
 
 Page({
   data: {
-     showModal: false,
-     disagreeArr: ['借款次数已使用完毕','请提供相关照片','不同意'],
-     agreeArr: ['请合理使用资金，谢谢','同意','辛苦了，谢谢'],
-      id:'',
-      status:'',
-      details:{},
-      examineStatus:'',
-      examineRemark:'',
-      examineMoney:''
+    showModal: false,
+    disagreeArr: ['没有人代办您的业务', '公司有大会议展开', '无法同意，请配合工作'],
+    agreeArr: ['同意请假', '好好休息', '祝您假期愉快'],
+    list: [],
+    id:'',
+    examineStatus: '',
+    examineRemark: '',
   },
   initValidate() {
     // 验证字段的规则
     const rules = {
-      examineMoney: {
-        required: true,
-        digits: true,
-        maxlength: 6
-      },
       examineRemark: {
         required: true,
         maxlength: 30
@@ -33,11 +26,6 @@ Page({
     }
     // 验证字段的提示信息，若不传则调用默认的信息
     const messages = {
-      examineMoney: {
-        required: '审批金额不能为空',
-        digits:'审批金额只能输入数字',
-        maxlength:'审批金额最多可以输入6位'
-      },
       examineRemark: {
         required: '审批备注不能为空',
         maxlength: '审批备注最多可以输入30位'
@@ -47,27 +35,34 @@ Page({
     this.WxValidate = new WxValidate(rules, messages)
   },
   onLoad: function (options) {
-    this.setData({
-      id: options.id,
-      status: options.status
-    });
-    this.getDetails();
+    this.getList();
     this.initValidate()
   },
-  getDetails(){
-    request.getRequest(api.loanListApi, {
-        data: {
-          id: this.data.id,
-        }
-      }).then(res=>{
-        this.setData({
-          details:res.data[0]
+  getList() {
+    request.getRequest(api.leavenoteListApi).then(res => {
+      console.log(res)
+      res.data.forEach(function (item, i) {
+        if (item.waybillStatus === 0) {
+          item.waybillStatus = '待审核';
+        } else if (item.waybillStatus === 1) {
+          item.waybillStatus = '审核完成';
+        } else if (item.waybillStatus === 2) {
+          item.waybillStatus = '预结算';
+        } else if (item.waybillStatus === 3) {
+          item.waybillStatus = '已结算';
+        } else if (item.waybillStatus === 4) {
+          item.waybillStatus = '已关账';
+        } 
+      });
+      this.setData({
+        list: res.data
       })
     })
   },
   showM: function (e) {
     this.setData({
       examineStatus: e.target.dataset.examinestatus,
+      id: e.target.dataset.id,
       showModal: true
     })
   },
@@ -85,12 +80,11 @@ Page({
       return false
     }
     const params = {
-      examineMoney: e.detail.value.examineMoney*100,
       examineRemark: e.detail.value.examineRemark,
       examineStatus: Number(this.data.examineStatus),
-      id:this.data.id
+      id: this.data.id
     }
-    request.postRequest(api.examineApi, {
+    request.postRequest(api.examineLeave, {
       data: params,
       header: {
         'Accept': 'application/json, text/plain, */*'
@@ -99,13 +93,10 @@ Page({
       if (res.result) {
         wx.showModal({
           confirmColor: '#666',
-          content: '创建成功',
+          content: '审批成功',
           showCancel: false,
         })
-        setTimeout(function () {
-          wx.navigateTo({ url: '../borrowMoney/borrowMoney' })
-        }, 1000)
-        
+        this.getList();
       } else {
         wx.showModal({
           confirmColor: '#666',
@@ -113,7 +104,6 @@ Page({
           showCancel: false,
         })
       }
-      console.log(res)
     })
     this.setData({
       showModal: false
@@ -122,8 +112,7 @@ Page({
   close() {
     this.setData({
       showModal: false,
-      examineRemark: '',
-      examineMoney: ''
+      examineRemark: ''
     })
   },
   getLicense(e) {

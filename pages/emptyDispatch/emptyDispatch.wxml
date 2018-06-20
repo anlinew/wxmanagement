@@ -1,5 +1,6 @@
 <view class="page">
   <view class="weui-tab__content" >
+  <form bindsubmit="addEmptyFun">
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
@@ -27,19 +28,19 @@
         </view>
         <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label">开始站点</view>
+              <view class="weui-label">发车站点</view>
             </view>
             <view class="weui-cell__bd">
-              <input class="weui-input" value='{{phone}}' placeholder="开始站点" placeholder-class="phcolor" disabled="true"/>
+              <input class="weui-input" value='{{startName}}' placeholder="开始站点" placeholder-class="phcolor" disabled="true"/>
             </view>
         </view>
         <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                <view class="weui-label">到达站点</view>
+                <view class="weui-label">空载线路</view>
             </view>
             <view class="weui-cell__bd">
-                <picker bindchange="bindEndSiteChange" value="{{endSiteIndex}}" range="{{endSite}}">
-                    <view class="weui-select weui-select_in-select-after">{{endSite[endSiteIndex]}}</view>
+                <picker bindchange="bindrouteChange" value="{{routeIndex}}" range="{{route}}" range-key="name">
+                    <view class="weui-select weui-select_in-select-after">{{route[routeIndex].name}}</view>
                 </picker>
             </view>
         </view>
@@ -48,20 +49,24 @@
               <view class="weui-label">发车时间</view>
             </view>
             <view class="weui-cell__bd">
-              <input class="weui-input" value='{{planArriveTime}}' placeholder="发车时间" placeholder-class="phcolor" disabled="true"/>
+              <input class="weui-input" value='{{actualArriveTime=="null"||actualArriveTime==""?planArriveTime:actualArriveTime}}' placeholder="发车时间" placeholder-class="phcolor" disabled="true"/>
             </view>
         </view>
         <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
                 <view class="weui-label">到达时间</view>
             </view>
-            <view class="weui-cell__bd">
+            <view class="weui-cell__bd ontime" >
               <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-                  <view class="weui-select weui-select_in-select-after">{{date}}</view>
+                  <view class="weui-input ondate">{{date}}</view>
               </picker>
+              <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+                        <view class="weui-input">{{time}}</view>
+                    </picker>
             </view>
         </view>
     </view>
-    <button class="weui-btn createdDispatch" type="primary">创建并下发</button>
+    <button class="weui-btn createdDispatch" type="primary" formType="submit">创建并下发</button>
+   </form>
   </view>
 </view>

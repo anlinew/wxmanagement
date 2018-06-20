@@ -8,7 +8,7 @@ const request = app.WxRequest;
 
 Page({
   data: {
-    loanList:[]
+    loanList: []
   },
   onLoad: function (options) {
     this.getLoanList()
