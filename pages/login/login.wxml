@@ -4,7 +4,7 @@
     <view class="input">
       <view class="weui-cell__bd">
         <view class='loginfont icon-mobile'></view>
-        <input class="weui-input" value='{{account}}' name="account" placeholder="请输入手机号码" />
+        <input class="weui-input" value='{{account}}' name="account" placeholder="请输入用户名" />
       </view>
       </view>
     <view class="input" style='borer-bottm:1rpx solid #ededed'>
