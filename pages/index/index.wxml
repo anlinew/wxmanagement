@@ -5,7 +5,7 @@
       <view>
         <image class='avatarImage' src="../image/avatar@2x.png"></image>
       </view>
-      <text class="nickName">江江</text>
+      <text class="nickName">刘香</text>
     </view>
     <view class="mission">
       <view>
