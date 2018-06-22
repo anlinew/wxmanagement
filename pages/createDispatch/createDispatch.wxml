@@ -17,9 +17,9 @@
                       <view class="weui-label">开始站点</view>
                   </view>
                   <view class="weui-cell__bd">
-                      <picker bindchange="bindStartSiteChange" value="{{startSiteInde}}" range="{{startSite}}" range-key="name">
-                          <view class="weui-select weui-select_in-select-after">{{startSite[startSiteIndex].name}}</view>
-                      </picker>
+                      <navigator url="../searchSite/searchSite?statr" hover-class="none">
+                      <input class="weui-select weui-select_in-select-after {{startSite?'':'phcolor'}}" placeholder='请选择开始站点' value='{{startSite}}' name="startSite" disabled='true'></input>
+                    </navigator>
                   </view>
               </view>
               <view class="weui-cell weui-cell_select">
@@ -27,9 +27,9 @@
                       <view class="weui-label">途经站点</view>
                   </view>
                   <view class="weui-cell__bd">
-                      <picker bindchange="bindWaySiteChange" value="{{waySiteIndex}}" range="{{waySite}}" range-key="name">
-                          <view class="weui-select weui-select_in-select-after">{{waySite[waySiteIndex].name}}</view>
-                      </picker>
+                       <navigator url="../searchSite/searchSite" hover-class="none">
+                      <input class="weui-select weui-select_in-select-after {{waySite?'':'phcolor'}}" placeholder='请选择途经站点' value='{{waySite}}' name="waySite" disabled='true'></input>
+                    </navigator>
                   </view>
               </view>
               <view class="weui-cell weui-cell_select">
@@ -37,9 +37,9 @@
                       <view class="weui-label">到达站点</view>
                   </view>
                   <view class="weui-cell__bd">
-                      <picker bindchange="bindEndSiteChange" value="{{endSiteIndex}}" range="{{endSite}}" range-key="name">
-                          <view class="weui-select weui-select_in-select-after">{{endSite[endSiteIndex].name}}</view>
-                      </picker>
+                       <navigator url="../searchSite/searchSite" hover-class="none">
+                      <input class="weui-select weui-select_in-select-after {{endSite?'':'phcolor'}}" placeholder='请选择到达站点' value='{{endSite}}' name="endSite" disabled='true'></input>
+                    </navigator>
                   </view>
               </view>
           </view>
@@ -102,7 +102,7 @@
             </view>
             <view class="weui-form-preview__ft">
               <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" >联系司机</button>
-              <navigator wx:if="{{item.status==='已完成'}}" url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}" hover-class="none">
+              <navigator url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}" hover-class="none">
                 <button class="weui-btn mini-btn createdfull" type="primary" plain="true" >新增空载</button>
               </navigator>
             </view>

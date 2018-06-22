@@ -61,7 +61,8 @@ Page({
         }
       }).then(res=>{
         this.setData({
-          details:res.data[0]
+          details:res.data[0],
+          examineMoney: res.data[0].money / 100,
       })
     })
   },
@@ -90,6 +91,29 @@ Page({
       examineStatus: Number(this.data.examineStatus),
       id:this.data.id
     }
+    if (params.examineStatus === 2 ){
+      let oldmoney = this.data.details.money / 100;
+      let newmoney = e.detail.value.examineMoney;
+      if (Number(newmoney) !== Number(oldmoney)) {
+        wx.showModal({
+          title: '提示',
+          content: `审批金额${newmoney}与申请金额${oldmoney}不一致，请确认是否继续审批通过？`,
+          success: (res) => {
+            if (res.confirm) {
+              this.confirmExamine(params)
+            } else if (res.cancel) {
+            }
+          }
+        })
+      }else {
+        this.confirmExamine(params)
+      }
+    } else if (params.examineStatus === 3) {
+      params.examineMoney = 0;
+      this.confirmExamine(params)
+    }
+  },
+  confirmExamine(params){
     request.postRequest(api.examineApi, {
       data: params,
       header: {
@@ -105,7 +129,6 @@ Page({
         setTimeout(function () {
           wx.navigateTo({ url: '../borrowMoney/borrowMoney' })
         }, 1000)
-        
       } else {
         wx.showModal({
           confirmColor: '#666',
@@ -113,7 +136,6 @@ Page({
           showCancel: false,
         })
       }
-      console.log(res)
     })
     this.setData({
       showModal: false

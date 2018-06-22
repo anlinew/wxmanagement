@@ -36,11 +36,11 @@
         </view>
         <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                <view class="weui-label">空载线路</view>
+                <view class="weui-label">目的站点</view>
             </view>
             <view class="weui-cell__bd">
-                <picker bindchange="bindrouteChange" value="{{routeIndex}}" range="{{route}}" range-key="name">
-                    <view class="weui-select weui-select_in-select-after">{{route[routeIndex].name}}</view>
+                <picker bindchange="bindrouteChange" value="{{routeIndex}}" range="{{route}}" range-key="siteNames">
+                    <view class="weui-select weui-select_in-select-after">{{route[routeIndex].siteNames}}</view>
                 </picker>
             </view>
         </view>

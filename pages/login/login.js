@@ -6,7 +6,6 @@ import WxValidate from '../../plugins/wx-validate/WxValidate';
 const app = getApp()
 const request = app.WxRequest;
 
-
 Page({
   data: {
     account:'',
@@ -66,6 +65,7 @@ Page({
           content: '登录成功',
           showCancel: false,
         })
+        app.globalData.userInfo = res.data;      
         wx.navigateTo({url: '../index/index'})
       }else{
         wx.showModal({

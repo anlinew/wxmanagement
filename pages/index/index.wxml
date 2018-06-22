@@ -5,15 +5,15 @@
       <view>
         <image class='avatarImage' src="../image/avatar@2x.png"></image>
       </view>
-      <text class="nickName">江江</text>
+      <text class="nickName">{{username}}</text>
     </view>
     <view class="mission">
       <view>
-        <view class='missionNum'>20</view>
+        <view class='missionNum'>{{todaynum}}</view>
         <view>当日调度任务</view>
       </view>
       <view>
-        <view class='missionNum'>126</view>
+        <view class='missionNum'>{{monthnum}}</view>
         <view>本月调度任务</view>
       </view>
     </view>

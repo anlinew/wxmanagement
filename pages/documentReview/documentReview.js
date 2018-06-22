@@ -14,22 +14,30 @@ Page({
     this.getLoanList()
   },
   getLoanList() {
-    request.getRequest(api.loanListApi).then(res => {
+    request.getRequest(api.docreviewList).then(res => {
+      console.log(res)
       res.data.forEach(function (item, i) {
         item.routesite = item.routeName.split('-');
-        if (item.examineStatus === 0) {
-          item.examineStatus = '待审核';
-        } else if (item.examineStatus === 2) {
-          item.examineStatus = '已审批';
-        } else if (item.examineStatus === 3) {
-          item.examineStatus = '已驳回';
-        } else if (item.examineStatus === 4) {
-          item.examineStatus = '已打款';
-        } else if (item.examineStatus === 5) {
-          item.examineStatus = '已还款';
-        } else if (item.examineStatus === 6) {
-          item.examineStatus = '已作废';
-        }
+        switch (item.waybillStatus) {
+          case 0:
+            item.waybillStatus = '待审核';
+            break;
+          case 1:
+            item.waybillStatus = '审核完成';
+            break;
+          case 2:
+            item.waybillStatus = '预结算';
+            break;
+          case 3:
+            item.waybillStatus = '已结算';
+            break;
+          case 4:
+            item.waybillStatus = '已关账';
+            break;
+          default:
+            item.waybillStatus = null;
+            break;
+        };
       });
       this.setData({
         loanList: res.data

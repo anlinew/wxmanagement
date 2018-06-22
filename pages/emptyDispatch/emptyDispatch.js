@@ -38,7 +38,6 @@ Page({
   },
   bindrouteChange: function (e) {
     var index = e.detail.value;
-    console.log(e.detail.value)
     var routeId = this.data.route[index].id; // 这个id就是选中项的id
     this.setData({
       routeIndex: e.detail.value,
@@ -73,15 +72,10 @@ Page({
       },
     }).then(res => {
       if (res.result) {
-        wx.showModal({
-          confirmColor: '#666',
-          content: '创建成功',
-          showCancel: false,
-        })
+        let res = res.data;
         setTimeout(function () {
-          wx.navigateTo({ url: '../createDispatch/createDispatch?activeIndex=1' })
+          wx.navigateTo({ url: '../msg/msg_success?num=res.num&routeName=res.routeName&driverName=res.driverName&truckLicense=res.truckLicense' })
         }, 1000)
-      
       } else {
         wx.showModal({
           confirmColor: '#666',
@@ -89,13 +83,14 @@ Page({
           showCancel: false,
         })
       }
-      console.log(res)
     })
   },
   getRoutes(startName) {
-    console.log(startName)
     request.getRequest(api.routeListApi).then(res => {
       let routeList = res.data.filter(item => item.name.indexOf(this.data.startName) !== -1 && item.dispatchType === 1)
+      routeList.forEach(item=>{
+        item.siteNames = item.siteNames[item.siteNames.length - 1]
+      })
       this.setData({
         route: routeList,
         routeId: routeList[this.data.routeIndex].id

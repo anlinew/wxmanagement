@@ -1,0 +1,63 @@
+<view class="weui-tab__content">
+  <view class="weui-form-preview" wx:if="{{detail.waybillStatus === 0}}">
+    <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">调度单号：{{detail.waybillNum}}</view>
+            <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>{{detail.createTime}}</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">司机：{{detail.driverName}}<text class='liceniseNum'>（京RE456）</text></view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">线路：{{detail.routeName}}<text class='gotime'>2018-06-2015:00:00发车</text></view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">类型：中途加油<text class='iconfont icon-tupian'></text></view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">备注：申请冬季燃油补贴</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__ft">
+      <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" >拒绝申请</button>
+      <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true" >同意申请</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-form-preview" wx:if="{{detail.waybillStatus !== 0}}">
+    <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">调度单号：201806203456</view>
+            <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>2018-06-20</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">司机：张晓丽<text class='liceniseNum'>（京RE456）</text></view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">线路：北京-上海-南京<text class='gotime'>2018-06-2015:00:00发车</text></view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">类型：中途加油</view>
+        </view>
+        <view class="weui-form-preview__item  boroowresaze">
+          <view class="weui-form-preview__label">备注：申请冬季燃油补贴</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">审核人员：流向</view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">审核时间：流向</view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">审核备注：流向</view>
+        </view>
+    </view>
+  </view>
+</view>

@@ -9,4 +9,7 @@ module.exports = {
   loanListApi : '/api/tms/loan', //借款列表 method 'get'
   leavenoteListApi : '/api/tms/leavenote/list', //请假列表 method 'get'
   examineLeave : '/api/tms/leavenote/examine', //请假审批 method 'post'
+  waybillCount: '/api/tms/waybill/count', //查询调度单数量 method 'get'
+  docreviewList: '/api/tms/waybillaccount/list', //单据列表 method 'get'
+  docreviewCount: '/api/tms/waybillaccount/listcount', //查询单据数量 method 'get'
 }

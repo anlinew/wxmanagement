@@ -17,14 +17,11 @@ Page({
     date: moment().format('YYYY-MM-DD'),
     license:'',
     liceniseid:'',
-    startSite: [],
-    startSiteIndex: 0,
+    startSite: '',
     startSiteId:'',
-    waySite: [],
-    waySiteIndex: 0,
+    waySite: '',
     waySiteId: '',
-    endSite: [],
-    endSiteIndex: 0,
+    endSite: '',
     endSiteId: '',
     waybillList:[],
    
@@ -46,9 +43,9 @@ Page({
     this.WxValidate = new WxValidate(rules, messages)
   },
   onLoad(option) {
-    if(option){
-      this.data.activeIndex = option.activeIndex;
-    }
+    // if(option){
+    //   this.data.activeIndex = 0;
+    // }
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
@@ -58,7 +55,6 @@ Page({
         });
       }
     });
-    this.getSite();
     this.initValidate()
     this.getWaybillList();
   },
@@ -68,45 +64,9 @@ Page({
       activeIndex: e.currentTarget.id
     });
   },
-  bindStartSiteChange: function (e) {
-    var index = e.detail.value;
-    var startSiteId = this.data.startSite[index].name; // 这个id就是选中项的id
-    this.setData({
-      startSiteIndex: e.detail.value,
-      startSiteId: startSiteId
-    })
-  },
-  bindWaySiteChange: function (e) {
-    var index = e.detail.value;
-    var waySiteId = this.data.waySite[index].name; // 这个id就是选中项的id
-    this.setData({
-      waySiteIndex: e.detail.value,
-      waySiteId: waySiteId
-    })
-  },
-  bindEndSiteChange: function (e) {
-    var index = e.detail.value;
-    var endSiteId = this.data.endSite[index].name; // 这个id就是选中项的id
-    this.setData({
-      endSiteIndex: e.detail.value,
-      endSiteId: endSiteId
-    })
-  },
   bindDateChange: function (e) {
     this.setData({
       date: e.detail.value
-    })
-  },
-  getSite(){
-    request.getRequest(api.siteapi).then(res => {
-      this.setData({
-        startSite: res.data,
-        waySite: res.data,
-        endSite: res.data,
-        startSiteId: res.data[this.data.startSiteIndex].name,
-        waySiteId: res.data[this.data.waySiteIndex].name,
-        endSiteId: res.data[this.data.endSiteIndex].name,
-      });
     })
   },
   createDispatch(e){

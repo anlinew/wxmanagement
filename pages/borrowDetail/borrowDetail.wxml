@@ -67,7 +67,7 @@
      <view class='content'>
       <view>申请类型：{{details.typeName}}</view>
       <view>申请金额：{{details.money/100}}元</view>
-      <view class='exmoney'><text>审批金额：</text><input class="weui-input" placeholder-class="phcolor" value="{{examineMoney}}" name="examineMoney" placeholder="请输入审批金额"/></view>
+      <view class='exmoney' hidden="{{examineStatus==='3'}}"><text>审批金额：</text><input class="weui-input" placeholder-class="phcolor" value="{{examineMoney?examineMoney:0}}" name="examineMoney" placeholder="请输入审批金额"/></view>
       <view>
        <textarea class="weui-textarea" placeholder-class="phcolor" value='{{examineRemark}}' name="examineRemark" placeholder="请输入审批备注" style="height: 180rpx" />
       </view>

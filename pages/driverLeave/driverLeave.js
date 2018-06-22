@@ -42,17 +42,13 @@ Page({
     request.getRequest(api.leavenoteListApi).then(res => {
       console.log(res)
       res.data.forEach(function (item, i) {
-        if (item.waybillStatus === 0) {
-          item.waybillStatus = '待审核';
-        } else if (item.waybillStatus === 1) {
-          item.waybillStatus = '审核完成';
-        } else if (item.waybillStatus === 2) {
-          item.waybillStatus = '预结算';
-        } else if (item.waybillStatus === 3) {
-          item.waybillStatus = '已结算';
-        } else if (item.waybillStatus === 4) {
-          item.waybillStatus = '已关账';
-        } 
+        if (item.examineStatus === 0) {
+          item.examineStatus = '待审批';
+        } else if (item.examineStatus === 2) {
+          item.examineStatus = '已审批';
+        } else if (item.examineStatus === 3) {
+          item.examineStatus = '驳回';
+        }
       });
       this.setData({
         list: res.data

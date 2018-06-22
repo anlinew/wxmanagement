@@ -5,7 +5,7 @@ App({
     this.WxRequest()
   },
   globalData: {
-    userInfo: null
+    userInfo: {}
   },
   WxRequest(){
     this.WxRequest = new WxRequest({
