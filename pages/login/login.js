@@ -26,8 +26,8 @@ Page({
     // 验证字段的提示信息，若不传则调用默认的信息
     const messages = {
       account: {
-        required: '手机号码不能为空',
-        tel: '请输入正确的手机号',
+        required: '用户名不能为空',
+        tel: '请输入正确的用户名',
       },
       password: {
         required: '密码不能为空',

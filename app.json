@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/logs/logs",
     "pages/createDispatch/createDispatch",
@@ -18,7 +19,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#3E85FF",
-    "navigationBarTitleText": "轿好运管理端",
+    "navigationBarTitleText": "博宇管理",
     "navigationBarTextStyle": "white"
   }
 }
