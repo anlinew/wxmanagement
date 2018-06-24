@@ -3,6 +3,7 @@ module.exports = {
   siteapi: "/api/tms/site",   //站点列表 method 'get'
   frontList: "/api/tms/truck",   //站点列表 method 'get'
   waybillList: "/api/tms/waybill",   //调度单列表 method 'get'
+  waybillDetailL: "/api/tms/waybill/{id}",   //调度单详情 method 'get'
   addEmptyFunWaybill: "/api/tms/waybill/createDryRun",   //新增空载 method 'post'
   examineApi: "/api/tms/loan/examine",   //借款审批 method 'post'
   routeListApi : '/api/tms/route', // 查询线路列表 method 'get'

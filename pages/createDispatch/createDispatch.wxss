@@ -11,7 +11,7 @@
   margin-top:100px;
   background:#3E85FF !important;
   border-radius:25px;
-  width:90%;
+  width:60%;
 }
 .weui-form-preview {
   margin-top: 20px;

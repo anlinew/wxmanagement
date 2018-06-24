@@ -36,3 +36,6 @@ page{
   border-radius:25px;
   width:90%;
 }
+.icon-yanjing {
+  color: #999;
+}

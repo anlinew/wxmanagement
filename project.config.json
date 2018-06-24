@@ -13,7 +13,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.9.98",
 	"appid": "wx02d73d62cc3b94c2",
-	"projectname": "JHYmanage",
+	"projectname": "wxmanagement",
 	"isGameTourist": false,
 	"condition": {
 		"search": {

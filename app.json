@@ -13,13 +13,15 @@
     "pages/driverLeave/driverLeave",
     "pages/documentReview/documentReview",
     "pages/searchSite/searchSite",
-    "pages/msg/msg_success",
-    "pages/docReciewDetail/docReciewDetail"
+    "pages/empty_success/empty_success",
+    "pages/docReciewDetail/docReciewDetail",
+    "pages/carRepair_success/carRepair_success",
+    "pages/dispatchDetail/dispatchDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#3E85FF",
-    "navigationBarTitleText": "博宇管理",
+    "navigationBarTitleText": "轿好运管理端",
     "navigationBarTextStyle": "white"
   }
 }

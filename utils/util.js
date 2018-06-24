@@ -48,8 +48,16 @@ const DateFormatLast = (str, fmt) => {
   return fmt;
 };
 
+const apiFormat = (str, res) => {
+  let reg = /\{(\w+?)\}/gi;
+  return str.replace(reg, ($0, $1) => {
+    return res[$1];
+  });
+};
+
 module.exports = {
   formatTime: formatTime,
   DateFormat: DateFormat,
-  DateFormatLast: DateFormatLast
+  DateFormatLast: DateFormatLast,
+  apiFormat:apiFormat
 }

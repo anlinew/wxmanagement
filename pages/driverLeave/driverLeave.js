@@ -40,7 +40,6 @@ Page({
   },
   getList() {
     request.getRequest(api.leavenoteListApi).then(res => {
-      console.log(res)
       res.data.forEach(function (item, i) {
         if (item.examineStatus === 0) {
           item.examineStatus = '待审批';
@@ -49,6 +48,8 @@ Page({
         } else if (item.examineStatus === 3) {
           item.examineStatus = '驳回';
         }
+        item.endTime = moment(item.endTime).format("YYYY-MM-DD");
+        item.startTime = moment(item.startTime).format("YYYY-MM-DD");
       });
       this.setData({
         list: res.data

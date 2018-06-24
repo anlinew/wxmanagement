@@ -74,12 +74,15 @@
       <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
         <block wx:for-items="{{waybillList}}" wx:key="{{index}}">
           <view class="weui-form-preview">
-            <view class="weui-form-preview__hd">
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">调度单号：{{item.num}}</view>
-                    <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>{{item.createTime}}</view>
+            <navigator url="../dispatchDetail/dispatchDetail?id={{item.id}}">
+            <view class="weui-panel__ft" style="border-bottom:1rpx solid #d5d5d5;">
+                <view class="weui-cell weui-cell_access weui-cell_link">
+                    <view class="weui-cell__bd" style="color:#333;">调度单号：{{item.num}}</view>
+                     <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>{{item.createTime}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </view>
             </view>
+            </navigator>
             <view class="weui-form-preview__bd">
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckLicense}}）</text></view>

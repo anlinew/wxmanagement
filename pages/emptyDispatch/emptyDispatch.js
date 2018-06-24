@@ -74,7 +74,7 @@ Page({
       if (res.result) {
         let res = res.data;
         setTimeout(function () {
-          wx.navigateTo({ url: '../msg/msg_success?num=res.num&routeName=res.routeName&driverName=res.driverName&truckLicense=res.truckLicense' })
+          wx.navigateTo({ url: '../empty_success/empty_success?num=res.num&routeName=res.routeName&driverName=res.driverName&truckLicense=res.truckLicense' })
         }, 1000)
       } else {
         wx.showModal({

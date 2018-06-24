@@ -64,5 +64,8 @@ Page({
       radioItems: radioItems,
       isway: e.detail.value
     });
+  },
+  torepair(e){
+    wx.navigateTo({ url: '../carRepair_success/carRepair_success?num=res.num&routeName=res.routeName&driverName=res.driverName&truckLicense=res.truckLicense' })
   }
 })
