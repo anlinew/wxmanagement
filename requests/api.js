@@ -15,4 +15,5 @@ module.exports = {
   docreviewCount: '/api/tms/waybillaccount/listcount', //查询单据数量 method 'get'
   changePassword: '/api/tms/password', //修改密码 method 'post'
   logout: '/api/pub/logout', //退出登录 method 'post'
+  onthewayRepair: '/api/tms/eventreport/list', //退出登录 method 'post'
 }

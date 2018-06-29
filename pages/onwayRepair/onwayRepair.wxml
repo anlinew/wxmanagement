@@ -1,23 +1,25 @@
 <view class="weui-tab__content">
+<view class='noevent' wx:if="list.length<0">当前没有在途维修事件</view>
+ <block wx:for-items="{{list}}" wx:key="{{index}}">
   <view class="weui-form-preview">
     <view class="weui-form-preview__hd">
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">调度单号：201806203456</view>
-            <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>2018-06-20</view>
+            <view class="weui-form-preview__label">调度单号：{{item.waybillNum}}</view>
+            <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>{{item.createTime}}</view>
         </view>
     </view>
     <view class="weui-form-preview__bd">
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">司机：张晓丽<text class='liceniseNum'>（京RE456）</text></view>
+            <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckNum}}）</text></view>
         </view>
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">线路：北京-上海-南京<text class='gotime'>2018-06-2015:00:00发车</text></view>
+            <view class="weui-form-preview__label">线路：{{item.routeName}}<text class='gotime'>{{item.planDepartureTime}}发车</text></view>
         </view>
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">类型：中途加油<text class='iconfont icon-tupian'></text></view>
+            <view class="weui-form-preview__label">类型：{{item.curStatus}}<text class='iconfont icon-tupian'></text></view>
         </view>
         <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">备注：申请冬季燃油补贴</view>
+          <view class="weui-form-preview__label">备注：{{item.description}}</view>
         </view>
     </view>
     <view class="weui-form-preview__ft">
@@ -30,22 +32,22 @@
   <view class="weui-form-preview">
     <view class="weui-form-preview__hd">
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">调度单号：201806203456</view>
-            <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>2018-06-20</view>
+            <view class="weui-form-preview__label">调度单号：{{item.waybillNum}}</view>
+            <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>{{item.createTime}}</view>
         </view>
     </view>
     <view class="weui-form-preview__bd">
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">司机：张晓丽<text class='liceniseNum'>（京RE456）</text></view>
+            <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckNum}}）</text></view>
         </view>
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">线路：北京-上海-南京<text class='gotime'>2018-06-2015:00:00发车</text></view>
+            <view class="weui-form-preview__label">线路：{{item.routeName}}<text class='gotime'>{{item.planDepartureTime}}发车</text></view>
         </view>
         <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">类型：中途加油<text class='iconfont icon-tupian'></text></view>
+            <view class="weui-form-preview__label">类型：{{item.curStatus}}<text class='iconfont icon-tupian'></text></view>
         </view>
         <view class="weui-form-preview__item  boroowresaze">
-          <view class="weui-form-preview__label">备注：申请冬季燃油补贴</view>
+          <view class="weui-form-preview__label">备注：{{item.description}}</view>
         </view>
     </view>
     <view class="weui-form-preview__bd">
@@ -60,4 +62,5 @@
         </view>
     </view>
   </view>
+  </block>
 </view>
