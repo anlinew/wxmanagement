@@ -13,4 +13,6 @@ module.exports = {
   waybillCount: '/api/tms/waybill/count', //查询调度单数量 method 'get'
   docreviewList: '/api/tms/waybillaccount/list', //单据列表 method 'get'
   docreviewCount: '/api/tms/waybillaccount/listcount', //查询单据数量 method 'get'
+  changePassword: '/api/tms/password', //修改密码 method 'post'
+  logout: '/api/pub/logout', //退出登录 method 'post'
 }

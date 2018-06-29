@@ -16,7 +16,9 @@
     "pages/empty_success/empty_success",
     "pages/docReciewDetail/docReciewDetail",
     "pages/carRepair_success/carRepair_success",
-    "pages/dispatchDetail/dispatchDetail"
+    "pages/dispatchDetail/dispatchDetail",
+    "pages/userinfor/userinfor",
+    "pages/changePwd/changePwd"
   ],
   "window": {
     "backgroundTextStyle": "light",

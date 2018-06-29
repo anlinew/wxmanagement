@@ -3,7 +3,9 @@
   <view class='header'>
     <view class="avatar">
       <view>
+      <navigator url="../userinfor/userinfor"  hover-class="none">
         <image class='avatarImage' src="../image/avatar@2x.png"></image>
+        </navigator>
       </view>
       <text class="nickName">{{username}}</text>
     </view>

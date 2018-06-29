@@ -1,0 +1,16 @@
+.avatarImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+.action {
+  display: flex;
+  margin-top:40px;
+  padding-left: 40px;
+}
+.createdDispatch {
+  margin-top:100px;
+  margin-right: 40px;
+  background:#3E85FF !important;
+  border-radius:25px;
+}
