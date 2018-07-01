@@ -36,11 +36,12 @@ Page({
 
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
     prevPage.setData({
-      license: e.currentTarget.dataset.license
+      license: e.currentTarget.dataset.license,
+      liceniseid: e.currentTarget.dataset.liceniseid
     })
     this.setData({
       licenise: e.currentTarget.dataset.license,
-      liceniseid: e.currentTarget.dataset.licenseid,
+      liceniseid: e.currentTarget.dataset.liceniseid,
       currentIndex: e.currentTarget.dataset.index
     })
   },

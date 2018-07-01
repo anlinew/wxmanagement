@@ -22,16 +22,22 @@
                     </navigator>
                   </view>
               </view>
-              <view class="weui-cell weui-cell_select">
-                  <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                      <view class="weui-label">途经站点</view>
+              <view class='changeway'>
+                <text class='iconfont icon-tianjia' bindtap='handleAdd'></text>
+                <block wx:for="{{waySitItems}}" wx:key="{{index}}">
+                  <view class="weui-cell weui-cell_select">
+                    <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                        <view class="weui-label">途经站点{{item.index}}</view>
+                    </view>
+                    <view class="weui-cell__bd waysite">
+                        <navigator url="../searchSite/searchSite" hover-class="none">
+                        <input class="weui-select weui-select_in-select-after {{item.value?'':'phcolor'}}" placeholder='请选择途经站点' value='{{item.value}}' name="item.value" disabled='true'></input>
+                      </navigator>
+                    </view>
                   </view>
-                  <view class="weui-cell__bd">
-                       <navigator url="../searchSite/searchSite" hover-class="none">
-                      <input class="weui-select weui-select_in-select-after {{waySite?'':'phcolor'}}" placeholder='请选择途经站点' value='{{waySite}}' name="waySite" disabled='true'></input>
-                    </navigator>
-                  </view>
+                </block>
               </view>
+
               <view class="weui-cell weui-cell_select">
                   <view class="weui-cell__hd weui-cell__hd_in-select-after">
                       <view class="weui-label">到达站点</view>
@@ -48,9 +54,12 @@
                   <view class="weui-cell__hd weui-cell__hd_in-select-after">
                       <view class="weui-label">发车时间</view>
                   </view>
-                  <view class="weui-cell__bd">
+                  <view class="weui-cell__bd ontime">
                     <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-                        <view class="weui-select weui-select_in-select-after">{{date}}</view>
+                        <view class="weui-input ondate">{{date}}</view>
+                    </picker>
+                    <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+                      <view class="weui-input">{{time}}</view>
                     </picker>
                   </view>
               </view>

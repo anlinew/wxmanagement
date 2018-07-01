@@ -54,15 +54,15 @@
         </view>
         <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                <view class="weui-label">到达时间</view>
+              <view class="weui-label">到达时间</view>
             </view>
             <view class="weui-cell__bd ontime" >
               <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-                  <view class="weui-input ondate">{{date}}</view>
+                <view class="weui-input ondate">{{date}}</view>
               </picker>
               <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
-                        <view class="weui-input">{{time}}</view>
-                    </picker>
+                <view class="weui-input">{{time}}</view>
+              </picker>
             </view>
         </view>
     </view>

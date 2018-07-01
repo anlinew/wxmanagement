@@ -58,8 +58,3 @@
   padding-left:10rpx;
 }
 
-.noevent{
-  text-align:center;
-  padding-top:100px;
-  color:#888;
-}

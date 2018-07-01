@@ -15,11 +15,18 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
     date: moment().format('YYYY-MM-DD'),
+    time: "12:00:00",
     license:'',
     liceniseid:'',
     startSite: '',
     startSiteId:'',
-    waySite: '',
+    waySitindex: 1,
+    waySitItems: [
+      {
+        value: '',
+        index: 1
+      }
+    ],
     waySiteId: '',
     endSite: '',
     endSiteId: '',
@@ -43,9 +50,6 @@ Page({
     this.WxValidate = new WxValidate(rules, messages)
   },
   onLoad(option) {
-    // if(option){
-    //   this.data.activeIndex = 0;
-    // }
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
@@ -64,9 +68,25 @@ Page({
       activeIndex: e.currentTarget.id
     });
   },
+  handleAdd() {
+    this.data.waySitindex++;
+    var items = this.data.waySitItems;
+    items.push({
+      value: '',
+      index: this.data.waySitindex
+    });
+    this.setData({
+      waySitItems: items
+    });
+  },
   bindDateChange: function (e) {
     this.setData({
       date: e.detail.value
+    })
+  },
+  bindTimeChange(e) {
+    this.setData({
+      time: e.detail.value + ':00'
     })
   },
   createDispatch(e){

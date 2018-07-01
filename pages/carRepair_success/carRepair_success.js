@@ -1,16 +1,10 @@
 Page({
   data: {
-    num: '',
-    routeName: '',
-    driverName: '',
-    truckLicense: ''
+    issuccess: ''
   },
   onLoad: function (options) {
     this.setData({
-      num: options.num,
-      routeName: options.routeName,
-      driverName: options.driverName,
-      truckLicense: options.truckLicense
+      issuccess: options.issuccess
     })
   },
 })

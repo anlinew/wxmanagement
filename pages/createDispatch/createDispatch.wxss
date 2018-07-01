@@ -44,3 +44,22 @@
  .weui-form-preview__ft {
   padding: 10px 0;
 }
+.ontime {
+  display: flex;
+}
+.ondate {
+  padding-right: 10px;
+  border-right: none;
+}
+.changeway {
+  position: relative;
+}
+.icon-tianjia {
+  position:absolute;
+  color:rgb(62, 133, 255);
+  font-size:20px;
+  line-height:40px;
+  margin-right:50px;
+  right:0;
+  z-index: 999;
+}

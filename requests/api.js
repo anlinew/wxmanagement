@@ -1,6 +1,7 @@
 module.exports = {
   login: '/api/pub/tms/login', //租户登录 method 'post'
   siteapi: "/api/tms/site",   //站点列表 method 'get'
+  driverList: "/api/tms/driver",   //司机列表 method 'get'
   frontList: "/api/tms/truck",   //站点列表 method 'get'
   waybillList: "/api/tms/waybill",   //调度单列表 method 'get'
   waybillDetailL: "/api/tms/waybill/{id}",   //调度单详情 method 'get'
@@ -16,4 +17,5 @@ module.exports = {
   changePassword: '/api/tms/password', //修改密码 method 'post'
   logout: '/api/pub/logout', //退出登录 method 'post'
   onthewayRepair: '/api/tms/eventreport/list', //退出登录 method 'post'
+  acrRepair: '/api/tms/truck/update/status', //车辆检测更新运力状态 method 'post'
 }

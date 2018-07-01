@@ -5,8 +5,7 @@
         </view>
         <view class="weui-msg__text-area">
             <view class="weui-msg__title">更新车辆状态</view>
-            <view class="weui-msg__desc">设置车辆可用状态成功</view>
-            <view class="weui-msg__desc">设置车辆不可用状态成功</view>
+            <view class="weui-msg__desc">设置车辆{{issuccess}}状态成功</view>
         </view>
         <view class="weui-msg__opr-area">
             <view class="weui-btn-area">

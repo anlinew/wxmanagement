@@ -13,7 +13,7 @@
         </view>
         <view class='license' wx:if="{{liceniseArr.length > 0}}">
          <block wx:for-items="{{liceniseArr}}" wx:key="{{index}}">
-            <view bindtap="getLicense" data-license="{{item.license}}" data-licenseid="{{item.id}}" data-index="{{index}}"><text class="{{currentIndex==index?'current':''}}">{{item.license}}</text></view>
+            <view bindtap="getLicense" data-license="{{item.license}}" data-liceniseid="{{item.id}}" data-index="{{index}}"><text class="{{currentIndex==index?'current':''}}">{{item.license}}</text></view>
             </block>
         </view>
         <view class="searchbar-result" wx:else>
