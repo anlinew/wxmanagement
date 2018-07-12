@@ -13,6 +13,7 @@ module.exports = {
   examineLeave : '/api/tms/leavenote/examine', //请假审批 method 'post'
   waybillCount: '/api/tms/waybill/count', //查询调度单数量 method 'get'
   docreviewList: '/api/tms/waybillaccount/list', //单据列表 method 'get'
+  docreExamineList: 'api/tms/orderreport/examinelist', //审批单据 method 'get'
   docreviewCount: '/api/tms/waybillaccount/listcount', //查询单据数量 method 'get'
   changePassword: '/api/tms/password', //修改密码 method 'post'
   logout: '/api/pub/logout', //退出登录 method 'post'

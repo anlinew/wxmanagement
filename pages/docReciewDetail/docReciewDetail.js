@@ -9,10 +9,9 @@ const request = app.WxRequest;
 Page({
   data: {
     waybillId:'',
-    detail:{}
+    list:[]
   },
   onLoad: function (options) {
-    console.log(options)
     this.setData({
       waybillId: options.waybillId
     })
@@ -20,17 +19,38 @@ Page({
   },
   getdetails(){
     let params = {
-      waybillId: this.data.waybillId
+      waybillId: this.data.waybillId,
+      examineStatus: '1,2,3',
+      cancel: false
     }
-    request.getRequest(api.docreviewList,{
+    request.getRequest(api.docreExamineList,{
       data: params,
       header: {
         'Accept': 'application/json, text/plain, */*'
       }
     }).then(res => {
       console.log(res)
+      res.data.forEach(item => {
+        switch (item.examineStatus) {
+          case 0:
+            item.examineStatus = '待提交';
+            break;
+          case 1:
+            item.examineStatus = '待审核';
+            break;
+          case 2:
+            item.examineStatus = '审核通过';
+            break;
+          case 3:
+            item.examineStatus = '已驳回';
+            break;
+          default:
+            item.examineStatus = null;
+            break;
+        }
+      })
       this.setData({
-        detail: res.data[0]
+        list: res.data
       });
     })
   }

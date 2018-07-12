@@ -17,7 +17,7 @@
                       <view class="weui-label">开始站点</view>
                   </view>
                   <view class="weui-cell__bd">
-                      <navigator url="../searchSite/searchSite?statr" hover-class="none">
+                      <navigator url="../searchSite/searchSite?startSite=true" hover-class="none">
                       <input class="weui-select weui-select_in-select-after {{startSite?'':'phcolor'}}" placeholder='请选择开始站点' value='{{startSite}}' name="startSite" disabled='true'></input>
                     </navigator>
                   </view>
@@ -43,7 +43,7 @@
                       <view class="weui-label">到达站点</view>
                   </view>
                   <view class="weui-cell__bd">
-                       <navigator url="../searchSite/searchSite" hover-class="none">
+                       <navigator url="../searchSite/searchSite?endSite=true" hover-class="none">
                       <input class="weui-select weui-select_in-select-after {{endSite?'':'phcolor'}}" placeholder='请选择到达站点' value='{{endSite}}' name="endSite" disabled='true'></input>
                     </navigator>
                   </view>

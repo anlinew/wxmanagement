@@ -15,7 +15,6 @@ Page({
   },
   getLoanList() {
     request.getRequest(api.docreviewList).then(res => {
-      console.log(res)
       res.data.forEach(function (item, i) {
         item.routesite = item.routeName.split('-');
         switch (item.waybillStatus) {
