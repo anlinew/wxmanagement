@@ -1,7 +1,7 @@
 <view class='page'>
-  <view class='noevent' wx:if="{{list.length<=0}}">当前无在途维修事件</view>
+   <view class='noevent' wx:if="{{list.length<=0}}">当前无在途维修事件</view> 
   <view class="weui-tab__content" wx:else>
-    <block wx:for-items="{{list}}" wx:key="{{index}}">
+     <block wx:for-items="{{list}}" wx:key="{{index}}"> 
       <view class="weui-form-preview">
         <view class="weui-form-preview__hd">
             <view class="weui-form-preview__item">
@@ -17,52 +17,29 @@
                 <view class="weui-form-preview__label">线路：{{item.routeName}}<text class='gotime'>{{item.planDepartureTime}}发车</text></view>
             </view>
             <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">类型：{{item.curStatus}}<text class='iconfont icon-tupian'></text></view>
+                <view class="weui-form-preview__label">类型：在途维修<text class='iconfont icon-tupian'></text></view>
             </view>
             <view class="weui-form-preview__item">
               <view class="weui-form-preview__label">备注：{{item.description}}</view>
             </view>
         </view>
-        <view class="weui-form-preview__ft">
-          <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" >拒绝申请</button>
-          <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true" >同意申请</button>
+        <view class="weui-form-preview__bd" wx:if="{{item.examineUser}}" style="border-top: 1rpx solid #D9D9D9;">
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">审核人员：{{item.examineUser}}</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">审核时间：{{item.examineTime}}</view>
+            </view>
+            <view class="weui-form-preview__item">
+                <view class="weui-form-preview__label">审核备注：{{item.remark}}</view>
+            </view>
+        </view>
+        <view class="weui-form-preview__ft" wx:else>
+          <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" bindtap="examine" data-status='3' data-id="{{item.id}}">拒绝申请</button>
+          <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true" bindtap="examine" data-status='2' data-id="{{item.id}}">同意申请</button>
           </view>
         </view>
       </view>
-
-      <view class="weui-form-preview">
-        <view class="weui-form-preview__hd">
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">调度单号：{{item.waybillNum}}</view>
-                <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>{{item.createTime}}</view>
-            </view>
-        </view>
-        <view class="weui-form-preview__bd">
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckNum}}）</text></view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">线路：{{item.routeName}}<text class='gotime'>{{item.planDepartureTime}}发车</text></view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">类型：{{item.curStatus}}<text class='iconfont icon-tupian'></text></view>
-            </view>
-            <view class="weui-form-preview__item  boroowresaze">
-              <view class="weui-form-preview__label">备注：{{item.description}}</view>
-            </view>
-        </view>
-        <view class="weui-form-preview__bd">
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">审核人员：流向</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">审核时间：流向</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">审核备注：流向</view>
-            </view>
-        </view>
-      </view>
-    </block>
+     </block> 
   </view>
 </view>

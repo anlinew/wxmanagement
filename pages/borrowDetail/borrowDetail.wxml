@@ -22,7 +22,7 @@
     </view>
     <view class="weui-form-preview__ft">
         <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" bindtap="showM" data-examineStatus='3'>拒绝申请</button>
-        <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true" bindtap="powerDrawer"bindtap="showM" data-examineStatus='2'>同意申请</button></view>
+        <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true"  bindtap="showM" data-examineStatus='2'>同意申请</button></view>
 
     </view>
   </view>

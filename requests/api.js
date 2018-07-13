@@ -15,6 +15,8 @@ module.exports = {
   docreviewList: '/api/tms/waybillaccount/list', //单据列表 method 'get'
   docreExamineList: 'api/tms/orderreport/examinelist', //审批单据 method 'get'
   docreviewCount: '/api/tms/waybillaccount/listcount', //查询单据数量 method 'get'
+  docreviewEXamine: '/api/tms/orderreport/examine', //审批单据 method 'post'
+  repairEXamine: '/api/tms/eventreport/examine', //在途维修审批 method 'post'
   changePassword: '/api/tms/password', //修改密码 method 'post'
   logout: '/api/pub/logout', //退出登录 method 'post'
   onthewayRepair: '/api/tms/eventreport/list', //退出登录 method 'post'

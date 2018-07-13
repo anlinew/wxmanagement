@@ -8,7 +8,9 @@ const request = app.WxRequest;
 
 Page({
   data: {
-    list: []
+    list: [],
+    status:'',
+    id:''
   },
   onLoad: function (options) {
     this.getRepairList()
@@ -19,10 +21,48 @@ Page({
         curStatus:0
       }
     }).then(res => {
-      console.log(res)
       this.setData({
         list: res.data
       });
     })
-  }
+  },
+  examine(e){
+    this.setData({
+      status: e.target.dataset.status,
+      id: e.target.dataset.id,
+    })
+    wx.showModal({
+      title: '提示',
+      content: `确认${Number(this.data.status)===3?'驳回审批':'通过审批'}？`,
+      success: (res) => {
+        if (res.confirm) {
+          this.confirmExamine()
+        }
+      }
+    })
+  },
+  confirmExamine(e) {
+    const params = {
+      status: Number(this.data.status),
+      id: this.data.id
+    }
+    request.postRequest(api.repairEXamine, {
+      data: params,
+    }).then(res => {
+      if (res.result) {
+        this.getRepairList() 
+        wx.showModal({
+          confirmColor: '#666',
+          content: res.message,
+          showCancel: false,
+        })
+      } else {
+        wx.showModal({
+          confirmColor: '#666',
+          content: res.message,
+          showCancel: false,
+        })
+      }
+    })
+  },
 })
