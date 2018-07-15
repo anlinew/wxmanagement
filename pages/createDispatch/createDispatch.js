@@ -20,14 +20,14 @@ Page({
     liceniseid:'',
     startSite: '',
     startSiteId:'',
-    waySitindex: 1,
+    baseId:'',
+    waySitindex: 0,
     waySitItems: [
       {
-        value: '',
-        index: 1
+        name: '',
+        id: 0
       }
     ],
-    waySiteId: '',
     endSite: '',
     endSiteId: '',
     waybillList:[],
@@ -72,8 +72,8 @@ Page({
     this.data.waySitindex++;
     var items = this.data.waySitItems;
     items.push({
-      value: '',
-      index: this.data.waySitindex
+      name: '',
+      id: this.data.waySitindex
     });
     this.setData({
       waySitItems: items
@@ -90,9 +90,24 @@ Page({
     })
   },
   createDispatch(e){
-    const that = this;
-    if (!that.WxValidate.checkForm(e)) {
-      const error = that.WxValidate.errorList[0]
+    if (!this.data.startSite) {
+      wx.showModal({
+        confirmColor: '#666',
+        content: '开始站点不可为空',
+        showCancel: false,
+      })
+      return false
+    }
+    if (!this.data.endSite) {
+      wx.showModal({
+        confirmColor: '#666',
+        content: '到达站点不可为空',
+        showCancel: false,
+      })
+      return false
+    }
+    if (!this.WxValidate.checkForm(e)) {
+      const error = this.WxValidate.errorList[0]
       wx.showModal({
         confirmColor: '#666',
         content: error.msg,
@@ -100,7 +115,16 @@ Page({
       })
       return false
     }
-    const params = { startSiteId: that.data.startSiteId, waySiteId: that.data.waySiteId, endSiteId: that.data.endSiteId, date: that.data.date, license: that.data.license};
+    let params = {
+      baseId: this.data.baseId, // 基地ID 必填
+      dispatchType: 0, // 调度类型 必填
+      issueType: 0, // 下发类型 必填
+      routeId: 'this.selectLine.id', // 线路ID 必填
+      schedule: this.data.date +' '+ this.data.time, // 每个站点计划时间
+      truckId: this.data.liceniseid, // 车辆ID
+      remark: ''
+    };
+    console.log(params)
   },
   getWaybillList(){
     request.getRequest(api.waybillList).then(res => {

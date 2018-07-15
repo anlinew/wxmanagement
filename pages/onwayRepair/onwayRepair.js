@@ -33,7 +33,7 @@ Page({
     })
     wx.showModal({
       title: '提示',
-      content: `确认${Number(this.data.status)===3?'驳回审批':'通过审批'}？`,
+      content: `确认${Number(this.data.status)===1?'驳回审批':'通过审批'}？`,
       success: (res) => {
         if (res.confirm) {
           this.confirmExamine()

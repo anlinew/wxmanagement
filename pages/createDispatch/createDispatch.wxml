@@ -17,7 +17,7 @@
                       <view class="weui-label">开始站点</view>
                   </view>
                   <view class="weui-cell__bd">
-                      <navigator url="../searchSite/searchSite?startSite=true" hover-class="none">
+                      <navigator url="../searchSite/searchSite?siteflag=startSiteId" hover-class="none">
                       <input class="weui-select weui-select_in-select-after {{startSite?'':'phcolor'}}" placeholder='请选择开始站点' value='{{startSite}}' name="startSite" disabled='true'></input>
                     </navigator>
                   </view>
@@ -27,11 +27,11 @@
                 <block wx:for="{{waySitItems}}" wx:key="{{index}}">
                   <view class="weui-cell weui-cell_select">
                     <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                        <view class="weui-label">途经站点{{item.index}}</view>
+                        <view class="weui-label">途经站点{{index+1}}</view>
                     </view>
                     <view class="weui-cell__bd waysite">
-                        <navigator url="../searchSite/searchSite" hover-class="none">
-                        <input class="weui-select weui-select_in-select-after {{item.value?'':'phcolor'}}" placeholder='请选择途经站点' value='{{item.value}}' name="item.value" disabled='true'></input>
+                        <navigator url="../searchSite/searchSite?siteflag={{item.id}}" hover-class="none">
+                        <input class="weui-select weui-select_in-select-after {{item.name?'':'phcolor'}}" placeholder='请选择途经站点' value='{{item.name}}' name="item.name" disabled='true'></input>
                       </navigator>
                     </view>
                   </view>
@@ -43,7 +43,7 @@
                       <view class="weui-label">到达站点</view>
                   </view>
                   <view class="weui-cell__bd">
-                       <navigator url="../searchSite/searchSite?endSite=true" hover-class="none">
+                       <navigator url="../searchSite/searchSite?siteflag=endSiteId" hover-class="none">
                       <input class="weui-select weui-select_in-select-after {{endSite?'':'phcolor'}}" placeholder='请选择到达站点' value='{{endSite}}' name="endSite" disabled='true'></input>
                     </navigator>
                   </view>

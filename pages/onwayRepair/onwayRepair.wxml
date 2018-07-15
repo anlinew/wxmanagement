@@ -35,8 +35,8 @@
             </view>
         </view>
         <view class="weui-form-preview__ft" wx:else>
-          <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" bindtap="examine" data-status='3' data-id="{{item.id}}">拒绝申请</button>
-          <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true" bindtap="examine" data-status='2' data-id="{{item.id}}">同意申请</button>
+          <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" bindtap="examine" data-status='1' data-id="{{item.id}}">拒绝申请</button>
+          <view><button class="weui-btn mini-btn createdfull" type="primary" plain="true" bindtap="examine" data-status='0' data-id="{{item.id}}">同意申请</button>
           </view>
         </view>
       </view>

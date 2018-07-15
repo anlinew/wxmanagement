@@ -48,7 +48,7 @@ Page({
   getLicenseList() {
     request.getRequest(api.frontList).then(res => {
       this.setData({
-        liceniseArr: res.data.filter(item => Number(item.id) < 6),
+        liceniseArr: res.data.filter((item,index) => index < 6),
         sheacchLiceniseArr: res.data,
       });
     })

@@ -10,9 +10,13 @@ Page({
     liceniseid: '',
     liceniseArr: [],
     sheacchLiceniseArr: [],
-    currentIndex: null
+    currentIndex: null,
+    siteflag:null
   },
-  onLoad() {
+  onLoad(option) {
+    this.setData({
+      siteflag: option.siteflag
+    });
     this.getLicenseList()
   },
   clearInput: function () {
@@ -35,22 +39,36 @@ Page({
     var prevPage = pages[pages.length - 2];  //上一个页面
 
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-    prevPage.setData({
-      startSite: e.currentTarget.dataset.license,
-      startSiteId: e.currentTarget.dataset.licenseid
-    })
+    if (this.data.siteflag === 'startSiteId'){
+      prevPage.setData({
+        startSite: e.currentTarget.dataset.license,
+        startSiteId: e.currentTarget.dataset.licenseid,
+        baseId: e.currentTarget.dataset.baseid,
+      })
+    } else if (this.data.siteflag === 'endSiteId'){
+      prevPage.setData({
+        endSite: e.currentTarget.dataset.license,
+        endSiteId: e.currentTarget.dataset.licenseid,
+      })
+    }else {
+      let tag = Number(this.data.siteflag)
+      let name = "waySitItems[" + tag + "].name"
+      let id = "waySitItems[" + tag + "].id"
+      prevPage.setData({
+        [name] : e.currentTarget.dataset.license,
+        [id] : e.currentTarget.dataset.licenseid,
+      })
+    }
     this.setData({
       licenise: e.currentTarget.dataset.license,
       liceniseid: e.currentTarget.dataset.licenseid,
       currentIndex: e.currentTarget.dataset.index
     })
-    console.log(e.currentTarget.dataset.license)
-    console.log(e.currentTarget.dataset.licenseid)
   },
   getLicenseList() {
     request.getRequest(api.siteapi).then(res => {
       this.setData({
-        liceniseArr: res.data.filter(item => Number(item.id) < 6),
+        liceniseArr: res.data.filter((item,index) => index < 6),
         sheacchLiceniseArr: res.data,
       });
     })

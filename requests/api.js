@@ -4,6 +4,7 @@ module.exports = {
   driverList: "/api/tms/driver",   //司机列表 method 'get'
   frontList: "/api/tms/truck",   //站点列表 method 'get'
   waybillList: "/api/tms/waybill",   //调度单列表 method 'get'
+  movewaybill: "/api/tms/waybill",   //调度单列表 method 'post'
   waybillDetailL: "/api/tms/waybill/{id}",   //调度单详情 method 'get'
   addEmptyFunWaybill: "/api/tms/waybill/createDryRun",   //新增空载 method 'post'
   examineApi: "/api/tms/loan/examine",   //借款审批 method 'post'
