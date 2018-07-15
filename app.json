@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/index/index",
     "pages/logs/logs",
     "pages/createDispatch/createDispatch",
@@ -18,7 +17,8 @@
     "pages/carRepair_success/carRepair_success",
     "pages/dispatchDetail/dispatchDetail",
     "pages/userinfor/userinfor",
-    "pages/changePwd/changePwd"
+    "pages/changePwd/changePwd",
+    "pages/dispatch_success/dispatch_success"
   ],
   "window": {
     "backgroundTextStyle": "light",

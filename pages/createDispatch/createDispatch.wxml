@@ -67,6 +67,21 @@
           <view class="weui-cells weui-cells_after-title zebra">
               <view class="weui-cell weui-cell_select">
                   <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                      <view class="weui-label">到达时间</view>
+                  </view>
+                  <view class="weui-cell__bd ontime">
+                    <picker mode="date" value="{{enddate}}" start="2015-09-01" end="2017-09-01" bindchange="bindendDateChange">
+                        <view class="weui-input ondate">{{enddate}}</view>
+                    </picker>
+                    <picker mode="time" value="{{endtime}}" start="06:00" end="23:00" bindchange="bindendTimeChange">
+                      <view class="weui-input">{{endtime}}</view>
+                    </picker>
+                  </view>
+              </view>
+          </view>
+          <view class="weui-cells weui-cells_after-title zebra">
+              <view class="weui-cell weui-cell_select">
+                  <view class="weui-cell__hd weui-cell__hd_in-select-after">
                     <view class="weui-label">车牌号</view>
                   </view>
                   <view class="weui-cell__bd">

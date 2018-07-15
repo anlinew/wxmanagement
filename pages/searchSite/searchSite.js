@@ -67,6 +67,7 @@ Page({
   },
   getLicenseList() {
     request.getRequest(api.siteapi).then(res => {
+      console.log(res)
       this.setData({
         liceniseArr: res.data.filter((item,index) => index < 6),
         sheacchLiceniseArr: res.data,

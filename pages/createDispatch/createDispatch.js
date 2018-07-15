@@ -2,6 +2,7 @@ import api from '../../requests/api.js'
 import utils from '../../utils/util.js'
 import moment from '../../utils/moment.js'
 import WxValidate from '../../plugins/wx-validate/WxValidate';
+import qs from '../../plugins/qs.js';
 
 const app = getApp()
 const request = app.WxRequest;
@@ -16,8 +17,11 @@ Page({
     sliderLeft: 0,
     date: moment().format('YYYY-MM-DD'),
     time: "12:00:00",
+    enddate: moment().format('YYYY-MM-DD'),
+    endtime: "23:00:00",
     license:'',
     liceniseid:'',
+    routeid:'',
     startSite: '',
     startSiteId:'',
     baseId:'',
@@ -89,6 +93,16 @@ Page({
       time: e.detail.value + ':00'
     })
   },
+  bindendDateChange: function (e) {
+    this.setData({
+      date: e.detail.value
+    })
+  },
+  bindendTimeChange(e) {
+    this.setData({
+      time: e.detail.value + ':00'
+    })
+  },
   createDispatch(e){
     if (!this.data.startSite) {
       wx.showModal({
@@ -115,16 +129,77 @@ Page({
       })
       return false
     }
-    let params = {
-      baseId: this.data.baseId, // 基地ID 必填
-      dispatchType: 0, // 调度类型 必填
-      issueType: 0, // 下发类型 必填
-      routeId: 'this.selectLine.id', // 线路ID 必填
-      schedule: this.data.date +' '+ this.data.time, // 每个站点计划时间
-      truckId: this.data.liceniseid, // 车辆ID
-      remark: ''
-    };
-    console.log(params)
+    let siteName = '';
+    let siteArr = [];
+    let params = {};
+    siteArr.push({
+      name: this.data.startSite,
+      id: this.data.startSiteId
+    },{
+        name: this.data.endSite,
+        id: this.data.startSiteId
+      }
+    )
+    this.data.waySitItems.forEach((item, i) => {
+      if (item.name) {
+        siteArr.splice((i+1), 0, item); 
+      }
+    }); 
+    siteArr.forEach((item, i) => {
+      console.log(item)
+      if (item.name) {
+          siteName += item.name + '-';
+      }
+    });
+    request.getRequest(api.routeDetailApi,{
+      data: {
+        routeName: siteName.substring(0, siteName.length - 1)  
+      }
+    }).then(res => {
+      console.log(res)
+      if (res.result) {
+        let schedule=[];
+        schedule[0]= this.data.date + ' ' + this.data.time
+        schedule[1]= this.data.enddate + ' ' + this.data.endtime
+        params = {
+          baseId: this.data.baseId, // 基地ID 必填
+          dispatchType: 0, // 调度类型 必填
+          issueType: 0, // 下发类型 必填
+          routeId: res.data.id, // 线路ID 必填
+          schedule: schedule, // 每个站点计划时间
+          truckId: this.data.liceniseid, // 车辆ID
+          remark: ''
+        };
+        this.todocreateDispatch(params)
+      } else {
+        wx.showModal({
+          confirmColor: '#666',
+          content: res.message,
+          showCancel: false,
+        })
+        return false;
+      }
+    })
+  },
+  todocreateDispatch(params){
+    request.postRequest(api.movewaybill, {
+      data: params,
+      header: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+
+    }).then(res => {
+      if (res.result) {
+        wx.navigateTo({ url: '../dispatch_success/dispatch_success' })
+      } else {
+        wx.showModal({
+          confirmColor: '#666',
+          content: res.message,
+          showCancel: false,
+        })
+      }
+    })
   },
   getWaybillList(){
     request.getRequest(api.waybillList).then(res => {
