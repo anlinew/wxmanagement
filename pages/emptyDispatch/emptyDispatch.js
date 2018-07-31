@@ -24,7 +24,9 @@ Page({
   },
   onLoad(option) {
     let routeName = option.routeName.split('-');
+    console.log(routeName);
     let startName = routeName[routeName.length-1]
+    console.log(startName);
     this.setData({
       driver: option.driverName,
       phone: option.driverPhone,
@@ -37,8 +39,9 @@ Page({
     this.getRoutes(startName)
   },
   bindrouteChange: function (e) {
+    console.log(this.data.route)
     var index = e.detail.value;
-    var routeId = this.data.route[index].id; // 这个id就是选中项的id
+    var routeId = this.data.route.lenght>0?this.data.route[index].id:null; // 这个id就是选中项的id
     this.setData({
       routeIndex: e.detail.value,
       routeId: routeId
@@ -89,11 +92,14 @@ Page({
     request.getRequest(api.routeListApi).then(res => {
       let routeList = res.data.filter(item => item.name.indexOf(this.data.startName) !== -1 && item.dispatchType === 1)
       routeList.forEach(item=>{
-        item.siteNames = item.siteNames[item.siteNames.length - 1]
+        item.siteNames = item.siteNames[item.siteNames.length - 1];
       })
+      if (routeList.length===0) {
+        routeList.push({siteNames:'无站点信息'})
+      }
       this.setData({
         route: routeList,
-        routeId: routeList[this.data.routeIndex].id
+        routeId: routeList.length>0? routeList[this.data.routeIndex].id:null
       });
     });
   },

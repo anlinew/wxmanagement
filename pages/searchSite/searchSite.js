@@ -20,12 +20,14 @@ Page({
     this.getLicenseList()
   },
   clearInput: function () {
+    console.log(1);
     this.setData({
       licenise: ""
     });
   },
   inputTyping: function (e) {
     let nowlicense = e.detail.value
+    console.log(nowlicense)
     let mowarr = this.data.sheacchLiceniseArr.filter(item => {
       return item.name.includes(nowlicense)
     })

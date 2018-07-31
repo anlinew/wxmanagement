@@ -23,13 +23,14 @@
                   </view>
               </view>
               <view class='changeway'>
-                <text class='iconfont icon-tianjia' bindtap='handleAdd'></text>
                 <block wx:for="{{waySitItems}}" wx:key="{{index}}">
                   <view class="weui-cell weui-cell_select">
                     <view class="weui-cell__hd weui-cell__hd_in-select-after">
                         <view class="weui-label">途经站点{{index+1}}</view>
                     </view>
                     <view class="weui-cell__bd waysite">
+                    <!-- <text class='iconfont icon-tianjia' bindtap='handleAdd' wx:if="{{index===0}}"></text>
+                    <text data-index="{{index}}" class='iconfont icon-tianjia jian' bindtap='handleReduce' wx:else></text> -->
                         <navigator url="../searchSite/searchSite?siteflag={{item.id}}" hover-class="none">
                         <input class="weui-select weui-select_in-select-after {{item.name?'':'phcolor'}}" placeholder='请选择途经站点' value='{{item.name}}' name="item.name" disabled='true'></input>
                       </navigator>
@@ -128,13 +129,16 @@
                 </view>
             </view>
             <view class="weui-form-preview__ft">
-              <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" >联系司机</button>
+              <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" data-driver="{{item.driverPhone}}" bindtap='callDriver'>联系司机</button>
               <navigator url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}" hover-class="none">
                 <button class="weui-btn mini-btn createdfull" type="primary" plain="true" >新增空载</button>
               </navigator>
             </view>
           </view>
         </block>
+        <view class="noInfo" wx:if="{{waybillList.length == 0}}">
+          <text>当前无调度单信息</text>
+        </view> 
       </view>
     </view>
   </view>

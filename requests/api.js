@@ -23,4 +23,6 @@ module.exports = {
   onthewayRepair: '/api/tms/eventreport/list', //退出登录 method 'post'
   acrRepair: '/api/tms/truck/update/status', //车辆检测更新运力状态 method 'post'
   routeDetailApi: '/api/tms/route/detail', //通过线路名查询线路详情 method 'GET'
+  supplierList: '/api/tms/contractor',// 获取供方列表
+  repairStatus: '/api/tms/truck/repairStatus' // 可用不可用的维修状态
 }

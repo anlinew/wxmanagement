@@ -17,7 +17,7 @@ Page({
   },
   clearInput: function () {
     this.setData({
-      licenise: ""
+      repairName: ""
     });
   },
   inputTyping: function (e) {
@@ -37,7 +37,7 @@ Page({
 
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
     prevPage.setData({
-      license: e.currentTarget.dataset.license,
+      repairName: e.currentTarget.dataset.license,
       liceniseid: e.currentTarget.dataset.liceniseid
     })
     this.setData({
@@ -47,7 +47,7 @@ Page({
     })
   },
   getLicenseList() {
-    request.getRequest(api.frontList).then(res => {
+    request.getRequest(api.supplierList).then(res => {
       this.setData({
         liceniseArr: res.data.filter((item,index) => index < 18),
         sheacchLiceniseArr: res.data,

@@ -1,12 +1,21 @@
 {
   "pages": [
-    "pages/login/login",
+    
+    "pages/carRepair/carRepair",
     "pages/index/index",
-    "pages/logs/logs",
+    "pages/login/login",
     "pages/createDispatch/createDispatch",
+    
+    
+    
+    "pages/supplier/supplier",
+    "pages/supplierT/supplierT",
+    
+    "pages/logs/logs",
+  
     "pages/searchLicense/searchLicense",
     "pages/emptyDispatch/emptyDispatch",
-    "pages/carRepair/carRepair",
+    
     "pages/borrowMoney/borrowMoney",
     "pages/borrowDetail/borrowDetail",
     "pages/onwayRepair/onwayRepair",

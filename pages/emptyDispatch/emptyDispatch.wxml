@@ -46,22 +46,22 @@
         </view>
         <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label">发车时间</view>
+              <view class="weui-label grad">发车时间</view>
             </view>
             <view class="weui-cell__bd">
-              <input class="weui-input" value='{{actualArriveTime=="null"||actualArriveTime==""?planArriveTime:actualArriveTime}}' placeholder="发车时间" placeholder-class="phcolor" disabled="true"/>
+              <input class="weui-input grad" value='{{actualArriveTime=="null"||actualArriveTime==""?planArriveTime:actualArriveTime}}' placeholder="发车时间" placeholder-class="phcolor" disabled="true"/>
             </view>
         </view>
         <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label">到达时间</view>
+              <view class="weui-label blue">到达时间</view>
             </view>
             <view class="weui-cell__bd ontime" >
               <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-                <view class="weui-input ondate">{{date}}</view>
+                <view class="weui-input ondate blue">{{date}}</view>
               </picker>
               <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
-                <view class="weui-input">{{time}}</view>
+                <view class="weui-input blue">{{time}}</view>
               </picker>
             </view>
         </view>

@@ -4,12 +4,14 @@
             <icon type="success" color="#3E85FF" size="93"></icon>
         </view>
         <view class="weui-msg__text-area">
-            <view class="weui-msg__title">更新车辆状态</view>
-            <view class="weui-msg__desc">设置车辆{{issuccess}}状态成功</view>
+            <view class="weui-msg__title">更新车辆状态成功</view>
+            <view class="weui-msg__desc">当前车辆状态{{issuccess==='可用'?'可调度':'维修中'}}</view>
         </view>
         <view class="weui-msg__opr-area">
             <view class="weui-btn-area">
-                <button class="weui-btn" type="primary">确定</button>
+            <navigator url="../carRepair/carRepair"  hover-class="none">
+              <button class="weui-btn" type="primary">确定</button>
+            </navigator> 
             </view>
         </view>
     </view>

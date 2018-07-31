@@ -13,14 +13,20 @@ Page({
     license:'',
     liceniseid:'',
     availableStatus :'0',
+    mShow: false,
+    current: 0,
+    isRepair: null,
+    isCare: null,
+    repairName: null,
+    maintainName: null,
+    repairDate: moment().format('YYYY-MM-DD'),
+    maintainDate: moment().format('YYYY-MM-DD'),
     radioItems: [
       { name: '可用', value: '0', checked: true },
       { name: '不可用', value: '3' }
     ],
-    liceniseArr: [
-    { name: '维修', value: '0'},
-    { name: '保养', value: '1' }
-    ],
+    repair:{ name: '需要维修', value: '0', pmName: '维修厂名', planTime: '预计完工'},
+    maintain:{ name: '需要保养', value: '1', pmName: '保养站名', planTime: '预计完工'},
     driverList:[]
   },
   initValidate() {
@@ -33,7 +39,7 @@ Page({
     // 验证字段的提示信息，若不传则调用默认的信息
     const messages = {
       license: {
-        required: '检测车辆不能为空'
+        required: '车牌号不能为空'
       }
     }
     // 创建实例对象
@@ -57,20 +63,10 @@ Page({
       });
     }
   },
-  checkboxChange: function (e) {
-    var liceniseArr = this.data.liceniseArr, values = e.detail.value;
-    for (var i = 0, lenI = liceniseArr.length; i < lenI; ++i) {
-      liceniseArr[i].checked = false;
-      for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
-        if (liceniseArr[i].value == values[j]) {
-          liceniseArr[i].checked = true;
-          break;
-        }
-      }
-    }
+  clickCheck:function (e) {
     this.setData({
-      liceniseArr: liceniseArr
-    });
+      current : e.currentTarget.dataset.index
+    })
   },
   getDriverList(){
     request.getRequest(api.driverList,{
@@ -103,10 +99,44 @@ Page({
     for (var i = 0, len = radioItems.length; i < len; ++i) {
       radioItems[i].checked = radioItems[i].value == e.detail.value;
     }
+    if (e.detail.value === '0') {
+      this.setData({
+        mShow: false
+      })
+    } else if(e.detail.value === '3') {
+      this.setData({
+        mShow: true
+      })
+    }
     this.setData({
       radioItems: radioItems,
-      availableStatus : e.detail.value
+      availableStatus : e.detail.value,
+      liceniseArr: this.data.liceniseArr
     });
+  },
+  checkboxChange: function (e) {
+    const arr = e.detail.value;
+    arr.forEach(item=> {
+      if (item === '0') {
+        this.setData({
+          isRepair: '0'
+        })
+      } else if (item === '1') {
+        this.setData({
+          isCare: '1'
+        })
+      }
+    })
+  },
+  repairDate(e) {
+    this.setData({
+      repairDate :e.detail.value
+    })
+  },
+  maintainDate(e) {
+    this.setData({
+      maintainDate :e.detail.value
+    })
   },
   torepair(e){
     if (!this.WxValidate.checkForm(e)) {
@@ -118,33 +148,71 @@ Page({
       })
       return false
     }
-    const params = { truckId: this.data.liceniseid, availableStatus: this.data.availableStatus };
-    request.putRequest(api.acrRepair, {
-      data: params,
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-    .then(res => {
-      if (res.result) {
-        wx.showModal({
-          confirmColor: '#666',
-          content: '设置车辆运力状态成功',
-          showCancel: false,
-        })
-        if (this.data.availableStatus==='0'){
+    // 可用的情况
+    if (!this.data.mShow) {
+      const params = {license: this.data.license, availableStatus: 0}
+      request.putRequest(api.repairStatus, {
+        data: params,
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .then(res => {
+        if (res.result) {
           wx.navigateTo({ url: '../carRepair_success/carRepair_success?issuccess=可用' })
-        } else if (this.data.availableStatus === '3'){
-          wx.navigateTo({ url: '../carRepair_success/carRepair_success?issuccess=不可用' })
+        } else {
+          wx.showModal({
+            confirmColor: '#666',
+            content: res.message,
+            showCancel: false,
+          })
         }
+      })
+    } else {
+      // 不可用情况
+      const license = this.data.license;
+      const isRepair =this.data.isRepair;
+      const contractorShortNameRepair = this.data.repairName;
+      const overTimeRepair = this.data.repairDate;
+      const isCare = this.data.isCare;
+      const contractorShortNameCare = this.data.maintainName;
+      const overTimeCare = this.data.maintainDate;
+      const payload ={};
+      payload.license = license?license:null
+      payload.availableStatus = 3
+      if (this.data.isRepair){
+        payload.contractorShortNameRepair = contractorShortNameRepair?contractorShortNameRepair:null
+        payload.overTimeRepair = overTimeRepair?overTimeRepair:null
+        payload.isRepair = isRepair?isRepair:null
       } else {
-        wx.showModal({
-          confirmColor: '#666',
-          content: res.message,
-          showCancel: false,
-        })
+        delete payload.contractorShortNameRepair;
+        delete payload.overTimeRepair;
       }
-    })
-   
+      if (this.data.isCare) {
+        payload.contractorShortNameCare = contractorShortNameCare?contractorShortNameCare:null
+        payload.isCare = isCare?isCare:null
+        payload.overTimeCare = overTimeCare?overTimeCare:null
+      } else {
+        delete payload.contractorShortNameCare;
+        delete payload.overTimeCare;
+      }
+      request.putRequest(api.repairStatus, {
+        data: payload,
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .then(res => {
+        if (res.result) {
+          wx.navigateTo({ url: '../carRepair_success/carRepair_success?issuccess=不可用' })
+        } else {
+          wx.showModal({
+            confirmColor: '#666',
+            content: res.message,
+            showCancel: false,
+          })
+        }
+      })
+    }
   }
 })

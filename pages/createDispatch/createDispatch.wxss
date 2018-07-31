@@ -57,9 +57,26 @@
 .icon-tianjia {
   position:absolute;
   color:rgb(62, 133, 255);
-  font-size:20px;
+  font-size:25px;
   line-height:40px;
   margin-right:50px;
-  right:0;
+  right:0px;
+  top: 2px;
   z-index: 999;
+}
+.jian {
+  position:absolute;
+  color:#ff0000;
+  font-size:25px;
+  line-height:40px;
+  margin-right:50px;
+  right:0px;
+  top: 2px;
+  z-index: 999;
+}
+.noInfo {
+  color: #999;
+  display: block;
+  text-align: center;
+  margin-top: 15px;
 }

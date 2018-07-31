@@ -17,3 +17,9 @@
   padding-right: 10px;
   border-right: none;
 }
+.grad {
+  color: #999999;
+}
+.blue {
+  color: #2292DD;
+}

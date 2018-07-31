@@ -65,6 +65,7 @@ Page({
     });
     this.initValidate()
     this.getWaybillList();
+    
   },
   tabClick: function (e) {
     this.setData({
@@ -74,11 +75,21 @@ Page({
   },
   handleAdd() {
     this.data.waySitindex++;
+    console.log(this.data.waySitindex)
     var items = this.data.waySitItems;
     items.push({
       name: '',
       id: this.data.waySitindex
     });
+    this.setData({
+      waySitItems: items
+    });
+  },
+  handleReduce(e) {
+    console.log(e);
+    // this.data.waySitindex--;
+    var items = this.data.waySitItems;
+    items.splice(e.currentTarget.dataset.index, 1);
     this.setData({
       waySitItems: items
     });
@@ -222,6 +233,17 @@ Page({
         waybillList:res.data
       });
     })
+  },
+  callDriver: function(e) {
+    const driverPhone = e.currentTarget.dataset.driver;
+    wx.makePhoneCall({
+      phoneNumber: driverPhone,
+      success: function () {
+        console.log("拨打电话成功！")
+      },
+      fail: function () {
+        console.log("拨打电话失败！")
+      }
+    })
   }
-  
 });
