@@ -89,7 +89,7 @@ Page({
     })
   },
   getRoutes(startName) {
-    request.getRequest(api.routeListApi).then(res => {
+    request.getRequest(api.routeListApi,{data:{pageNo:1,pageSize:500}}).then(res => {
       let routeList = res.data.filter(item => item.name.indexOf(this.data.startName) !== -1 && item.dispatchType === 1)
       routeList.forEach(item=>{
         item.siteNames = item.siteNames[item.siteNames.length - 1];

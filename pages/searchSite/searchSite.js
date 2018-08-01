@@ -14,6 +14,7 @@ Page({
     siteflag:null
   },
   onLoad(option) {
+    console.log(option)
     this.setData({
       siteflag: option.siteflag
     });
@@ -31,6 +32,11 @@ Page({
     let mowarr = this.data.sheacchLiceniseArr.filter(item => {
       return item.name.includes(nowlicense)
     })
+    if (!nowlicense){
+      mowarr = mowarr.filter((item,index) => index < 18)
+    } else {
+      mowarr =mowarr
+    }
     this.setData({
       liceniseArr: mowarr ? mowarr : ''
     });
@@ -68,10 +74,10 @@ Page({
     })
   },
   getLicenseList() {
-    request.getRequest(api.siteapi).then(res => {
+    request.getRequest(api.siteapi,{data:{pageNo:1,pageSize:500}}).then(res => {
       console.log(res)
       this.setData({
-        liceniseArr: res.data.filter((item,index) => index < 6),
+        liceniseArr: res.data.filter((item,index) => index < 18),
         sheacchLiceniseArr: res.data,
       });
     })

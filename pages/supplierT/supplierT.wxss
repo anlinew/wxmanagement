@@ -4,10 +4,10 @@
   background: #fff;
 }
 .license {
-  padding: 15px 6px 20px 4px;
+  padding: 15px 0;
   width:100%;
   overflow:hidden;
-
+  text-align: center;
 }
 .license>view {
   position: relative;
@@ -41,4 +41,9 @@
   /* left: 10px; */
   text-align: center;
   top: 330px;
+  width: 100%;
+}
+.textBox text {
+  width: 70px;
+  display: inline-block;
 }

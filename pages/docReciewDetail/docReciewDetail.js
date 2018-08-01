@@ -55,7 +55,9 @@ Page({
     let params = {
       waybillId: this.data.waybillId,
       examineStatus: '1,2,3',
-      cancel: false
+      cancel: false,
+      pageNo: 1,
+      pageSzie: 500
     }
     request.getRequest(api.docreExamineList,{
       data: params,

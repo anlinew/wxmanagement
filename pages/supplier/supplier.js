@@ -23,8 +23,13 @@ Page({
   inputTyping: function (e) {
     let nowlicense = e.detail.value
     let mowarr = this.data.sheacchLiceniseArr.filter(item => {
-      return item.license.includes(nowlicense)
+      return item.shortName.includes(nowlicense)
     })
+    if (!nowlicense){
+      mowarr = mowarr.filter((item,index) => index < 18)
+    } else {
+      mowarr =mowarr
+    }
     this.setData({
       liceniseArr: mowarr ? mowarr: ''
     });
@@ -47,7 +52,7 @@ Page({
     })
   },
   getLicenseList() {
-    request.getRequest(api.supplierList).then(res => {
+    request.getRequest(api.supplierList, { data: { pageNo: 1, pageSize: 500, contractType: 2 }}).then(res => {
       this.setData({
         liceniseArr: res.data.filter((item,index) => index < 18),
         sheacchLiceniseArr: res.data,

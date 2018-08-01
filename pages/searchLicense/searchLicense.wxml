@@ -20,7 +20,7 @@
           <text>温馨提示：不在列表的车牌的号请输入车牌号搜索</text>
         </view>
         <view class="searchbar-result" wx:else>
-          <text>无此车牌号</text>
+          <text>无车牌号信息</text>
         </view> 
     </view>
 </view>

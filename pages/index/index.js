@@ -48,11 +48,15 @@ Page({
     })
     let params = {
       planDepartureTimeBefore: this.data.planDepartureTimeBefore,
-      planDepartureTimeAfter: this.data.planDepartureTimeAfter
+      planDepartureTimeAfter: this.data.planDepartureTimeAfter,
+      pageNo: 1,
+      pageSzie: 500
     }
     let payload = {
       planDepartureTimeBefore: this.data.monthend,
-      planDepartureTimeAfter: this.data.monthstart
+      planDepartureTimeAfter: this.data.monthstart,
+      pageNo: 1,
+      pageSzie: 500
     }
     this.getwabytodayNum(params)
     this.getwabymonthNum(payload)

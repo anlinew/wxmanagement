@@ -13,14 +13,14 @@
         </view>
         <view class='license' wx:if="{{liceniseArr.length > 0}}">
         <block wx:for-items="{{liceniseArr}}" wx:key="{{index}}">
-          <view bindtap="getLicense" data-license="{{item.shortName}}" data-liceniseid="{{item.id}}" data-index="{{index}}"><text class="{{currentIndex==index?'current':''}}">{{item.shortName}}</text></view>
+          <view class='textBox' bindtap="getLicense" data-license="{{item.shortName}}" data-liceniseid="{{item.id}}" data-index="{{index}}"><text class="{{currentIndex==index?'current':''}}">{{item.shortName}}</text></view>
         </block>
         </view>
         <view class="search-tip" wx:if="{{liceniseArr.length > 0}}">
           <text>温馨提示：不在列表的保养站请输入保养站名搜索</text>
         </view>
         <view class="searchbar-result" wx:else>
-          <text>无此保养站</text>
+          <text>无保养站信息</text>
         </view> 
     </view>
 </view>

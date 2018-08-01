@@ -13,9 +13,12 @@
         </view>
         <view class='license' wx:if="{{liceniseArr.length > 0}}">
          <block wx:for-items="{{liceniseArr}}" wx:key="{{index}}">
-            <view bindtap="getLicense" data-license="{{item.name}}" data-licenseid="{{item.id}}" data-index="{{index}}" data-baseid="{{item.baseId}}"><text class="{{currentIndex==index?'current':''}}">{{item.name}}</text></view>
+            <view class='textBox' bindtap="getLicense" data-license="{{item.name}}" data-licenseid="{{item.id}}" data-index="{{index}}" data-baseid="{{item.baseId}}"><text class="{{currentIndex==index?'current':''}}">{{item.name}}</text></view>
             </block>
         </view>
+        <view class="search-tip" wx:if="{{liceniseArr.length > 0}}">
+            <text>温馨提示：不在列表的站点请输入站点名称搜索</text>
+          </view>
         <view class="searchbar-result" wx:else>
           <text>无站点信息</text>
         </view>

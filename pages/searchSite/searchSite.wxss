@@ -4,10 +4,10 @@
   background: #fff;
 }
 .license {
-  padding: 20px 10px;
+  padding: 15px 0;
   width:100%;
   overflow:hidden;
-
+  text-align: center;
 }
 .license>view {
   position: relative;
@@ -33,4 +33,21 @@
   padding-top:20%;
   color:#999;
 
+}
+.search-tip {
+  padding: 10px;
+  color: #999;
+  position: absolute;
+  display: block;
+  /* left: 10px; */
+  text-align: center;
+  top: 330px;
+  width: 100%;
+}
+/* .textBox {
+  width: 300rpx;
+} */
+.textBox text {
+  width: 70px;
+  display: inline-block;
 }

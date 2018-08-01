@@ -1,29 +1,22 @@
 {
   "pages": [
-    
-    "pages/carRepair/carRepair",
-    "pages/index/index",
     "pages/login/login",
-    "pages/createDispatch/createDispatch",
-    
-    
-    
+    "pages/index/index",
     "pages/supplier/supplier",
     "pages/supplierT/supplierT",
-    
-    "pages/logs/logs",
-  
+    "pages/searchSite/searchSite",
     "pages/searchLicense/searchLicense",
+    "pages/docReciewDetail/docReciewDetail",
+    "pages/documentReview/documentReview",
+    "pages/createDispatch/createDispatch",
     "pages/emptyDispatch/emptyDispatch",
-    
+    "pages/carRepair/carRepair",
+    "pages/logs/logs",
     "pages/borrowMoney/borrowMoney",
     "pages/borrowDetail/borrowDetail",
     "pages/onwayRepair/onwayRepair",
     "pages/driverLeave/driverLeave",
-    "pages/documentReview/documentReview",
-    "pages/searchSite/searchSite",
     "pages/empty_success/empty_success",
-    "pages/docReciewDetail/docReciewDetail",
     "pages/carRepair_success/carRepair_success",
     "pages/dispatchDetail/dispatchDetail",
     "pages/userinfor/userinfor",

@@ -66,13 +66,26 @@
 }
 .jian {
   position:absolute;
-  color:#ff0000;
+  background:#ff0000;
   font-size:25px;
   line-height:40px;
   margin-right:50px;
   right:0px;
-  top: 2px;
+  top: 12px;
   z-index: 999;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+.jian .hr {
+  height: 2px;
+  width: 12px;
+  background: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -1px;
+  margin-left: -6px;
 }
 .noInfo {
   color: #999;

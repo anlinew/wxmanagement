@@ -4,16 +4,16 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.94",
+	"libVersion": "2.2.1",
 	"appid": "wx02d73d62cc3b94c2",
-	"projectname": "wxmanagement",
+	"projectname": "manage",
 	"isGameTourist": false,
 	"condition": {
 		"search": {

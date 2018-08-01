@@ -54,6 +54,7 @@ Page({
     this.WxValidate = new WxValidate(rules, messages)
   },
   onLoad(option) {
+    console.log(this.data.waySitItems)
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
@@ -74,7 +75,9 @@ Page({
     });
   },
   handleAdd() {
-    this.data.waySitindex++;
+    this.setData({
+      waySitindex: ++this.data.waySitindex
+    })
     console.log(this.data.waySitindex)
     var items = this.data.waySitItems;
     items.push({
@@ -213,7 +216,7 @@ Page({
     })
   },
   getWaybillList(){
-    request.getRequest(api.waybillList).then(res => {
+    request.getRequest(api.waybillList,{data:{pageNo:1,pageSize:500}}).then(res => {
       res.data.forEach(function (item, i) {
         if (item.status === 0) {
           item.status = '待下发';

@@ -7,7 +7,7 @@ App({
   globalData: {
     userInfo: {}
   },
-  WxRequest(){
+  WxRequest() {
     this.WxRequest = new WxRequest({
       baseURL: 'https://boyu.cmal.com.cn/',
     })
@@ -19,7 +19,7 @@ App({
       request(request) {
         const token = wx.getStorageSync('token');
         if (token) {
-          request.header['x-auth-token'] = token;
+          request.header['X-Auth-Token'] = token;
         }
         return request
       },
@@ -28,7 +28,7 @@ App({
         return Promise.reject(requestError)
       },
       response(response) {
-        const token = response.header['x-auth-token']
+        const token = response.header['X-Auth-Token']
         if (token) {
           response.data.token = token;
           wx.setStorageSync('token', token);

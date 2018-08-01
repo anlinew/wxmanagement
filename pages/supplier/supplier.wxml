@@ -4,7 +4,7 @@
             <view class="weui-search-bar__form">
                 <view class="weui-search-bar__box">
                     <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                    <input type="text" class="weui-search-bar__input" placeholder="搜索车牌号" value="{{licenise}}" bindinput="inputTyping"/>
+                    <input type="text" class="weui-search-bar__input" placeholder="搜索维修厂" value="{{licenise}}" bindinput="inputTyping"/>
                     <view class="weui-icon-clear" wx:if="{{licenise.length > 0}}" bindtap="clearInput">
                         <icon type="clear" size="14"></icon>
                     </view>
@@ -13,14 +13,14 @@
         </view>
         <view class='license' wx:if="{{liceniseArr.length > 0}}">
         <block wx:for-items="{{liceniseArr}}" wx:key="{{index}}">
-          <view bindtap="getLicense" data-license="{{item.shortName}}" data-liceniseid="{{item.id}}" data-index="{{index}}"><text class="{{currentIndex==index?'current':''}}">{{item.shortName}}</text></view>
+          <view class='textBox' bindtap="getLicense" data-license="{{item.shortName}}" data-liceniseid="{{item.id}}" data-index="{{index}}"><text class="{{currentIndex==index?'current':''}}">{{item.shortName}}</text></view>
         </block>
         </view>
         <view class="search-tip" wx:if="{{liceniseArr.length > 0}}">
           <text>温馨提示：不在列表的维修厂请输入维修厂简称搜索</text>
         </view>
         <view class="searchbar-result" wx:else>
-          <text>无此维修厂</text>
+          <text>无维修厂信息</text>
         </view> 
     </view>
 </view>

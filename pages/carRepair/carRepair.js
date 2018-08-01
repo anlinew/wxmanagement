@@ -71,7 +71,9 @@ Page({
   getDriverList(){
     request.getRequest(api.driverList,{
       data:{
-        bind:false
+        bind:false,
+        pageNo: 1,
+        pageSize: 500
       }
     }).then(res => {
       this.setData({
@@ -116,17 +118,27 @@ Page({
   },
   checkboxChange: function (e) {
     const arr = e.detail.value;
-    arr.forEach(item=> {
-      if (item === '0') {
-        this.setData({
-          isRepair: '0'
-        })
-      } else if (item === '1') {
-        this.setData({
-          isCare: '1'
-        })
-      }
-    })
+    if (arr.indexOf('0') !== -1 && arr.indexOf('1') !== -1) {
+      this.setData({
+        isRepair: '1',
+        isCare: '1'
+      })
+    } if (arr.indexOf('0') !== -1 && !(arr.indexOf('1') !== -1))  {
+      this.setData({
+        isRepair: '1',
+        isCare: '0'
+      })
+    } if (!(arr.indexOf('0') !== -1) && arr.indexOf('1') !== -1) {
+      this.setData({
+        isRepair: '0',
+        isCare: '1'
+      })
+    } if (!(arr.indexOf('0') !== -1) && !(arr.indexOf('1') !== -1)) {
+      this.setData({
+        isRepair: '0',
+        isCare: '0'
+      })
+    }
   },
   repairDate(e) {
     this.setData({
@@ -180,7 +192,7 @@ Page({
       const payload ={};
       payload.license = license?license:null
       payload.availableStatus = 3
-      if (this.data.isRepair){
+      if (parseInt(this.data.isRepair)){
         payload.contractorShortNameRepair = contractorShortNameRepair?contractorShortNameRepair:null
         payload.overTimeRepair = overTimeRepair?overTimeRepair:null
         payload.isRepair = isRepair?isRepair:null
@@ -188,7 +200,7 @@ Page({
         delete payload.contractorShortNameRepair;
         delete payload.overTimeRepair;
       }
-      if (this.data.isCare) {
+      if (parseInt(this.data.isCare)) {
         payload.contractorShortNameCare = contractorShortNameCare?contractorShortNameCare:null
         payload.isCare = isCare?isCare:null
         payload.overTimeCare = overTimeCare?overTimeCare:null

@@ -39,7 +39,7 @@ Page({
     this.initValidate()
   },
   getList() {
-    request.getRequest(api.leavenoteListApi).then(res => {
+    request.getRequest(api.leavenoteListApi,{data:{pageNo:1,pageSize:500}}).then(res => {
       res.data.forEach(function (item, i) {
         if (item.examineStatus === 0) {
           item.examineStatus = '待审批';

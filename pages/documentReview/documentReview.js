@@ -14,7 +14,7 @@ Page({
     this.getLoanList()
   },
   getLoanList() {
-    request.getRequest(api.docreviewList).then(res => {
+    request.getRequest(api.docreviewList,{data:{pageNo:1,pageSize:500}}).then(res => {
       res.data.forEach(function (item, i) {
         item.routesite = item.routeName.split('-');
         switch (item.waybillStatus) {

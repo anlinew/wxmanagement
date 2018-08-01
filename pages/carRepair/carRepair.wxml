@@ -109,7 +109,6 @@
                   </picker>
                 </view>
             </view>
-            <view class="hr"></view>
             
         </checkbox-group>
       </view>

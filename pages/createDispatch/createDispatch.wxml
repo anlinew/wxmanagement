@@ -29,9 +29,10 @@
                         <view class="weui-label">途经站点{{index+1}}</view>
                     </view>
                     <view class="weui-cell__bd waysite">
-                    <!-- <text class='iconfont icon-tianjia' bindtap='handleAdd' wx:if="{{index===0}}"></text>
-                    <text data-index="{{index}}" class='iconfont icon-tianjia jian' bindtap='handleReduce' wx:else></text> -->
-                        <navigator url="../searchSite/searchSite?siteflag={{item.id}}" hover-class="none">
+                    <text class='iconfont icon-tianjia' bindtap='handleAdd' wx:if="{{index===0}}"></text>
+                    <view data-index="{{index}}" class='iconfont jian' bindtap='handleReduce' wx:else><view class="hr"></view></view>
+                    <!-- <text data-index="{{index}}" class='iconfont icon-tianjia jian' bindtap='handleReduce' wx:else></text> -->
+                        <navigator url="../searchSite/searchSite?siteflag={{index}}" hover-class="none">
                         <input class="weui-select weui-select_in-select-after {{item.name?'':'phcolor'}}" placeholder='请选择途经站点' value='{{item.name}}' name="item.name" disabled='true'></input>
                       </navigator>
                     </view>

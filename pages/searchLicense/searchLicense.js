@@ -25,6 +25,11 @@ Page({
     let mowarr = this.data.sheacchLiceniseArr.filter(item => {
       return item.license.includes(nowlicense)
     })
+    if (!nowlicense){
+      mowarr = mowarr.filter((item,index) => index < 18)
+    } else {
+      mowarr =mowarr
+    }
     this.setData({
       liceniseArr: mowarr ? mowarr: ''
     });
@@ -47,7 +52,7 @@ Page({
     })
   },
   getLicenseList() {
-    request.getRequest(api.frontList).then(res => {
+    request.getRequest(api.frontList,{data:{pageNo:1,pageSize:500}}).then(res => {
       this.setData({
         liceniseArr: res.data.filter((item,index) => index < 18),
         sheacchLiceniseArr: res.data,
