@@ -208,6 +208,14 @@ Page({
         delete payload.contractorShortNameCare;
         delete payload.overTimeCare;
       }
+      if (!parseInt(this.data.isCare) && !parseInt(this.data.isRepair)) {
+        wx.showModal({
+          confirmColor: '#666',
+          content: '请选择维修厂或保养站',
+          showCancel: false,
+        })
+        return false;
+      }
       request.putRequest(api.repairStatus, {
         data: payload,
         header: {

@@ -4,6 +4,7 @@ App({
   onLaunch: function () {
     this.WxRequest()
   },
+  
   globalData: {
     userInfo: {}
   },
@@ -15,36 +16,73 @@ App({
     return this.WxRequest;
   },
   interceptors() {
-    this.WxRequest.interceptors.use({
-      request(request) {
-        const token = wx.getStorageSync('token');
-        if (token) {
-          request.header['X-Auth-Token'] = token;
-        }
-        return request
-      },
-      requestError(requestError) {
-        wx.hideLoading()
-        return Promise.reject(requestError)
-      },
-      response(response) {
-        const token = response.header['X-Auth-Token']
-        if (token) {
-          response.data.token = token;
-          wx.setStorageSync('token', token);
-        }
-        if (response.statusCode === 200) {
-          return Promise.resolve(response.data);
-        } else {
-          console.log('请求错误' + response.data.message)
-          return Promise.reject(response.data);
-        }
-        return response
-      },
-      responseError(responseError) {
-        wx.hideLoading()
-        return Promise.reject(responseError)
-      },
-    })
+    var res = wx.getSystemInfoSync()
+    console.log(res.model)
+    // 是苹果
+    if (res.model.indexOf('iPhone')>=0) {
+      this.WxRequest.interceptors.use({
+        request(request) {
+          const token = wx.getStorageSync('token');
+          if (token) {
+            request.header['x-auth-token'] = token;
+          }
+          return request
+        },
+        requestError(requestError) {
+          wx.hideLoading()
+          return Promise.reject(requestError)
+        },
+        response(response) {
+          const token = response.header['x-auth-token']
+          if (token) {
+            response.data.token = token;
+            wx.setStorageSync('token', token);
+          }
+          if (response.statusCode === 200) {
+            return Promise.resolve(response.data);
+          } else {
+            console.log('请求错误' + response.data.message)
+            return Promise.reject(response.data);
+          }
+          return response
+        },
+        responseError(responseError) {
+          wx.hideLoading()
+          return Promise.reject(responseError)
+        },
+      })
+    } else {
+      this.WxRequest.interceptors.use({
+        request(request) {
+          const token = wx.getStorageSync('token');
+          if (token) {
+            request.header['X-Auth-Token'] = token;
+          }
+          return request
+        },
+        requestError(requestError) {
+          wx.hideLoading()
+          return Promise.reject(requestError)
+        },
+        response(response) {
+          const token = response.header['X-Auth-Token']
+          if (token) {
+            response.data.token = token;
+            wx.setStorageSync('token', token);
+          }
+          if (response.statusCode === 200) {
+            return Promise.resolve(response.data);
+          } else {
+            console.log('请求错误' + response.data.message)
+            return Promise.reject(response.data);
+          }
+          return response
+        },
+        responseError(responseError) {
+          wx.hideLoading()
+          return Promise.reject(responseError)
+        },
+      })
+    }
   }
 })
