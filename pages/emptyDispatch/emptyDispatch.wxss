@@ -23,3 +23,10 @@
 .blue {
   color: #2292DD;
 }
+.fcTime {
+  padding: 10px 0;
+}
+.hourText {
+  position: absolute;
+  right: 12px;
+}

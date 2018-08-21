@@ -1,8 +1,8 @@
 import api from '../../requests/api.js'
 import utils from '../../utils/util.js'
 import moment from '../../utils/moment.js'
-import WxValidate from '../../plugins/wx-validate/WxValidate';
 import qs from '../../plugins/qs.js';
+import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
 
 const app = getApp()
 const request = app.WxRequest;
@@ -17,8 +17,6 @@ Page({
     sliderLeft: 0,
     date: moment().format('YYYY-MM-DD'),
     time: "12:00:00",
-    enddate: moment().format('YYYY-MM-DD'),
-    endtime: "23:00:00",
     license:'',
     liceniseid:'',
     routeid:'',
@@ -35,23 +33,15 @@ Page({
     endSite: '',
     endSiteId: '',
     waybillList:[],
-   
-  },
-  initValidate() {
-    // 验证字段的规则
-    const rules = {
-      license: {
-        required: true,
-      }
-    }
-    // 验证字段的提示信息，若不传则调用默认的信息
-    const messages = {
-      license: {
-        required: '车牌号不能为空'
-      }
-    }
-    // 创建实例对象
-    this.WxValidate = new WxValidate(rules, messages)
+    pzTime: '',
+    pageNo: 1,
+    pageSize: 10,
+    radioItems: [
+      { name: '重载', value: '', checked: true },
+      { name: '水路', value: '(水)' }
+    ],
+    routeType: '',
+    payload: {}
   },
   onLoad(option) {
     console.log(this.data.waySitItems)
@@ -64,9 +54,8 @@ Page({
         });
       }
     });
-    this.initValidate()
     this.getWaybillList();
-    
+    this._getTime();
   },
   tabClick: function (e) {
     this.setData({
@@ -89,7 +78,6 @@ Page({
     });
   },
   handleReduce(e) {
-    console.log(e);
     // this.data.waySitindex--;
     var items = this.data.waySitItems;
     items.splice(e.currentTarget.dataset.index, 1);
@@ -97,27 +85,11 @@ Page({
       waySitItems: items
     });
   },
-  bindDateChange: function (e) {
+  creatbill(e) {
+    const type = e.currentTarget.dataset.type;
     this.setData({
-      date: e.detail.value
+      type: type
     })
-  },
-  bindTimeChange(e) {
-    this.setData({
-      time: e.detail.value + ':00'
-    })
-  },
-  bindendDateChange: function (e) {
-    this.setData({
-      date: e.detail.value
-    })
-  },
-  bindendTimeChange(e) {
-    this.setData({
-      time: e.detail.value + ':00'
-    })
-  },
-  createDispatch(e){
     if (!this.data.startSite) {
       wx.showModal({
         confirmColor: '#666',
@@ -134,11 +106,10 @@ Page({
       })
       return false
     }
-    if (!this.WxValidate.checkForm(e)) {
-      const error = this.WxValidate.errorList[0]
+    if (!this.data.liceniseid) {
       wx.showModal({
         confirmColor: '#666',
-        content: error.msg,
+        content: '车牌号不可为空',
         showCancel: false,
       })
       return false
@@ -160,31 +131,45 @@ Page({
       }
     }); 
     siteArr.forEach((item, i) => {
-      console.log(item)
       if (item.name) {
           siteName += item.name + '-';
       }
     });
     request.getRequest(api.routeDetailApi,{
       data: {
-        routeName: siteName.substring(0, siteName.length - 1)  
+        routeName: siteName.substring(0, siteName.length - 1) + this.data.routeType
       }
     }).then(res => {
       console.log(res)
       if (res.result) {
         let schedule=[];
-        schedule[0]= this.data.date + ' ' + this.data.time
-        schedule[1]= this.data.enddate + ' ' + this.data.endtime
+        // 发车时间
+        schedule[0]= moment().add(this.data.pzTime,'hour').format('YYYY-MM-DD HH:mm:ss');
+        // 到达时间
+        schedule[1]= moment().add(this.data.pzTime+res.data.totalTime,'hour').format('YYYY-MM-DD HH:mm:ss');
         params = {
           baseId: this.data.baseId, // 基地ID 必填
           dispatchType: 0, // 调度类型 必填
-          issueType: 0, // 下发类型 必填
+          issueType: this.data.type, // 下发类型 必填
           routeId: res.data.id, // 线路ID 必填
           schedule: schedule, // 每个站点计划时间
           truckId: this.data.liceniseid, // 车辆ID
           remark: ''
         };
-        this.todocreateDispatch(params)
+        wx.showModal({
+          title: this.data.type==='1'?'是否创建调度单':'是否创建并下发调度单',
+          content: '线路名称：'+res.data.name+'\r\n\r\n发车时间：'+schedule[0]+'\r\n\r\n到达时间：'+schedule[1],
+          showCancel: true,
+          cancelText: '取消',
+          cancelColor: '#000000',
+          confirmText: '确定',
+          confirmColor: '#3CC51F',
+          success: res => {
+            if(res.confirm){
+              this.todocreateDispatch(params)
+            }
+          }
+        });
       } else {
         wx.showModal({
           confirmColor: '#666',
@@ -205,7 +190,7 @@ Page({
 
     }).then(res => {
       if (res.result) {
-        wx.navigateTo({ url: '../dispatch_success/dispatch_success' })
+        wx.navigateTo({ url: '../dispatch_success/dispatch_success?wayNum='+res.data.num+'&license='+res.data.truckLicense+'&driverName='+res.data.driverName+'&planDepartureTime='+res.data.planDepartureTime+'&driverPhone='+res.data.driverPhone })
       } else {
         wx.showModal({
           confirmColor: '#666',
@@ -215,8 +200,18 @@ Page({
       }
     })
   },
+  // 获取配置时间得到发车时间和到达时间
+  _getTime() {
+    request.getRequest(api.pzTime,{data:{sysGroup: 'interval_task', sysKey: 'intervalTime'}}).then(res=> {
+      console.log(res);
+      const sysInfo = res.data;
+      this.setData({
+        pzTime: sysInfo.intervalTime
+      })
+    })
+  },
   getWaybillList(){
-    request.getRequest(api.waybillList,{data:{pageNo:1,pageSize:500}}).then(res => {
+    request.getRequest(api.waybillList,{data:{pageNo:this.data.pageNo,pageSize:this.data.pageSize}}).then(res => {
       res.data.forEach(function (item, i) {
         if (item.status === 0) {
           item.status = '待下发';
@@ -248,5 +243,48 @@ Page({
         console.log("拨打电话失败！")
       }
     })
-  }
+  },
+  // 选择重载还是水路
+  radioChange: function (e) {
+    console.log(e);
+    var radioItems = this.data.radioItems;
+    for (var i = 0, len = radioItems.length; i < len; ++i) {
+      radioItems[i].checked = radioItems[i].value == e.detail.value;
+    }
+    this.setData({
+      radioItems: radioItems,
+      routeType: e.detail.value
+    });
+  },
+  // 下拉刷新
+  async onPullDownRefresh(e) {
+    this.data.payload = {};
+    this.data.pageNo = 1;
+    this.data.pageSize = 10;
+    wx.showLoading({
+      title: '加载中...',
+    })
+    await this.getWaybillList();
+    setTimeout(()=> {
+      wx.stopPullDownRefresh();
+      wx.hideLoading();
+    },500)
+  },
+  // 上拉加载更多
+  async onReachBottom() {
+    wx.showLoading({
+      title: '加载更多中...',
+    })
+    this.data.pageSize = this.data.pageSize + 10;
+    this.data.payload.pageNo = 1;
+    this.data.payload.pageSize = this.data.pageSize;
+    await this.getWaybillList(this.data.payload);
+    setTimeout(()=> {
+      wx.hideLoading();
+      wx.showToast({
+        title: '加载完毕',
+        icon: 'none'
+      })
+    },500)
+  },
 });

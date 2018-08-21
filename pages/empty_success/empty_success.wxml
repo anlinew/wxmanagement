@@ -5,14 +5,15 @@
         </view>
         <view class="weui-msg__text-area">
             <view class="weui-msg__title">空载调度创建成功</view>
-            <view class="weui-msg__desc">调度单号：{{num}}</view>
-            <view class="weui-msg__desc">线路名称：{{routeName}}</view>
-            <view class="weui-msg__desc">车牌号：{{truckLicense}}</view>
-            <view class="weui-msg__desc">司机姓名：{{driverName}}</view>
+            <view class=" title">调度单号：{{num}}</view>
+            <view class=" title">线路名称：{{routeName}}</view>
+            <view class=" title">车牌号码：{{truckLicense}}</view>
+            <view class=" title">司机姓名：{{driverName}}</view>
         </view>
         <view class="weui-msg__opr-area">
             <view class="weui-btn-area">
-                <button class="weui-btn" type="primary">确定</button>
+              <button class="weui-btn btn oneBtn" type="primary" bindtap="back">返回</button>
+              <button class="weui-btn btn" type="primary" bindtap="call">联系司机</button>
             </view>
         </view>
     </view>

@@ -38,9 +38,17 @@ Page({
 
     let aMonth = moment().add(1, 'months');
     let endmonth = moment(aMonth).format('MM');
-
+    wx.getStorage({
+      key: 'username',
+      success: (res)=> {
+        app.globalData.userInfo = res.data;
+        this.setData({
+          username: app.globalData.userInfo.realName
+        })
+      }
+    })
+    console.log(app.globalData.userInfo)
     this.setData({
-      username: app.globalData.userInfo.realName,
       planDepartureTimeBefore: endtiem + " " + '23:59:59',
       planDepartureTimeAfter: starttiem + " " + '00:00:00',
       monthstart: year + "-" + month + '-01 00:00:00',

@@ -17,8 +17,8 @@ Page({
     current: 0,
     isRepair: null,
     isCare: null,
-    repairName: null,
-    maintainName: null,
+    repairName: '',
+    maintainName: '',
     repairDate: moment().format('YYYY-MM-DD'),
     maintainDate: moment().format('YYYY-MM-DD'),
     radioItems: [
@@ -112,8 +112,7 @@ Page({
     }
     this.setData({
       radioItems: radioItems,
-      availableStatus : e.detail.value,
-      liceniseArr: this.data.liceniseArr
+      availableStatus : e.detail.value
     });
   },
   checkboxChange: function (e) {

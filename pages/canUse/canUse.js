@@ -10,21 +10,23 @@ Page({
     liceniseid: '',
     liceniseArr: [],
     sheacchLiceniseArr: [],
-    currentIndex:null
+    currentIndex:null,
+    baseId: ''
   },
   onLoad(option){
     this.getLicenseList()
     this.setData({
-      licenise: option.maintainName
+      licenise: option.license
     })
   },
-  clearInput: function () {
+  clearInput: function (e) {
     var pages = getCurrentPages();
     var prevPage = pages[pages.length - 2];  //上一个页面
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
     prevPage.setData({
-      maintainName: '',
-      liceniseid: ''
+      license: '',
+      liceniseid: '',
+      baseId: ''
     })
     this.setData({
       licenise: '',
@@ -34,7 +36,7 @@ Page({
   inputTyping: function (e) {
     let nowlicense = e.detail.value
     let mowarr = this.data.sheacchLiceniseArr.filter(item => {
-      return item.shortName.includes(nowlicense)
+      return item.license.includes(nowlicense)
     })
     if (!nowlicense){
       mowarr = mowarr.filter((item,index) => index < 18)
@@ -51,8 +53,9 @@ Page({
     var prevPage = pages[pages.length - 2];  //上一个页面
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
     prevPage.setData({
-      maintainName: e.currentTarget.dataset.license,
-      liceniseid: e.currentTarget.dataset.liceniseid
+      license: e.currentTarget.dataset.license,
+      liceniseid: e.currentTarget.dataset.liceniseid,
+      baseId: e.currentTarget.dataset.baseid
     })
     this.setData({
       licenise: e.currentTarget.dataset.license,
@@ -61,7 +64,7 @@ Page({
     })
   },
   getLicenseList() {
-    request.getRequest(api.supplierList, { data: { pageNo: 1, pageSize: 500, contractType: 2 }}).then(res => {
+    request.getRequest(api.frontList,{data:{pageNo:1,pageSize:500,availableStatus:0}}).then(res => {
       this.setData({
         liceniseArr: res.data.filter((item,index) => index < 18),
         sheacchLiceniseArr: res.data,

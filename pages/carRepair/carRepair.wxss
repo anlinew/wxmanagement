@@ -97,6 +97,9 @@ checkbox {
 .weui-check__label {
   border-top: 8px solid #eee;
 }
+.weui-check__label:first-child{
+  border-top: none;
+}
 checkbox-group {
   width: 100%;
 }

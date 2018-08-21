@@ -4,12 +4,16 @@
             <icon type="success" color="#3E85FF" size="93"></icon>
         </view>
         <view class="weui-msg__text-area">
-            <view class="weui-msg__title">创建调度单</view>
-            <view class="weui-msg__desc">创建并下发调度单成功</view>
+            <view class="weui-msg__title">创建调度单成功</view>
+            <view class="title">调度单号：{{wayNum}}</view>
+            <view class="title">车牌号码：{{license}}</view>
+            <view class="title">司机姓名：{{driverName}}</view>
+            <view class="title">计划发车：{{planDepartureTime}}</view>
         </view>
         <view class="weui-msg__opr-area">
             <view class="weui-btn-area">
-                <button class="weui-btn" type="primary">确定</button>
+                <button class="weui-btn btn oneBtn" type="primary" bindtap="back">返回</button>
+                <button class="weui-btn btn" type="primary" bindtap="call">联系司机</button>
             </view>
         </view>
     </view>

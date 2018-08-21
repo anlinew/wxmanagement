@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "借款审核"
+  "navigationBarTitleText": "借款审核",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

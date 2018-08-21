@@ -1,8 +1,11 @@
 .weui-navbar {
   background: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 .zebra {
-  margin-top:20px;
+  margin-top:10px;
 }
 .phcolor{  
     color: #999999;
@@ -11,7 +14,13 @@
   margin-top:100px;
   background:#3E85FF !important;
   border-radius:25px;
-  width:60%;
+  width:70%;
+}
+.createdDispatch1 {
+  margin-top:30px;
+  background:#3E85FF !important;
+  border-radius:25px;
+  width:70%;
 }
 .weui-form-preview {
   margin-top: 20px;
@@ -92,4 +101,7 @@
   display: block;
   text-align: center;
   margin-top: 15px;
+}
+.fcTime {
+  padding: 10px 0;
 }

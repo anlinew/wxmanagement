@@ -15,12 +15,12 @@ Page({
     time: "12:00:00",
     license: '',
     phone:'',
-    planArriveTime:'',
-    actualArriveTime:'',
     startName:'',
     route: [],
     routeIndex: 0,
-    routeId:''
+    routeId:'',
+    pzTime: '',
+    fcTime: null
   },
   onLoad(option) {
     let routeName = option.routeName.split('-');
@@ -31,12 +31,11 @@ Page({
       driver: option.driverName,
       phone: option.driverPhone,
       license: option.truckLicense,
-      planArriveTime: option.planArriveTime,
-      actualArriveTime: option.actualArriveTime,
       startName: startName,
-      waybillId: option.waybillId
+      waybillId: option.waybillId,
     })
     this.getRoutes(startName)
+    this._getTime();
   },
   bindrouteChange: function (e) {
     console.log(this.data.route)
@@ -59,9 +58,19 @@ Page({
   },
   addEmptyFun(){
     let schedule = [];
-    schedule[0] = this.data.actualArriveTime == "null" || this.data.actualArriveTime == "" ? this.data.planArriveTime : this.data.actualArriveTime;
+    schedule[0] = this.data.fcTime;
     let endtime = this.data.date +' '+ this.data.time
     schedule[1] = endtime;
+    console.log(schedule[0],schedule[1])
+    if (new Date(schedule[0].replace(/-/g, '/')).getTime()>new Date(schedule[1].replace(/-/g, '/')).getTime()) {
+      wx.showToast({
+        title: '到达时间不能早于出发时间',
+        icon: 'none',
+        duration: 1000
+      });
+      return false
+    }
+    
     let opt = {
       remark: 'remark',
       routeId: this.data.routeId, // 线路id
@@ -75,9 +84,8 @@ Page({
       },
     }).then(res => {
       if (res.result) {
-        let res = res.data;
         setTimeout(function () {
-          wx.navigateTo({ url: '../empty_success/empty_success?num=res.num&routeName=res.routeName&driverName=res.driverName&truckLicense=res.truckLicense' })
+          wx.navigateTo({ url: '../empty_success/empty_success?num='+res.data.num+'&routeName='+res.data.routeName+'&driverName='+res.data.driverName+'&truckLicense='+res.data.truckLicense })
         }, 1000)
       } else {
         wx.showModal({
@@ -102,5 +110,16 @@ Page({
         routeId: routeList.length>0? routeList[this.data.routeIndex].id:null
       });
     });
+  },
+  // 获取配置时间得到发车时间和到达时间
+  _getTime() {
+    request.getRequest(api.pzTime,{data:{sysGroup: 'interval_task', sysKey: 'intervalTime'}}).then(res=> {
+      console.log(res);
+      const sysInfo = res.data;
+      this.setData({
+        pzTime: sysInfo.intervalTime,
+        fcTime: moment().add(sysInfo.intervalTime,'hour').format('YYYY-MM-DD HH:mm:ss')
+      })
+    })
   },
 });

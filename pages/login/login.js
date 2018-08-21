@@ -66,7 +66,14 @@ Page({
           content: '登录成功',
           showCancel: false,
         })
-        app.globalData.userInfo = res.data;      
+        wx.setStorage({
+          key: 'username',
+          data: res.data,
+          success: (res)=> {
+            console.log(res)
+            // app.globalData.userInfo = res.data; 
+          }
+        })   
         wx.navigateTo({url: '../index/index'})
       }else{
         wx.showModal({

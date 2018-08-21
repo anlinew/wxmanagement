@@ -16,15 +16,39 @@ Page({
   onLoad(option) {
     console.log(option)
     this.setData({
-      siteflag: option.siteflag
+      siteflag: option.siteflag,
+      licenise: option.license
     });
     this.getLicenseList()
   },
-  clearInput: function () {
-    console.log(1);
+  // 清除输入框
+  clearInput: function (e) {
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2];  //上一个页面
+    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+    if (this.data.siteflag === 'startSiteId'){
+      prevPage.setData({
+        startSite: '',
+        startSiteId: '',
+      })
+    } else if (this.data.siteflag === 'endSiteId'){
+      prevPage.setData({
+        endSite: '',
+        endSiteId: '',
+      })
+    }else {
+      let tag = Number(this.data.siteflag)
+      let name = "waySitItems[" + tag + "].name"
+      let id = "waySitItems[" + tag + "].id"
+      prevPage.setData({
+        [name] : '',
+        [id] : '',
+      })
+    }
     this.setData({
-      licenise: ""
-    });
+      licenise: '',
+      liceniseid: '',
+    })
   },
   inputTyping: function (e) {
     let nowlicense = e.detail.value
@@ -43,15 +67,12 @@ Page({
   },
   getLicense(e) {
     var pages = getCurrentPages();
-    var currPage = pages[pages.length - 1];   //当前页面
     var prevPage = pages[pages.length - 2];  //上一个页面
-
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
     if (this.data.siteflag === 'startSiteId'){
       prevPage.setData({
         startSite: e.currentTarget.dataset.license,
         startSiteId: e.currentTarget.dataset.licenseid,
-        baseId: e.currentTarget.dataset.baseid,
       })
     } else if (this.data.siteflag === 'endSiteId'){
       prevPage.setData({

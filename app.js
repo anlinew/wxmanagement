@@ -10,7 +10,7 @@ App({
   },
   WxRequest() {
     this.WxRequest = new WxRequest({
-      baseURL: 'https://boyu.cmal.com.cn/',
+      baseURL: 'https://boyu.cmal.com.cn',
     })
     this.interceptors()
     return this.WxRequest;
@@ -47,7 +47,20 @@ App({
           return response
         },
         responseError(responseError) {
-          wx.hideLoading()
+          console.log(responseError)
+          if (responseError.statusCode === 403) {
+            console.log(122)
+            wx.showToast({
+              title: '登录失效，请先登录',
+              icon: 'none',
+              duration: 1000
+            })
+            setTimeout(() => {
+              wx.redirectTo({
+                url: '../login/login'
+              })
+            }, 1000);
+          }
           return Promise.reject(responseError)
         },
       })
@@ -79,7 +92,20 @@ App({
           return response
         },
         responseError(responseError) {
-          wx.hideLoading()
+          console.log(responseError)
+          if (responseError.statusCode === 403) {
+            console.log(122)
+            wx.showToast({
+              title: '登录失效，请先登录',
+              icon: 'none',
+              duration: 1000
+            })
+            setTimeout(() => {
+              wx.redirectTo({
+                url: '../login/login'
+              })
+            }, 1000);
+          }
           return Promise.reject(responseError)
         },
       })

@@ -36,3 +36,9 @@
 .end {
   background:rgb(244, 79, 0);
 }
+.applyMoney {
+  padding: 5px 15px;
+}
+.waybill {
+  padding: 15px;
+}

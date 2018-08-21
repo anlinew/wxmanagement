@@ -82,7 +82,13 @@ Page({
           content: '修改密码成功',
           showCancel: false,
         })
-        app.globalData.userInfo = res.data;
+        wx.getStorage({
+          key: 'username',
+          success: function(res) {
+            console.log(res.data)
+            app.globalData.userInfo = res.data;
+          }
+        })
         wx.navigateTo({ url: '../login/login' })
       } else {
         wx.showModal({

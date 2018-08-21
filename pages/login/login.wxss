@@ -1,10 +1,6 @@
 page{
     background-color: #fff;
 }
-.jiao{
-  width:100%;
-  display:block;
-}
 .input {
   padding:0 40rpx;
   height: 160rpx;
@@ -38,4 +34,33 @@ page{
 }
 .icon-yanjing {
   color: #999;
+}
+.backGround {
+  height: 240px;
+  width: 100%;
+  background: #308bef;
+  position: relative;
+}
+.changanLogo {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: 60px auto;
+}
+.title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: 190px auto;
+  height: 40px;
+  text-align: center;
 }

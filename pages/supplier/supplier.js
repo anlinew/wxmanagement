@@ -12,13 +12,11 @@ Page({
     sheacchLiceniseArr: [],
     currentIndex:null
   },
-  onLoad(){
+  onLoad(option){
     this.getLicenseList()
-  },
-  clearInput: function () {
     this.setData({
-      repairName: ""
-    });
+      licenise: option.repairName
+    })
   },
   inputTyping: function (e) {
     let nowlicense = e.detail.value
@@ -35,11 +33,23 @@ Page({
     });
     console.log(nowlicense);
   },
+  // 清除输入框
+  clearInput: function (e) {
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2];  //上一个页面
+    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+    prevPage.setData({
+      repairName: '',
+      liceniseid: ''
+    })
+    this.setData({
+      licenise: '',
+      liceniseid: ''
+    })
+  },
   getLicense(e){
     var pages = getCurrentPages();
-    var currPage = pages[pages.length - 1];   //当前页面
     var prevPage = pages[pages.length - 2];  //上一个页面
-
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
     prevPage.setData({
       repairName: e.currentTarget.dataset.license,
