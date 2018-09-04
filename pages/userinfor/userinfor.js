@@ -22,7 +22,7 @@ Page({
       },
     }).then(res => {
       if (res.result) {
-        wx.navigateTo({ url: '../login/login' })
+        wx.reLaunch({ url: '../login/login' })
       } else {
         wx.showModal({
           confirmColor: '#666',

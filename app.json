@@ -1,8 +1,9 @@
 {
   "pages": [
+    
     "pages/index/index",
     "pages/login/login",  
-    
+    "pages/userinfor/userinfor",
     "pages/createDispatch/createDispatch",
     "pages/dispatch_success/dispatch_success",
     "pages/empty_success/empty_success",
@@ -28,7 +29,7 @@
     
     "pages/carRepair_success/carRepair_success",
     "pages/dispatchDetail/dispatchDetail",
-    "pages/userinfor/userinfor",
+    
     "pages/changePwd/changePwd"
     
   ],

@@ -66,7 +66,9 @@
             </view>
         </view>
     </view>
-    <button class="weui-btn createdDispatch" type="primary" formType="submit">创建并下发</button>
+    <button class="weui-btn createdDispatch" type="primary" formType="submit">创建空载</button>
+
+    <button class="weui-btn createdDispatch1" bindtap="back" type="primary">返回</button>
    </form>
   </view>
 </view>

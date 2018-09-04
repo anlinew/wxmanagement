@@ -11,10 +11,11 @@ Page({
     liceniseArr: [],
     sheacchLiceniseArr: [],
     currentIndex: null,
-    siteflag:null
+    siteflag:null,
+    mowarr: [],
+    timeout: null
   },
   onLoad(option) {
-    console.log(option)
     this.setData({
       siteflag: option.siteflag,
       licenise: option.license
@@ -30,6 +31,7 @@ Page({
       prevPage.setData({
         startSite: '',
         startSiteId: '',
+        baseId: ''
       })
     } else if (this.data.siteflag === 'endSiteId'){
       prevPage.setData({
@@ -52,18 +54,21 @@ Page({
   },
   inputTyping: function (e) {
     let nowlicense = e.detail.value
-    console.log(nowlicense)
-    let mowarr = this.data.sheacchLiceniseArr.filter(item => {
-      return item.name.includes(nowlicense)
-    })
-    if (!nowlicense){
-      mowarr = mowarr.filter((item,index) => index < 18)
-    } else {
-      mowarr =mowarr
-    }
-    this.setData({
-      liceniseArr: mowarr ? mowarr : ''
-    });
+      wx.showLoading({
+        title: '正在加载...',
+      })
+      this.data.timeout = setTimeout(() => {
+        request.getRequest(api.siteapi, { data: { pageNo: 1, pageSize: 18, nameLk: nowlicense } }).then(res => {
+          wx.hideLoading()
+          const mowarr = res.data;
+          this.setData({
+            liceniseArr: mowarr ? mowarr : ''
+          });
+          this.setData({
+            timeout: null
+          })
+        });
+      }, 500);
   },
   getLicense(e) {
     var pages = getCurrentPages();
@@ -73,6 +78,7 @@ Page({
       prevPage.setData({
         startSite: e.currentTarget.dataset.license,
         startSiteId: e.currentTarget.dataset.licenseid,
+        baseId: e.currentTarget.dataset.baseid
       })
     } else if (this.data.siteflag === 'endSiteId'){
       prevPage.setData({
@@ -95,12 +101,15 @@ Page({
     })
   },
   getLicenseList() {
-    request.getRequest(api.siteapi,{data:{pageNo:1,pageSize:500}}).then(res => {
-      console.log(res)
+    wx.showLoading({
+      title: '加载列表中...',
+    })
+    request.getRequest(api.siteapi,{data:{pageNo:1,pageSize:20}}).then(res => {
       this.setData({
         liceniseArr: res.data.filter((item,index) => index < 18),
         sheacchLiceniseArr: res.data,
       });
+      wx.hideLoading()
     })
   }
 });

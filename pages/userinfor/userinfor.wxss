@@ -4,13 +4,25 @@
   border-radius: 50%;
 }
 .action {
-  display: flex;
-  margin-top:40px;
-  padding-left: 40px;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  bottom: 50px;
 }
 .createdDispatch {
-  margin-top:100px;
-  margin-right: 40px;
+  display: inline-block;
   background:#3E85FF !important;
   border-radius:25px;
+  padding: 2px 25px;
+  font-size: 16px;
+  width: 88%;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+.bb {
+  font-size: 24rpx;
+  color: #ccc;
+  position: fixed;
+  bottom: 30rpx;
+  left: 30rpx;
 }

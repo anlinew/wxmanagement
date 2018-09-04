@@ -65,7 +65,7 @@
               </view>
           </view>
           <view class="weui-cells weui-cells_after-title zebra">
-              <view class="weui-cell weui-cell_select">
+              <view class="weui-cell weui-cell_select carBox">
                   <view class="weui-cell__hd weui-cell__hd_in-select-after">
                     <view class="weui-label">车牌号</view>
                   </view>
@@ -74,6 +74,7 @@
                       <input class="weui-select weui-select_in-select-after {{license?'':'phcolor'}}" placeholder='请选择车牌号' value='{{license}}' name="license" disabled='true'></input>
                     </navigator>
                   </view>
+                  <view class='driver'>{{driverName?'(' +driverName+ ')':''}}</view>
               </view>
           </view>
           <button class="weui-btn createdDispatch" data-type="1" type="primary" bindtap="creatbill">创建调度单</button>
@@ -114,8 +115,11 @@
                 </view>
             </view>
             <view class="weui-form-preview__ft">
-              <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" data-driver="{{item.driverPhone}}" bindtap='callDriver'>联系司机</button>
-              <navigator wx:if="{{!item.dispatchType}}" url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}" hover-class="none">
+            <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" data-driver="{{item.driverPhone}}" bindtap='callDriver'>联系司机</button>
+              <button wx:if="{{item.status==='已送达'}}" class="weui-btn mini-btn createdfull" type="primary" plain="true" data-id="{{item.id}}" bindtap="beFinish">确认完成</button>
+              <button wx:if="{{item.status==='待下发'}}" class="weui-btn mini-btn createdfull" type="primary" plain="true" data-id="{{item.id}}" bindtap="xfEvent">下发任务</button>
+              
+              <navigator wx:if="{{!item.dispatchType && item.status !== '已作废'}}" url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}" hover-class="none">
                 <button class="weui-btn mini-btn createdfull" type="primary" plain="true" >新增空载</button>
               </navigator>
             </view>

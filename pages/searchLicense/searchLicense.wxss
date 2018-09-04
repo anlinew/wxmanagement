@@ -43,4 +43,5 @@
   text-align: center;
   top: 330px;
   width: 100%;
+  box-sizing: border-box;
 }

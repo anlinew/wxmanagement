@@ -11,7 +11,6 @@ Page({
     planDepartureTimeBefore:'',
     planDepartureTimeAfter:'',
     monthstart:'',
-    monthend:'',
     todaynum:'',
     monthnum:'',
     username: '',
@@ -49,25 +48,22 @@ Page({
     })
     console.log(app.globalData.userInfo)
     this.setData({
-      planDepartureTimeBefore: endtiem + " " + '23:59:59',
       planDepartureTimeAfter: starttiem + " " + '00:00:00',
-      monthstart: year + "-" + month + '-01 00:00:00',
-      monthend: year + "-" + endmonth + '-01 00:00:00'
+      monthstart: year + "-" + month + '-01 00:00:00'
     })
     let params = {
-      planDepartureTimeBefore: this.data.planDepartureTimeBefore,
-      planDepartureTimeAfter: this.data.planDepartureTimeAfter,
+      createTimeAfter: this.data.planDepartureTimeAfter,
       pageNo: 1,
       pageSzie: 500
     }
     let payload = {
-      planDepartureTimeBefore: this.data.monthend,
-      planDepartureTimeAfter: this.data.monthstart,
+      createTimeAfter: this.data.monthstart,
       pageNo: 1,
       pageSzie: 500
     }
     this.getwabytodayNum(params)
     this.getwabymonthNum(payload)
+    this._upData()
   },
   getwabytodayNum(params){
     request.getRequest(api.waybillCount, {
@@ -88,5 +84,42 @@ Page({
           monthnum: res.data
         })
       })
+  },
+  // 判断是否要更新小程序
+  _upData() {
+    if (wx.canIUse('getUpdateManager')) {
+      const updateManager = wx.getUpdateManager()
+      updateManager.onCheckForUpdate(function (res) {
+        console.log(res)
+        // 请求完新版本信息的回调
+        if (res.hasUpdate) {
+          updateManager.onUpdateReady(function () {
+            wx.showModal({
+              title: '更新提示',
+              content: '新版本已经准备好，是否重启应用？',
+              success: function (res) {
+                if (res.confirm) {
+                  // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                  updateManager.applyUpdate()
+                }
+              }
+            })
+          })
+          updateManager.onUpdateFailed(function () {
+            // 新的版本下载失败
+            wx.showModal({
+              title: '已经有新版本了',
+              content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开',
+            })
+          })
+        }
+      })
+    } else {
+      // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+      })
+    }
   }
 })

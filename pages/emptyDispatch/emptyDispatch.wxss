@@ -7,6 +7,12 @@
   border-radius:25px;
   width:90%;
 }
+.createdDispatch1 {
+  margin-top:30px;
+  background:#3E85FF !important;
+  border-radius:25px;
+  width:88%;
+}
 .phcolor{  
     color: #999999;
 }

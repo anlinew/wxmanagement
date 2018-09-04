@@ -26,5 +26,7 @@ module.exports = {
   supplierList: '/api/tms/contractor',// 获取供方列表
   repairStatus: '/api/tms/truck/repairStatus', // 可用不可用的维修状态
   xfWaybill: '/api/tms/waybill/issue', // 下发任务
-  pzTime: '/api/tms/monovalence/sys' // 获取配置时间
+  pzTime: '/api/tms/monovalence/sys', // 获取配置时间
+  finishWay: '/api/tms/waybill/confirmArrival', // 确认完成
+  canUseCar: '/api/tms/truck/available/truck' // 查询可用的车头
 }

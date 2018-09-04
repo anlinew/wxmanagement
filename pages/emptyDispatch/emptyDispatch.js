@@ -118,8 +118,15 @@ Page({
       const sysInfo = res.data;
       this.setData({
         pzTime: sysInfo.intervalTime,
-        fcTime: moment().add(sysInfo.intervalTime,'hour').format('YYYY-MM-DD HH:mm:ss')
+        // fcTime: moment().add(sysInfo.intervalTime,'hour').format('YYYY-MM-DD HH:mm:ss')
+        fcTime: moment().format('YYYY-MM-DD HH:mm:ss')
       })
     })
   },
+  // 返回
+  back () {
+    wx.navigateBack({
+      delta: 1,
+    })
+  }
 });

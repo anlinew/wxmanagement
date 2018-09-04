@@ -7,5 +7,9 @@ Page({
       issuccess: options.issuccess
     })
   },
-  
+  back() {
+    wx.navigateBack({
+      delta:1
+    })
+  }
 })

@@ -24,6 +24,7 @@ Page({
     startSiteId:'',
     baseId:'',
     waySitindex: 0,
+    driverName: '',
     waySitItems: [
       {
         name: '',
@@ -143,10 +144,14 @@ Page({
       console.log(res)
       if (res.result) {
         let schedule=[];
-        // 发车时间
-        schedule[0]= moment().add(this.data.pzTime,'hour').format('YYYY-MM-DD HH:mm:ss');
-        // 到达时间
-        schedule[1]= moment().add(this.data.pzTime+res.data.totalTime,'hour').format('YYYY-MM-DD HH:mm:ss');
+        // 每个途径点的时间
+        res.data.routeSites.forEach((item, index)=> {
+          if (index === 0) {
+            schedule[index] = moment().add(this.data.pzTime + item.driveTime, 'hour').format('YYYY-MM-DD HH:mm:ss');
+          } else {
+            schedule[index] = this.DateFormat((new Date((new Date(schedule[index - 1].replace(/\-/g, '/')).getTime() + (item.driveTime * 60 * 60 * 1000) + (item.restTime * 60 * 60 * 1000)))), 'yyyy-MM-dd hh:mm:ss');
+          }
+        })
         params = {
           baseId: this.data.baseId, // 基地ID 必填
           dispatchType: 0, // 调度类型 必填
@@ -156,9 +161,10 @@ Page({
           truckId: this.data.liceniseid, // 车辆ID
           remark: ''
         };
+        console.log(params)
         wx.showModal({
           title: this.data.type==='1'?'是否创建调度单':'是否创建并下发调度单',
-          content: '线路名称：'+res.data.name+'\r\n\r\n发车时间：'+schedule[0]+'\r\n\r\n到达时间：'+schedule[1],
+          content: '线路名称：' + res.data.name + '\r\n\r\n发车时间：' + schedule[0] + '\r\n\r\n到达时间：' + schedule[schedule.length-1],
           showCancel: true,
           cancelText: '取消',
           cancelColor: '#000000',
@@ -225,6 +231,8 @@ Page({
           item.status = '已送达';
         } else if (item.status === 5) {
           item.status = '已完成';
+        } else if (item.status === 6) {
+          item.status = '已作废';
         }
       });
       this.setData({
@@ -287,4 +295,47 @@ Page({
       })
     },500)
   },
+  // 下发任务
+  async xfEvent (e) {
+    console.log(e.currentTarget.dataset.id);
+    const wayId = e.currentTarget.dataset.id;
+    const res = await request.postRequest(api.xfWaybill,{data: {id: wayId}});
+    if (res.result) {
+      wx.showToast({
+        title: '下发任务成功',
+        icon: 'success'
+      })
+      this.getWaybillList();
+    }
+  },
+  // 确认完成
+  async beFinish (e) {
+    const wayId = e.currentTarget.dataset.id;
+    const res = await request.postRequest(api.finishWay, { data: { id: wayId } });
+    if (res.result) {
+      wx.showToast({
+        title: '已确认完成',
+        icon: 'success'
+      })
+      this.getWaybillList();
+    }
+  },
+  DateFormat (str, fmt) {
+    let o = {
+      'M+': str.getMonth() + 1,
+      'd+': str.getDate(),
+      'h+': str.getHours(),
+      'm+': str.getMinutes(),
+      's+': str.getSeconds(),
+      'q+': Math.floor((str.getMonth() + 3) / 3),
+      'S': str.getMilliseconds()
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (str.getFullYear() + '').substr(4 - RegExp.$1.length));
+    for (let k in o) {
+      if (new RegExp('(' + k + ')').test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+      }
+    }
+    return fmt;
+  }
 });
