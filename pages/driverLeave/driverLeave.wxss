@@ -29,6 +29,7 @@
 .weui-form-preview__value_in-hd {
   font-size: 14px;
   color: #999;
+  text-align: right;
 }
 .liceniseNum {
   color: #3E85FF;
@@ -53,7 +54,7 @@
 .weui-media-box {
   padding:0;
   border-bottom:1rpx dashed #D5D5D6;
-  padding-bottom:30rpx;
+  padding-bottom:12px;
 }
 .weui-media-box__hd_in-appmsg {
   background:rgb(62, 133, 255);
@@ -64,9 +65,9 @@
 }
 .boroowtype {
   color: #999;
+  margin-left: 6px;
 }
 .boroowresaze {
-  border-bottom:1rpx solid #D5D5D6;
   padding:20rpx 0;
 }
 .other {
@@ -169,4 +170,19 @@
 }
 .disagreeexm{
   background:rgb(248, 81, 64) !important;
+}
+.leaveTitle {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eaeaea;
+}
+.weui-form-preview__bd {
+  padding: 12px 15px 0px 15px;
+}
+.auditInfo {
+  border-top: 1px solid #eaeaea;
+  padding: 10px 15px;
+}
+.auditInfo .weui-form-preview__item {
+  height: 30px;
+  line-height: 30px;
 }

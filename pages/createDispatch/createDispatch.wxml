@@ -83,35 +83,39 @@
       </view>
       <!-- 选项二的内容 -->
       <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+        <view class='chooseTj'>
+          <view class='tjtab' wx:for="{{tjList}}" wx:key="{{index}}"><text data-index="{{index}}" data-statusval="{{item.value}}" bindtap='chooseClick' class="{{currentTab === index?'tjTab':'tjText'}}">{{item.name}}</text></view>
+        </view>
         <block wx:for-items="{{waybillList}}" wx:key="{{index}}">
-          <view class="weui-form-preview">
-            <navigator url="../dispatchDetail/dispatchDetail?id={{item.id}}">
+          <view class="weui-form-preview" style="{{index===0?'margin-top:0':''}}">
+            <!-- <navigator url="../dispatchDetail/dispatchDetail?id={{item.id}}"> -->
             <view class="weui-panel__ft" style="border-bottom:1rpx solid #d5d5d5;">
                 <view class="weui-cell weui-cell_access weui-cell_link">
                     <view class="weui-cell__bd" style="color:#333;">调度单号：{{item.num}}</view>
                      <view class="weui-form-preview__value_in-hd" style='font-size:12px;'>{{item.createTime}}</view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                    <!-- 调度单的箭头 -->
+                    <!-- <view class="weui-cell__ft weui-cell__ft_in-access"></view> -->
                 </view>
             </view>
-            </navigator>
+            <!-- </navigator> -->
             <view class="weui-form-preview__bd">
                 <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckLicense}}）</text></view>
+                    <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckLicense}}）</text><text style="background-color:{{item.background}}" class='statusColor'>{{item.status}}</text></view>
                 </view>
                 <view class="weui-form-preview__item">
                     <view class="weui-form-preview__label">线路：{{item.routeName}}</view>
                 </view>
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">状态：{{item.status}}</view>
+                <view wx:if="{{!item.actualDepartureTime&&item.planDepartureTime}}" class="weui-form-preview__item"  >
+                  <view class="weui-form-preview__label">计划发车时间：{{item.planDepartureTime}}</view>
                 </view>
-                <view class="weui-form-preview__item"  >
-                  <view class="weui-form-preview__label">实际发车时间：{{item.actualDepartureTime?item.actualDepartureTime:''}}</view>
+                <view wx:if="{{item.actualDepartureTime}}" class="weui-form-preview__item"  >
+                  <view class="weui-form-preview__label">实际发车时间：{{item.actualDepartureTime}}</view>
                 </view>
-                <view class="weui-form-preview__item" wx:if="{{item.status==='已完成'}}">
-                  <view class="weui-form-preview__label">实际到达时间：{{item.actualArriveTime?item.actualArriveTime:''}}</view>
+                <view class="weui-form-preview__item" wx:if="{{item.actualArriveTime}}">
+                  <view class="weui-form-preview__label">实际到达时间：{{item.actualArriveTime}}</view>
                 </view>
-                <view class="weui-form-preview__item" wx:else>
-                  <view class="weui-form-preview__label">计划到达时间：{{item.planArriveTime?item.planArriveTime:''}}</view>
+                <view class="weui-form-preview__item" wx:if="{{item.planArriveTime && !item.actualArriveTime}}">
+                  <view class="weui-form-preview__label">计划到达时间：{{item.planArriveTime}}</view>
                 </view>
             </view>
             <view class="weui-form-preview__ft">
@@ -119,7 +123,7 @@
               <button wx:if="{{item.status==='已送达'}}" class="weui-btn mini-btn createdfull" type="primary" plain="true" data-id="{{item.id}}" bindtap="beFinish">确认完成</button>
               <button wx:if="{{item.status==='待下发'}}" class="weui-btn mini-btn createdfull" type="primary" plain="true" data-id="{{item.id}}" bindtap="xfEvent">下发任务</button>
               
-              <navigator wx:if="{{!item.dispatchType && item.status !== '已作废'}}" url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}" hover-class="none">
+              <navigator wx:if="{{!item.dispatchType && item.status !== '已作废'}}" url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}&planDepartureTime={{item.planDepartureTime}}&actualDepartureTime={{item.actualDepartureTime}}" hover-class="none">
                 <button class="weui-btn mini-btn createdfull" type="primary" plain="true" >新增空载</button>
               </navigator>
             </view>

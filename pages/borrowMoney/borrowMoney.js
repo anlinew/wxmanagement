@@ -11,8 +11,7 @@ Page({
   data: {
     loanList:[],
     pageNo: 1,
-    pageSize: 10,
-    payload: {}
+    pageSize: 10
   },
   onLoad: function (options) {
     this.getLoanList()
@@ -30,16 +29,22 @@ Page({
         item.routesite = item.routeName.split('-');
         if (item.examineStatus === 0) {
           item.examineStatus = '待审核';
+          item.color = '#f49f13'
         } else if (item.examineStatus === 2) {
           item.examineStatus = '已审批';
+          item.color = '#40ab00'
         } else if (item.examineStatus === 3) {
           item.examineStatus = '已驳回';
+          item.color = '#fc8473'
         } else if (item.examineStatus === 4) {
           item.examineStatus = '已打款';
+          item.color = '#25b4b0'
         } else if (item.examineStatus === 5) {
           item.examineStatus = '已还款';
+          item.color = '#59cac8'
         } else if (item.examineStatus === 6) {
           item.examineStatus = '已作废';
+          item.color = '#999'
         }
       });
       this.setData({
@@ -49,7 +54,6 @@ Page({
   },
   // 下拉刷新
   async onPullDownRefresh(e) {
-    this.data.payload = {};
     this.data.pageNo = 1;
     this.data.pageSize = 10;
     wx.showLoading({
@@ -67,9 +71,7 @@ Page({
       title: '加载更多中...',
     })
     this.data.pageSize = this.data.pageSize + 10;
-    this.data.payload.pageNo = 1;
-    this.data.payload.pageSize = this.data.pageSize;
-    await this.getLoanList(this.data.payload);
+    await this.getLoanList();
     setTimeout(()=> {
       wx.hideLoading();
       wx.showToast({

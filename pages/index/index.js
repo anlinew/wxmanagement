@@ -21,7 +21,9 @@ Page({
       { title: '在途维修', pageUrl: '../onwayRepair/onwayRepair', imageUrl:'../image/way@2x.png' },
       { title: '请假审核', pageUrl: '../driverLeave/driverLeave', imageUrl:'../image/leave@2x.png' },
       { title: '单据审核', pageUrl: '../documentReview/documentReview', imageUrl:'../image/type@2x.png' }
-    ]
+    ],
+    opsList: [],
+    userId: ''
   },
   //事件处理函数
   bindViewTap: function() {
@@ -37,16 +39,21 @@ Page({
 
     let aMonth = moment().add(1, 'months');
     let endmonth = moment(aMonth).format('MM');
+    this.setData({
+      opsList: []
+    })
     wx.getStorage({
       key: 'username',
       success: (res)=> {
         app.globalData.userInfo = res.data;
         this.setData({
-          username: app.globalData.userInfo.realName
+          username: res.data.realName,
+          userId: res.data.id
         })
+        // 获取用户的详情
+        this._getUser();
       }
     })
-    console.log(app.globalData.userInfo)
     this.setData({
       planDepartureTimeAfter: starttiem + " " + '00:00:00',
       monthstart: year + "-" + month + '-01 00:00:00'
@@ -65,13 +72,17 @@ Page({
     this.getwabymonthNum(payload)
     this._upData()
   },
+  onShow() {
+    // 更新用户登录
+    this.uplogin();
+  },
   getwabytodayNum(params){
     request.getRequest(api.waybillCount, {
       data: params
     })
     .then(res => {
       this.setData({
-        todaynum:res.data
+        todaynum:res.data || 0
       })
     })
   },
@@ -81,9 +92,36 @@ Page({
     })
       .then(res => {
         this.setData({
-          monthnum: res.data
+          monthnum: res.data || 0
         })
       })
+  },
+  // 更新用户登录时间
+  uplogin() {
+    request.getRequest(api.upLogin).then(res=> {
+      console.log(res)
+    })
+  },
+  // 获取用的详情(获取用户可使用小程序的功能)
+  _getUser() {
+    const userId = this.data.userId;
+    console.log(userId)
+    let url = utils.apiFormat(api.userDetail, { id: userId })
+    request.getRequest(url).then(res=> {
+      if (res.data.wechatOps) {
+        this.data.grids.forEach(item => {
+          if (res.data.wechatOps.includes(item.title)) {
+            this.data.opsList.push(item)
+          }
+        })
+        console.log(this.data.opsList)
+        this.setData({
+          opsList: this.data.opsList
+        })
+      } else {
+        this.data.opsList = []
+      }
+    })
   },
   // 判断是否要更新小程序
   _upData() {
@@ -100,7 +138,13 @@ Page({
               success: function (res) {
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-                  updateManager.applyUpdate()
+                  wx.showToast({
+                    title: '更新完成!',
+                    icon: 'success'
+                  })
+                  setTimeout(()=> {
+                    updateManager.applyUpdate()
+                  }, 1000)
                 }
               }
             })

@@ -27,5 +27,5 @@
       <button class="weui-btn createdDispatch" type="primary" bindtap='logout'>退出登录</button>
     </view>
   </view>
-  <view class="bb">V 1.9.04S</view>
+  <view class="bb">V 1.9.18a</view>
 </view>

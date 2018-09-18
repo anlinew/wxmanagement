@@ -702,7 +702,7 @@ icon {
   border-radius: 18px;
   background-color: rgb(20, 180, 177);
   color: #FFFFFF;
-  line-height: 1.2;
+  line-height: 1.4;
   text-align: center;
   font-size: 12px;
   vertical-align: middle;

@@ -3,7 +3,7 @@
   <view wx:else>
     <block wx:for-items="{{list}}" wx:key="{{index}}">
       <view class="preview" wx:if="{{item.examineStatus==='待审批'}}">
-        <view class="weui-form-preview__hd">
+        <view class="leaveTitle">
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">申请日期</view>
                 <view class="weui-form-preview__value_in-hd">{{item.createTime}}</view>
@@ -16,10 +16,10 @@
                 </view>
                 <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <view class="weui-media-box__desc">{{item.driverName}}</view>
-                    <view class="weui-media-box__desc">共{{item.duration}}天<text class='boroowtype'>({{item.startTime}}至{{item.endTime}})</text></view>
+                    <view class="weui-media-box__desc">共{{item.duration}}天<text class='boroowtype'>( {{item.startTime}} 至 {{item.endTime}} )</text></view>
                 </view>
             </view>
-            <view class="weui-form-preview__item other">
+            <view class="weui-form-preview__item boroowresaze">
                 <view class="weui-form-preview__label">请假原因：{{item.description}}</view>
             </view>
         </view>
@@ -30,7 +30,7 @@
         </view>
       </view>
       <view class="preview" wx:if="{{item.examineStatus!=='待审批'}}">
-        <view class="weui-form-preview__hd">
+        <view class="leaveTitle">
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">申请日期</view>
                 <view class="weui-form-preview__value_in-hd">{{item.createTime}}</view>
@@ -43,14 +43,14 @@
               </view>
               <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                   <view class="weui-media-box__desc">{{item.driverName}}<text class="weui-badge {{item.examineStatus==='驳回'?'disagreeexm':''}}" style="margin-left: 5px;">{{item.examineStatus}}</text></view>
-                  <view class="weui-media-box__desc">共{{item.duration}}天<text class='boroowtype'>({{item.startTime}}至{{item.endTime}})</text></view>
+                  <view class="weui-media-box__desc">共{{item.duration}}天<text class='boroowtype'>( {{item.startTime}} 至 {{item.endTime}} )</text></view>
               </view>
             </view>
             <view class="weui-form-preview__item boroowresaze">
               <view class="weui-form-preview__label">请假原因：{{item.description}}</view>
             </view>
         </view>
-        <view class="weui-form-preview__bd">
+        <view class="auditInfo">
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">审核人员：{{item.examineUserName?item.examineUserName:''}}</view>
             </view>

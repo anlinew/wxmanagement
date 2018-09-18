@@ -20,27 +20,35 @@ Page({
     routeIndex: 0,
     routeId:'',
     pzTime: '',
-    fcTime: null
+    fcTime: '',
+    fcDate: '',
+    fcdateTime: '',
+    overloadFcTime: '',
+    overloadDdTime: ''
   },
   onLoad(option) {
+    console.log(option)
     let routeName = option.routeName.split('-');
-    console.log(routeName);
     let startName = routeName[routeName.length-1]
-    console.log(startName);
     this.setData({
       driver: option.driverName,
       phone: option.driverPhone,
       license: option.truckLicense,
       startName: startName,
       waybillId: option.waybillId,
+      fcTime: option.actualArriveTime !== 'null' ? option.actualArriveTime : option.planArriveTime,
+      fcDate: (option.actualArriveTime !== 'null' ? option.actualArriveTime : option.planArriveTime).split(' ')[0],
+      fcdateTime: (option.actualArriveTime !== 'null' ? option.actualArriveTime : option.planArriveTime).split(' ')[1],
+      overloadFcTime: (option.actualDepartureTime !== 'null' ? option.actualDepartureTime : option.planDepartureTime).slice(5,16),
+      overloadDdTime: (option.actualArriveTime !== 'null' ? option.actualArriveTime : option.planArriveTime).slice(5,16)
     })
     this.getRoutes(startName)
-    this._getTime();
+    // this._getTime();
   },
   bindrouteChange: function (e) {
-    console.log(this.data.route)
     var index = e.detail.value;
-    var routeId = this.data.route.lenght>0?this.data.route[index].id:null; // 这个id就是选中项的id
+    var routeId = this.data.route.length>0?this.data.route[index].id:null; // 这个id就是选中项的id
+    console.log(this.data.route.length,routeId)
     this.setData({
       routeIndex: e.detail.value,
       routeId: routeId
@@ -52,16 +60,45 @@ Page({
     })
   },
   bindTimeChange(e) {
+    console.log(e)
     this.setData({
       time: e.detail.value + ':00'
     })
   },
+  fcbindDate(e) {
+    this.setData({
+      fcDate: e.detail.value
+    })
+  },
+  fcbindTime(e) {
+    console.log(e)
+    this.setData({
+      fcdateTime: e.detail.value + ':00'
+    })
+  },
   addEmptyFun(){
+    wx.showLoading({
+      title: '正在创建下发...',
+      mask: true
+    })
     let schedule = [];
-    schedule[0] = this.data.fcTime;
+    let startTime = this.data.fcDate + ' ' + this.data.fcdateTime;
+    schedule[0] = startTime;
     let endtime = this.data.date +' '+ this.data.time
     schedule[1] = endtime;
-    console.log(schedule[0],schedule[1])
+
+
+    // 空载的时间
+    // this.data.route.forEach((item, index) => {
+    //   if (index === 0) {
+    //     schedule[index] = startTime;
+    //   } else if (index === this.data.route.length-1) {
+    //     schedule[index] = endtime;
+    //   } else {
+    //     schedule[index] = startTime;
+    //   }
+    // })
+
     if (new Date(schedule[0].replace(/-/g, '/')).getTime()>new Date(schedule[1].replace(/-/g, '/')).getTime()) {
       wx.showToast({
         title: '到达时间不能早于出发时间',
@@ -75,8 +112,10 @@ Page({
       remark: 'remark',
       routeId: this.data.routeId, // 线路id
       schedule: schedule,
-      waybillId: this.data.waybillId // 调度单id
+      waybillId: this.data.waybillId, // 调度单id
+      issue: true
     };
+    console.log(opt)
     request.postRequest(api.addEmptyFunWaybill, {
       data: opt,
       header: {
@@ -85,9 +124,11 @@ Page({
     }).then(res => {
       if (res.result) {
         setTimeout(function () {
-          wx.navigateTo({ url: '../empty_success/empty_success?num='+res.data.num+'&routeName='+res.data.routeName+'&driverName='+res.data.driverName+'&truckLicense='+res.data.truckLicense })
-        }, 1000)
+          wx.navigateTo({ url: '../empty_success/empty_success?num=' + res.data.num + '&routeName=' + res.data.routeName + '&driverName=' + res.data.driverName + '&truckLicense=' + res.data.truckLicense + '&driverPhone=' + res.data.driverPhone })
+          wx.hideLoading()
+        }, 200)
       } else {
+        wx.hideLoading()
         wx.showModal({
           confirmColor: '#666',
           content: res.message,
@@ -97,32 +138,35 @@ Page({
     })
   },
   getRoutes(startName) {
-    request.getRequest(api.routeListApi,{data:{pageNo:1,pageSize:500}}).then(res => {
-      let routeList = res.data.filter(item => item.name.indexOf(this.data.startName) !== -1 && item.dispatchType === 1)
+    console.log(startName, this.data.startName)
+    
+    request.getRequest(api.routeListApi, { data: { pageNo: 1, pageSize: 100, namePre: startName, dispatchType: 1, enabled: false}}).then(res => {
+      const routeList = res.data;
       routeList.forEach(item=>{
         item.siteNames = item.siteNames[item.siteNames.length - 1];
       })
+      console.log(routeList)
       if (routeList.length===0) {
         routeList.push({siteNames:'无站点信息'})
       }
       this.setData({
         route: routeList,
-        routeId: routeList.length>0? routeList[this.data.routeIndex].id:null
+        routeId: routeList.length > 0 ? routeList[this.data.routeIndex].id : null
       });
     });
   },
   // 获取配置时间得到发车时间和到达时间
-  _getTime() {
-    request.getRequest(api.pzTime,{data:{sysGroup: 'interval_task', sysKey: 'intervalTime'}}).then(res=> {
-      console.log(res);
-      const sysInfo = res.data;
-      this.setData({
-        pzTime: sysInfo.intervalTime,
-        // fcTime: moment().add(sysInfo.intervalTime,'hour').format('YYYY-MM-DD HH:mm:ss')
-        fcTime: moment().format('YYYY-MM-DD HH:mm:ss')
-      })
-    })
-  },
+  // _getTime() {
+  //   request.getRequest(api.pzTime,{data:{sysGroup: 'interval_task', sysKey: 'intervalTime'}}).then(res=> {
+  //     console.log(res);
+  //     const sysInfo = res.data;
+  //     this.setData({
+  //       pzTime: sysInfo.intervalTime,
+  //       // fcTime: moment().add(sysInfo.intervalTime,'hour').format('YYYY-MM-DD HH:mm:ss')
+  //       fcTime: moment().format('YYYY-MM-DD HH:mm:ss')
+  //     })
+  //   })
+  // },
   // 返回
   back () {
     wx.navigateBack({

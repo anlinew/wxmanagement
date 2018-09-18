@@ -50,6 +50,7 @@ Page({
         }
         item.endTime = moment(item.endTime).format("YYYY-MM-DD");
         item.startTime = moment(item.startTime).format("YYYY-MM-DD");
+        item.createTime = item.createTime.slice(5,16)
       });
       this.setData({
         list: res.data

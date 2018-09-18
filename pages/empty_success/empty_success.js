@@ -3,14 +3,16 @@ Page({
     num:'',
     routeName:'',
     driverName:'',
-    truckLicense:''
+    truckLicense:'',
+    driverPhone: ''
   },
   onLoad: function (options) {
     this.setData({
       num: options.num,
       routeName: options.routeName,
       driverName: options.driverName,
-      truckLicense: options.truckLicense
+      truckLicense: options.truckLicense,
+      driverPhone: options.driverPhone
     })
     this._getBillList();
   },

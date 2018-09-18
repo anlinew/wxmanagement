@@ -62,20 +62,31 @@ Page({
       }).then(res=>{
         this.setData({
           details:res.data[0],
-          examineMoney: res.data[0].money / 100,
+          examineMoney: res.data[0].money * 0.01,
       })
     })
   },
   showM: function (e) {
-    this.setData({
-      examineStatus: e.target.dataset.examinestatus,
-      showModal: true
-    })
+    console.log(e)
+    if (e.currentTarget.dataset.examinestatus === '3') {
+      this.setData({
+        examineStatus: e.target.dataset.examinestatus,
+        showModal: true,
+        examineMoney: '0'
+      })
+    } else {
+      this.setData({
+        examineStatus: e.target.dataset.examinestatus,
+        showModal: true,
+        examineMoney: this.data.details.money * 0.01
+      })
+    }
   },
   preventTouchMove: function () {
 
   },
   examine(e) {
+    console.log(e)
     if (!this.WxValidate.checkForm(e)) {
       const error = this.WxValidate.errorList[0]
       wx.showModal({
@@ -92,7 +103,7 @@ Page({
       id:this.data.id
     }
     if (params.examineStatus === 2 ){
-      let oldmoney = this.data.details.money / 100;
+      let oldmoney = this.data.details.money * 0.01;
       let newmoney = e.detail.value.examineMoney;
       if (Number(newmoney) !== Number(oldmoney)) {
         wx.showModal({
@@ -121,19 +132,24 @@ Page({
       },
     }).then(res => {
       if (res.result) {
-        wx.showModal({
-          confirmColor: '#666',
-          content: '创建成功',
-          showCancel: false,
+        wx.showToast({
+          title: '审核成功',
+          icon: 'success',
+          success: (e)=> {
+            var pages = getCurrentPages();
+            var backPage = pages[pages.length-2]  // 上个页面
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1, // 回退前 delta(默认为1) 页面
+              })
+              backPage.getLoanList();
+            }, 1000)
+          }
         })
-        setTimeout(function () {
-          wx.navigateTo({ url: '../borrowMoney/borrowMoney' })
-        }, 1000)
       } else {
-        wx.showModal({
-          confirmColor: '#666',
-          content: res.message,
-          showCancel: false,
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
         })
       }
     })

@@ -45,12 +45,17 @@
             </view>
         </view>
         <view class="weui-cell weui-cell_select">
-            <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label grad">发车时间</view>
-            </view>
-            <view class="weui-cell__bd">
-              <input class="weui-input grad" value='{{fcTime}}' placeholder="发车时间" placeholder-class="phcolor" disabled="true"/>
-            </view>
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label blue">发车时间</view>
+          </view>
+          <view class="weui-cell__bd ontime" >
+            <picker mode="date" value="{{fcDate}}" bindchange="fcbindDate">
+              <view class="weui-input ondate blue">{{fcDate}}</view>
+            </picker>
+            <picker mode="time" value="{{fcdateTime}}" bindchange="fcbindTime">
+              <view class="weui-input blue">{{fcdateTime}}</view>
+            </picker>
+          </view>
         </view>
         <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
@@ -65,8 +70,19 @@
               </picker>
             </view>
         </view>
+
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="wayLabel wayzz">重载：</view>
+            </view>
+            <view class="weui-cell__bd wayzz">
+              <text style='margin-right:15px'>出发：{{overloadFcTime}}</text>
+              <text>到达：{{overloadDdTime}}</text>
+            </view>
+        </view>
+
     </view>
-    <button class="weui-btn createdDispatch" type="primary" formType="submit">创建空载</button>
+    <button class="weui-btn createdDispatch" type="primary" formType="submit">创建并下发</button>
 
     <button class="weui-btn createdDispatch1" bindtap="back" type="primary">返回</button>
    </form>

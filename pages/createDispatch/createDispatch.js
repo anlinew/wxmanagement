@@ -42,7 +42,18 @@ Page({
       { name: '水路', value: '(水)' }
     ],
     routeType: '',
-    payload: {}
+    payload: {},
+    tjList: [
+      {name: '待接受', value: 1},
+      { name: '运输中', value: 3 },
+      { name: '已送达', value: 4 },
+      { name: '全部', value: '0,1,2,3,4,5,6' },
+      { name: '更多' }
+    ],
+    currentTab: 0,
+    payloadVal: 1,
+    searchForm: {},
+    searchMore: false
   },
   onLoad(option) {
     console.log(this.data.waySitItems)
@@ -187,6 +198,10 @@ Page({
     })
   },
   todocreateDispatch(params){
+    wx.showLoading({
+      title: '正在创建单据...',
+      mask: true
+    })
     request.postRequest(api.movewaybill, {
       data: params,
       header: {
@@ -195,6 +210,7 @@ Page({
       },
 
     }).then(res => {
+      wx.hideLoading()
       if (res.result) {
         wx.navigateTo({ url: '../dispatch_success/dispatch_success?wayNum='+res.data.num+'&license='+res.data.truckLicense+'&driverName='+res.data.driverName+'&planDepartureTime='+res.data.planDepartureTime+'&driverPhone='+res.data.driverPhone })
       } else {
@@ -216,23 +232,43 @@ Page({
       })
     })
   },
-  getWaybillList(){
-    request.getRequest(api.waybillList,{data:{pageNo:this.data.pageNo,pageSize:this.data.pageSize}}).then(res => {
+  getWaybillList(params){
+    var payload = {}
+    if (!this.data.searchMore) {
+      if (params) {
+        payload = { pageNo: this.data.pageNo, pageSize: this.data.pageSize, statusIn: params }
+      } else {
+        payload = { pageNo: this.data.pageNo, pageSize: this.data.pageSize, statusIn: 1 }
+      }
+    } else {
+      payload = Object.assign({ pageNo: 1, pageSize: 10 }, params )
+      this.setData({
+        searchForm: params
+      })
+    }
+    request.getRequest(api.waybillList, { data: payload}).then(res => {
       res.data.forEach(function (item, i) {
         if (item.status === 0) {
           item.status = '待下发';
+          item.background = '#808080';
         } else if (item.status === 1) {
           item.status = '待接受';
+          item.background = '#f77528';
         } else if (item.status === 2) {
           item.status = '待发车';
+          item.background = '#f8b551';
         } else if (item.status === 3) {
           item.status = '运输中';
+          item.background = '#4a9cf2';
         } else if (item.status === 4) {
           item.status = '已送达';
+          item.background = '#5dc873';
         } else if (item.status === 5) {
           item.status = '已完成';
+          item.background = '#19be6b';
         } else if (item.status === 6) {
           item.status = '已作废';
+          item.background = '#919293';
         }
       });
       this.setData({
@@ -264,6 +300,35 @@ Page({
       routeType: e.detail.value
     });
   },
+  // 点击选择查询条件
+  async chooseClick (e) {
+    if (e.currentTarget.dataset.index !== 4) {
+      console.log(e.currentTarget.dataset);
+      this.setData({
+        currentTab: e.currentTarget.dataset.index,
+        payloadVal: e.currentTarget.dataset.statusval,
+        searchMore: false,
+        pageNo: 1,
+        pageSize: 10
+      })
+      wx.showLoading({
+        title: '加载数据中...',
+        mask: true
+      })
+      await this.getWaybillList(this.data.payloadVal);
+      setTimeout(() => {
+        wx.hideLoading()
+      }, 200)
+    } else {
+      wx.navigateTo({
+        url: '../waySearch/waySearch',
+      })
+      this.setData({
+        currentTab: e.currentTarget.dataset.index,
+      })
+    }
+    
+  },
   // 下拉刷新
   async onPullDownRefresh(e) {
     this.data.payload = {};
@@ -272,7 +337,12 @@ Page({
     wx.showLoading({
       title: '加载中...',
     })
-    await this.getWaybillList();
+    if (!this.data.searchMore) {
+      await this.getWaybillList(this.data.payloadVal);
+    } else {
+      const payload = Object.assign({pageNo: 1, pageSize: 10}, this.data.searchForm)
+      await this.getWaybillList(payload);
+    }
     setTimeout(()=> {
       wx.stopPullDownRefresh();
       wx.hideLoading();
@@ -286,7 +356,14 @@ Page({
     this.data.pageSize = this.data.pageSize + 10;
     this.data.payload.pageNo = 1;
     this.data.payload.pageSize = this.data.pageSize;
-    await this.getWaybillList(this.data.payload);
+    if (!this.data.searchMore) {
+      await this.getWaybillList(this.data.payloadVal);
+    } else {
+      let pageSize = this.data.pageSize;
+      console.log(pageSize)
+      const payload = Object.assign(this.data.searchForm, { pageNo: 1, pageSize: pageSize })
+      await this.getWaybillList(payload);
+    }
     setTimeout(()=> {
       wx.hideLoading();
       wx.showToast({

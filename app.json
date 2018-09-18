@@ -5,12 +5,17 @@
     "pages/login/login",  
     "pages/userinfor/userinfor",
     "pages/createDispatch/createDispatch",
-    "pages/dispatch_success/dispatch_success",
-    "pages/empty_success/empty_success",
     
+    "pages/empty_success/empty_success",
+    "pages/dispatch_success/dispatch_success",
    
     
-    
+    "pages/waySearch/waySearch",
+
+    "pages/searchDriver/searchDriver",
+
+    "pages/searchBase/searchBase",
+
     "pages/canUse/canUse",
     "pages/supplier/supplier",
     "pages/supplierT/supplierT",

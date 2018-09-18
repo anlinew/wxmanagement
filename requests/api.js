@@ -1,8 +1,9 @@
 module.exports = {
   login: '/api/pub/tms/login', //租户登录 method 'post'
+  wechatlogin: '/api/pub/tms/loginWechat', //小程序租户登录 method 'post'
   siteapi: "/api/tms/site",   //站点列表 method 'get'
   driverList: "/api/tms/driver",   //司机列表 method 'get'
-  frontList: "/api/tms/truck",   //站点列表 method 'get'
+  frontList: "/api/tms/truck",   //车辆列表 method 'get'
   waybillList: "/api/tms/waybill",   //调度单列表 method 'get'
   movewaybill: "/api/tms/waybill",   //调度单列表 method 'post'
   waybillDetailL: "/api/tms/waybill/{id}",   //调度单详情 method 'get'
@@ -20,7 +21,7 @@ module.exports = {
   repairEXamine: '/api/tms/eventreport/examine', //在途维修审批 method 'post'
   changePassword: '/api/tms/password', //修改密码 method 'post'
   logout: '/api/pub/logout', //退出登录 method 'post'
-  onthewayRepair: '/api/tms/eventreport/list', //退出登录 method 'post'
+  onthewayRepair: '/api/tms/eventreport/list', //在途维修列表 method 'post'
   acrRepair: '/api/tms/truck/update/status', //车辆检测更新运力状态 method 'post'
   routeDetailApi: '/api/tms/route/detail', //通过线路名查询线路详情 method 'GET'
   supplierList: '/api/tms/contractor',// 获取供方列表
@@ -28,5 +29,8 @@ module.exports = {
   xfWaybill: '/api/tms/waybill/issue', // 下发任务
   pzTime: '/api/tms/monovalence/sys', // 获取配置时间
   finishWay: '/api/tms/waybill/confirmArrival', // 确认完成
-  canUseCar: '/api/tms/truck/available/truck' // 查询可用的车头
+  canUseCar: '/api/tms/truck/available/truck', // 查询可用的车头
+  searchBase: '/api/tms/base',    // 查询基地列表
+  upLogin: '/api/wechatUser/updateUserLogTime',    // 更新用户登录时间
+  userDetail: '/api/tms/user/{id}',    // 获取用户详情
 }

@@ -16,6 +16,20 @@ Page({
     })
   },
   back() {
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2];  //上一个页面
+    prevPage.setData({
+      startSite: '',
+      waySitItems: [
+        {
+          name: '',
+          id: 0
+        }
+      ],
+      endSite: '',
+      license: '',
+      driverName: ''
+    })
     wx.navigateBack({
       delta: 1
     });

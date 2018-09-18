@@ -1,32 +1,42 @@
 <view class="page">
-  <view class='noevent' wx:if="{{loanList.length<=0}}">当前无借款审核</view>
+  <view class='noevent' wx:if="{{loanList.length<=0}}">当前无借款审核信息</view>
   <view class="page__bd" wx:else>
      <block wx:for="{{loanList}}" wx:key="{{index}}">
       <view class="weui-panel weui-panel_access">
         <view class="weui-panel__ft">
+        
+          <navigator url="../borrowDetail/borrowDetail?id={{item.id}}&status={{item.examineStatus}}" class="navGo weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" style='border-bottom: 1px solid #dbdbdb'>
           <view class="weui-cell weui-cell_access weui-cell_link waybill">
             <view class="weui-cell__bd">调度单号：{{item.waybillNum}}({{item.mileage}}KM)</view>
-            <text>{{item.examineStatus}}</text>
+            <text style="{{'background:'+item.color}}" class='wayStatus'>{{item.examineStatus}}</text>
             <view class="weui-cell__ft weui-cell__ft_in-access"></view>
           </view>
+          </navigator>
+
         </view>
         <view class="weui-panel__bd">
-        <navigator url="../borrowDetail/borrowDetail?id={{item.id}}&status={{item.examineStatus}}" class="applyMoney weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-              <view class="weui-media-box__desc">申请金额：{{item.money/100}}元</view>
+        
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg applyMoney">
+              <view class="weui-media-box__desc">申请金额：{{item.money*0.01}}元</view>
             </view>
-          </navigator>
-          <navigator url="../borrowDetail/borrowDetail?id={{item.id}}&status={{item.examineStatus}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg applyMoney">
+              <view class="weui-media-box__desc">司机姓名：{{item.driverName}}</view>
+            </view>
+
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg applyMoney">
+              <view class="weui-media-box__desc">车牌号码：{{item.licence}}</view>
+            </view>
+          
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg routeClass">
               <block wx:for="{{item.routesite}}" wx:key="{{index}}" wx:for-item="items">
-                <view class="weui-media-box__desc">
-                <text class='texticon {{index===0?"":index===item.routesite.length-1?"end":way}}'>{{index===0?'起':index===item.routesite.length-1?'终':'途'}}</text>{{items}}<text class='time'>{{item.createTime}}</text>
+                <view class="weui-media-box__desc wayRoute">
+                <text class='texticon {{index===0?"":index===item.routesite.length-1?"end":way}}'>{{index===0?'起':index===item.routesite.length-1?'终':'途'}}</text><text class='siteItem'>{{items}}</text><text class='time'>{{item.createTime}}</text>
                 </view>
               </block>
             </view>
-          </navigator>
         </view>
-        <view class="weui-panel__hd">{{item.createTime}}</view>
+        <view class="weui-panel__hd time">{{item.createTime}}</view>
       </view>
     </block>
   </view>

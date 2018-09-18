@@ -51,7 +51,7 @@ Page({
       return false
     }
     const params = { account: e.detail.value.account, password: e.detail.value.password };
-    request.postRequest(api.login, {
+    request.postRequest(api.wechatlogin, {
       data: params,
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

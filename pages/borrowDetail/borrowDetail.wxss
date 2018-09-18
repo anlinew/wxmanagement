@@ -25,6 +25,7 @@
 .weui-form-preview__label {
   color: #000;
   font-size:14px;
+  padding-left: 10px;
 }
 .weui-form-preview__value_in-hd {
   font-size: 14px;
@@ -39,6 +40,7 @@
   color:rgb(252, 101, 81)  !important;
   font-size: 14px;
   margin-right:10px;
+  margin-top: 0;
 }
 .createdfull {
   border-color:rgb(20, 180, 177) !important;
@@ -47,13 +49,21 @@
   font-size: 14px;
   margin-right:10px;
 }
- .weui-form-preview__ft {
+ .applyBtn {
   padding: 10px 0;
+  overflow: hidden;
+  border-top: 1px solid #e2e2e2;
+}
+.applyBtn button {
+  width: 100px;
+  /* display: inline-block; */
+  float: right;
 }
 .weui-media-box {
   padding:0;
-  border-bottom:1rpx dashed #D5D5D6;
+  border-bottom:1px dashed #D5D5D6;
   padding-bottom:30rpx;
+  padding-left: 10px;
 }
 .weui-media-box__hd_in-appmsg {
   background:rgb(62, 133, 255);
@@ -61,12 +71,14 @@
 }
 .weui-media-box__desc {
   text-align: left;
+  font-size: 14px;
+  font-weight: 700;
 }
 .boroowtype {
   color: #999;
 }
 .boroowresaze {
-  border-bottom:1rpx solid #D5D5D6;
+  border-bottom:1px solid #D5D5D6;
   padding:20rpx 0;
 }
 .other {
@@ -102,7 +114,7 @@
   height: 55px;
   line-height: 55px;
   color: #666;
-  border-bottom:1rpx solid #D5D5D6;
+  border-bottom:1px solid #D5D5D6;
   padding:0 30rpx; 
 }
 .content {
@@ -113,10 +125,10 @@
   padding:20rpx 0;
 }
 .weui-input {
-  border:1rpx solid #D5D5D6;
+  border:1px solid #D5D5D6;
 }
 .weui-textarea {
-  border:1rpx solid #D5D5D6;
+  border:1px solid #D5D5D6;
    padding:10rpx;
 }
 .exmoney {
@@ -169,4 +181,11 @@
 }
 .disagreeexm{
   background:rgb(248, 81, 64) !important;
+}
+.applyDate {
+  padding: 8px 10px 8px 5px;
+  border-bottom: 1px solid #e2e2e2;
+}
+.weui-form-preview__bd {
+  padding: 10px 5px;
 }
