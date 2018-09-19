@@ -11,14 +11,16 @@
         </view>
         <view class="weui-form-preview__bd">
             <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckNum}}）</text><text style="{{item.examineStatus?'background: #ff9800':'background: #00c853'}}" class="statusTitle">{{item.examineStatus}}</text></view>
+                <view class="weui-form-preview__label">司机：{{item.driverName}}<text class='liceniseNum'>（{{item.truckNum}}）</text><text style="{{'background:' + item.backColor}}" class="statusTitle">{{item.examineStatus}}</text></view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">线路：{{item.routeName}}<text class='gotime'>{{item.planDepartureTime}}发车</text></view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">类型：在途维修</view>
-                <image wx:if="{{item.imgIds}}" data-imgids="{{item.imgIds}}" bindtap="handleOpen" src="../image/have_picture.png" class="logo"></image>
+                <image style="position: relative;overflow: visible" wx:if="{{item.imgIds}}" src="../image/have_picture.png" class="logo">
+                  <view data-imgids="{{item.imgIds}}" bindtap="handleOpen" style="position:absolute;width:40px;height:40px;z-index:11;left:-10px;top: -10px;"></view>
+                </image>
             </view>
             <view class="weui-form-preview__item">
               <view class="weui-form-preview__label">备注：{{item.description}}</view>

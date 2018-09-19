@@ -5,7 +5,7 @@
       <view class="weui-panel weui-panel_access">
         <view class="weui-panel__ft">
         
-          <navigator url="../borrowDetail/borrowDetail?id={{item.id}}&status={{item.examineStatus}}" class="navGo weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" style='border-bottom: 1px solid #dbdbdb'>
+          <navigator url="../borrowDetail/borrowDetail?id={{item.id}}&status={{item.examineStatus}}" class="navGo weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" style='border-bottom: 1px solid #e9e9e9'>
           <view class="weui-cell weui-cell_access weui-cell_link waybill">
             <view class="weui-cell__bd">调度单号：{{item.waybillNum}}({{item.mileage}}KM)</view>
             <text style="{{'background:'+item.color}}" class='wayStatus'>{{item.examineStatus}}</text>

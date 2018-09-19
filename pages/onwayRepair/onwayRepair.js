@@ -66,6 +66,10 @@ Page({
         item.planDepartureTime = item.planDepartureTime.slice(5, 16);
         if (item.examineStatus === 1) {
           item.examineStatus = '驳回'
+          item.backColor = '#ff9800'
+        } else if (item.examineStatus === 0) {
+          item.examineStatus = '通过'
+          item.backColor = '#00c853'
         }
       })
       this.setData({
@@ -165,7 +169,7 @@ Page({
       wx.hideLoading();
       wx.showToast({
         title: '加载完毕',
-        icon: 'none'
+        icon: 'success'
       })
     },500)
   },

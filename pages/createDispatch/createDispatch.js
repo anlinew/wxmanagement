@@ -368,7 +368,7 @@ Page({
       wx.hideLoading();
       wx.showToast({
         title: '加载完毕',
-        icon: 'none'
+        icon: 'success'
       })
     },500)
   },

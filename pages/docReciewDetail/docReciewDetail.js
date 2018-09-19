@@ -2,6 +2,7 @@ import api from '../../requests/api.js'
 import utils from '../../utils/util.js'
 import moment from '../../utils/moment.js'
 import WxValidate from '../../plugins/wx-validate/WxValidate';
+import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
 
 const app = getApp()
 const request = app.WxRequest;
@@ -14,7 +15,10 @@ Page({
     id: '',
     examineStatus: '',
     remark: '',
-    examineMoney: ''
+    examineMoney: '',
+    pageNo: 1,
+    pageSize: 10,
+    unit: ''
   },
   initValidate() {
     // 验证字段的规则
@@ -56,8 +60,8 @@ Page({
       waybillId: this.data.waybillId,
       examineStatus: '1,2,3',
       cancel: false,
-      pageNo: 1,
-      pageSzie: 500
+      pageNo: this.data.pageNo,
+      pageSzie: this.data.pageSize
     }
     request.getRequest(api.docreExamineList,{
       data: params,
@@ -70,20 +74,25 @@ Page({
         switch (item.examineStatus) {
           case 0:
             item.examineStatus = '待提交';
+            item.color = '#f49f13'
             break;
           case 1:
             item.examineStatus = '待审核';
+            item.color = '#4a9cf2'
             break;
           case 2:
-            item.examineStatus = '审核通过';
+            item.examineStatus = '已通过';
+            item.color = '#39c782'
             break;
           case 3:
             item.examineStatus = '已驳回';
+            item.color = '#ed5b38'
             break;
           default:
             item.examineStatus = null;
             break;
         }
+        item.createTime = item.createTime.slice(5,16)
       })
       this.setData({
         list: res.data
@@ -91,13 +100,25 @@ Page({
     })
   },
   showM: function (e) {
+    console.log(e)
+    if (e.target.dataset.examinestatus === '2') {
+      this.setData({
+        examineMoney: ''
+      })
+    } else if (e.target.dataset.examinestatus === '3') {
+      this.setData({
+        examineMoney: 0
+      })
+    }
     this.setData({
       examineStatus: e.target.dataset.examinestatus,
       id: e.target.dataset.id,
-      showModal: true
+      showModal: true,
+      unit: e.target.dataset.unit
     })
   },
   examine(e) {
+    console.log(e)
     if (!this.WxValidate.checkForm(e)) {
       const error = this.WxValidate.errorList[0]
       wx.showModal({
@@ -108,7 +129,7 @@ Page({
       return false
     }
     const params = {
-      examineMoney: e.detail.value.examineMoney * 100,
+      examineMoney: this.data.unit === '元'?e.detail.value.examineMoney * 100:e.detail.value.examineMoney,
       remark: e.detail.value.remark,
       examineStatus: Number(this.data.examineStatus),
       id: this.data.id
@@ -121,14 +142,14 @@ Page({
     }).then(res => {
       console.log(res)
       if (res.result) {
-        wx.showModal({
-          confirmColor: '#666',
-          content: res.message,
-          showCancel: false,
+        wx.showToast({
+          title: '审核成功',
+          icon: 'success'
         })
-        setTimeout(function () {
-          wx.navigateTo({ url: '../documentReview/documentReview' })
-        }, 1000)
+        this.getdetails();
+        // setTimeout(function () {
+        //   wx.navigateTo({ url: '../documentReview/documentReview' })
+        // }, 1000)
       } else {
         wx.showModal({
           confirmColor: '#666',
@@ -147,5 +168,62 @@ Page({
       remark: '',
       examineMoney: '',
     })
+  },
+  // 显示模态框
+  handleOpen(e) {
+    console.log(e);
+    const imgids = e.currentTarget.dataset.imgids.split(',');
+    const urls = imgids.map((item) => item = 'http://boyu.cmal.com.cn/api/pub/objurl/name?id=' + item + '&compress=true')
+    console.log(urls);
+    this.setData({
+      visible: true,
+      imgList: urls
+    });
+  },
+  // 点击叉叉关闭模态框
+  closeMadol() {
+    this.setData({
+      visible: false,
+      imgList: []
+    })
+  },
+  // 点击图片放大预览
+  imgTap(e) {
+    console.log(e);
+    // 为压缩的图片列表
+    const imgList = this.data.imgList.map(item => item = item.replace('true', 'false'))
+    const current = e.currentTarget.dataset.current.replace('true', 'false')
+    wx.previewImage({
+      current: current,
+      urls: imgList
+    })
+  },
+  // 下拉刷新
+  async onPullDownRefresh(e) {
+    this.data.pageNo = 1;
+    this.data.pageSize = 10;
+    wx.showLoading({
+      title: '加载中...',
+    })
+    await this.getdetails();
+    setTimeout(()=> {
+      wx.stopPullDownRefresh();
+      wx.hideLoading();
+    },500)
+  },
+  // 上拉加载更多
+  async onReachBottom() {
+    wx.showLoading({
+      title: '加载更多中...',
+    })
+    this.data.pageSize = this.data.pageSize + 10;
+    await this.getdetails();
+    setTimeout(()=> {
+      wx.hideLoading();
+      wx.showToast({
+        title: '加载完毕',
+        icon: 'success'
+      })
+    },500)
   },
 })

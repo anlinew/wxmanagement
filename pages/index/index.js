@@ -2,6 +2,7 @@ import api from '../../requests/api.js'
 import utils from '../../utils/util.js'
 import moment from '../../utils/moment.js'
 import WxValidate from '../../plugins/wx-validate/WxValidate';
+import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
 
 const app = getApp()
 const request = app.WxRequest;
@@ -32,13 +33,9 @@ Page({
     })
   },
   onLoad() {
-    let endtiem = moment().format('YYYY-MM-DD')
     let starttiem = moment().format('YYYY-MM-DD')
     let year = moment().format('YYYY');
     let month = moment().format('MM');
-
-    let aMonth = moment().add(1, 'months');
-    let endmonth = moment(aMonth).format('MM');
     this.setData({
       opsList: []
     })
@@ -104,10 +101,20 @@ Page({
   },
   // 获取用的详情(获取用户可使用小程序的功能)
   _getUser() {
+    wx.showLoading({
+      title: '加载数据中...'
+    })
+    setTimeout(() => {
+      wx.hideLoading();
+    }, 5000);
+    this.data.opsList = []
     const userId = this.data.userId;
     console.log(userId)
     let url = utils.apiFormat(api.userDetail, { id: userId })
     request.getRequest(url).then(res=> {
+      setTimeout(()=> {
+        wx.hideLoading();
+      }, 1000)
       if (res.data.wechatOps) {
         this.data.grids.forEach(item => {
           if (res.data.wechatOps.includes(item.title)) {
@@ -122,6 +129,51 @@ Page({
         this.data.opsList = []
       }
     })
+  },
+  // 下拉刷新
+  async onPullDownRefresh(e) {
+    wx.showLoading({
+      title: '数据加载中...',
+    })
+    let starttiem = moment().format('YYYY-MM-DD')
+    let year = moment().format('YYYY');
+    let month = moment().format('MM');
+    this.setData({
+      planDepartureTimeAfter: starttiem + " " + '00:00:00',
+      monthstart: year + "-" + month + '-01 00:00:00'
+    })
+    let params = {
+      createTimeAfter: this.data.planDepartureTimeAfter,
+      pageNo: 1,
+      pageSzie: 500
+    }
+    let payload = {
+      createTimeAfter: this.data.monthstart,
+      pageNo: 1,
+      pageSzie: 500
+    }
+    await this.getwabytodayNum(params)
+    await this.getwabymonthNum(payload)
+    wx.getStorage({
+      key: 'username',
+      success: (res)=> {
+        app.globalData.userInfo = res.data;
+        this.setData({
+          username: res.data.realName,
+          userId: res.data.id
+        })
+        // 获取用户的详情
+        this._getUser();
+      }
+    })
+    setTimeout(()=> {
+      wx.stopPullDownRefresh();
+      wx.hideLoading();
+      wx.showToast({
+        title: '加载完毕',
+        icon: 'success'
+      })
+    },700)
   },
   // 判断是否要更新小程序
   _upData() {
