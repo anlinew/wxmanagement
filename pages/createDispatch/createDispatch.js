@@ -53,10 +53,12 @@ Page({
     currentTab: 0,
     payloadVal: 1,
     searchForm: {},
-    searchMore: false
+    searchMore: false,
+    lastModal: false,
+    okText: 3,
+    menuList: []
   },
   onLoad(option) {
-    console.log(this.data.waySitItems)
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
@@ -79,7 +81,6 @@ Page({
     this.setData({
       waySitindex: ++this.data.waySitindex
     })
-    console.log(this.data.waySitindex)
     var items = this.data.waySitItems;
     items.push({
       name: '',
@@ -96,6 +97,13 @@ Page({
     this.setData({
       waySitItems: items
     });
+  },
+  // 上一单不是空载弹框按钮的事件
+  // 取消事件
+  cancel () {
+    this.setData({
+      lastModal: false
+    })
   },
   creatbill(e) {
     const type = e.currentTarget.dataset.type;
@@ -126,6 +134,48 @@ Page({
       })
       return false
     }
+    // 检查上一趟任务是否为空载任务
+    const truckId = this.data.liceniseid || null;
+    request.getRequest(api.lastWay,{data: {truckId: truckId}}).then(res=> {
+      if (res.result) {
+        // 如果上一趟不是空载
+        if (!res.data) {
+          this.setData({
+            lastModal: true,
+            okText: 3
+          })
+          var timer = setInterval(()=> {
+            this.data.okText--
+            if (this.data.okText === 0) {
+              this.data.okText = '确定'
+              clearInterval(timer)
+            }
+            this.setData({
+              okText: this.data.okText
+            })
+          },1000)
+        } else {
+          // 如果上一趟是空载
+          this.checkRoute();
+        }
+      } else {
+        wx.showModal({
+          confirmColor: '#666',
+          content: res.message,
+          showCancel: false,
+        })
+      }
+    })
+  },
+  // 上一趟不是空载弹框的确定按钮事件
+  beOk () {
+    this.setData({
+      lastModal: false
+    })
+    this.checkRoute();
+  },
+  // 检测线路
+  checkRoute () {
     let siteName = '';
     let siteArr = [];
     let params = {};
@@ -152,7 +202,6 @@ Page({
         routeName: siteName.substring(0, siteName.length - 1) + this.data.routeType
       }
     }).then(res => {
-      console.log(res)
       if (res.result) {
         let schedule=[];
         // 每个途径点的时间
@@ -197,6 +246,7 @@ Page({
       }
     })
   },
+  // 创建调度单
   todocreateDispatch(params){
     wx.showLoading({
       title: '正在创建单据...',
@@ -225,14 +275,13 @@ Page({
   // 获取配置时间得到发车时间和到达时间
   _getTime() {
     request.getRequest(api.pzTime,{data:{sysGroup: 'interval_task', sysKey: 'intervalTime'}}).then(res=> {
-      console.log(res);
       const sysInfo = res.data;
       this.setData({
         pzTime: sysInfo.intervalTime
       })
     })
   },
-  getWaybillList(params){
+  async getWaybillList(params){
     var payload = {}
     if (!this.data.searchMore) {
       if (params) {
@@ -246,35 +295,93 @@ Page({
         searchForm: params
       })
     }
-    request.getRequest(api.waybillList, { data: payload}).then(res => {
-      res.data.forEach(function (item, i) {
-        if (item.status === 0) {
-          item.status = '待下发';
-          item.background = '#808080';
-        } else if (item.status === 1) {
-          item.status = '待接受';
-          item.background = '#f77528';
-        } else if (item.status === 2) {
-          item.status = '待发车';
-          item.background = '#f8b551';
-        } else if (item.status === 3) {
-          item.status = '运输中';
-          item.background = '#4a9cf2';
-        } else if (item.status === 4) {
-          item.status = '已送达';
-          item.background = '#5dc873';
-        } else if (item.status === 5) {
-          item.status = '已完成';
-          item.background = '#19be6b';
-        } else if (item.status === 6) {
-          item.status = '已作废';
-          item.background = '#919293';
-        }
-      });
-      this.setData({
-        waybillList:res.data
-      });
+    wx.getStorage({
+      key: 'username',
+      success: async (res)=> {
+        const id = res.data.id;
+        var role = res.data.role;
+        // 获取用户的详情
+        const url = utils.apiFormat(api.userDetail, {id:id});
+        const baseRes = await request.getRequest(url);
+        var hasBaseList = baseRes.data.authBaseIds.split(',');
+        const menuRes = await request.getRequest(api.menuList);
+        var resData = menuRes.data;
+        const wayRes = await request.getRequest(api.waybillList, { data: payload});
+        wayRes.data.forEach(function (item, i) {
+          if (hasBaseList.includes(item.toBaseId)) {
+            item.hasBase = true;
+          } else {
+            item.hasBase = false;
+          }
+          if (role === 'admin') {
+            item.hasBase = true;
+          }
+          for (let n of resData) {
+            if (n.id === 400307) {
+              item.autBtn = true;
+              break
+            } else {
+              item.autBtn = false;
+            }
+          }
+          if (item.status === 0) {
+            item.status = '待下发';
+            item.background = '#808080';
+          } else if (item.status === 1) {
+            item.status = '待接受';
+            item.background = '#f77528';
+          } else if (item.status === 2) {
+            item.status = '待发车';
+            item.background = '#f8b551';
+          } else if (item.status === 3) {
+            item.status = '运输中';
+            item.background = '#4a9cf2';
+          } else if (item.status === 4) {
+            item.status = '已送达';
+            item.background = '#5dc873';
+          } else if (item.status === 5) {
+            item.status = '已完成';
+            item.background = '#19be6b';
+          } else if (item.status === 6) {
+            item.status = '已作废';
+            item.background = '#919293';
+          }
+        });
+        this.setData({
+          waybillList:wayRes.data
+        });
+      }
     })
+    
+    // await request.getRequest(api.waybillList, { data: payload}).then(res => {
+    //   res.data.forEach(function (item, i) {
+    //     if (item.status === 0) {
+    //       item.status = '待下发';
+    //       item.background = '#808080';
+    //     } else if (item.status === 1) {
+    //       item.status = '待接受';
+    //       item.background = '#f77528';
+    //     } else if (item.status === 2) {
+    //       item.status = '待发车';
+    //       item.background = '#f8b551';
+    //     } else if (item.status === 3) {
+    //       item.status = '运输中';
+    //       item.background = '#4a9cf2';
+    //     } else if (item.status === 4) {
+    //       item.status = '已送达';
+    //       item.background = '#5dc873';
+    //     } else if (item.status === 5) {
+    //       item.status = '已完成';
+    //       item.background = '#19be6b';
+    //     } else if (item.status === 6) {
+    //       item.status = '已作废';
+    //       item.background = '#919293';
+    //     }
+    //   });
+    //   this.setData({
+    //     waybillList:res.data
+    //   });
+    // })
   },
   callDriver: function(e) {
     const driverPhone = e.currentTarget.dataset.driver;
@@ -290,7 +397,6 @@ Page({
   },
   // 选择重载还是水路
   radioChange: function (e) {
-    console.log(e);
     var radioItems = this.data.radioItems;
     for (var i = 0, len = radioItems.length; i < len; ++i) {
       radioItems[i].checked = radioItems[i].value == e.detail.value;
@@ -303,7 +409,6 @@ Page({
   // 点击选择查询条件
   async chooseClick (e) {
     if (e.currentTarget.dataset.index !== 4) {
-      console.log(e.currentTarget.dataset);
       this.setData({
         currentTab: e.currentTarget.dataset.index,
         payloadVal: e.currentTarget.dataset.statusval,
@@ -360,7 +465,6 @@ Page({
       await this.getWaybillList(this.data.payloadVal);
     } else {
       let pageSize = this.data.pageSize;
-      console.log(pageSize)
       const payload = Object.assign(this.data.searchForm, { pageNo: 1, pageSize: pageSize })
       await this.getWaybillList(payload);
     }
@@ -374,7 +478,6 @@ Page({
   },
   // 下发任务
   async xfEvent (e) {
-    console.log(e.currentTarget.dataset.id);
     const wayId = e.currentTarget.dataset.id;
     const res = await request.postRequest(api.xfWaybill,{data: {id: wayId}});
     if (res.result) {

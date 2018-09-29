@@ -118,12 +118,13 @@
                   <view class="weui-form-preview__label">计划到达时间：{{item.planArriveTime}}</view>
                 </view>
             </view>
-            <view class="weui-form-preview__ft">
+            <view class="weui-form-preview__ft" style="position: relative">
+            <text class="kongText" wx:if="{{item.nextWaybillNum}}">空载已创建</text>
             <button class="weui-btn mini-btn driverBtn" type="primary" plain="true" data-driver="{{item.driverPhone}}" bindtap='callDriver'>联系司机</button>
               <button wx:if="{{item.status==='已送达'}}" class="weui-btn mini-btn createdfull" type="primary" plain="true" data-id="{{item.id}}" bindtap="beFinish">确认完成</button>
               <button wx:if="{{item.status==='待下发'}}" class="weui-btn mini-btn createdfull" type="primary" plain="true" data-id="{{item.id}}" bindtap="xfEvent">下发任务</button>
               
-              <navigator wx:if="{{!item.dispatchType && item.status !== '已作废'}}" url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}&planDepartureTime={{item.planDepartureTime}}&actualDepartureTime={{item.actualDepartureTime}}" hover-class="none">
+              <navigator hidden="{{ item.status === '已作废' || item.nextWaybillNum || !item.allowedDryrun || !item.hasBase || !item.autBtn }}" url="../emptyDispatch/emptyDispatch?driverName={{item.driverName}}&driverPhone={{item.driverPhone}}&truckLicense={{item.truckLicense}}&planArriveTime={{item.planArriveTime}}&actualArriveTime={{item.actualArriveTime}}&routeName={{item.routeName}}&waybillId={{item.id}}&planDepartureTime={{item.planDepartureTime}}&actualDepartureTime={{item.actualDepartureTime}}" hover-class="none">
                 <button class="weui-btn mini-btn createdfull" type="primary" plain="true" >新增空载</button>
               </navigator>
             </view>
@@ -134,5 +135,17 @@
         </view> 
       </view>
     </view>
+  </view>
+</view>
+
+<!--前一趟是空载是否继续创建重载的弹框-->
+<view class="mask" wx:if="{{lastModal}}"></view>
+<view class="lastWay" wx:if="{{lastModal}}">
+  <view><icon type="info" size="20" /><text style="margin-left:10px">提示</text></view>
+  <view style="margin-top:18px;">上一单不是空载调度，确定创建调度单？</view>
+  <view>
+    <button class="beOk" disabled="{{okText!=='确定'}}"  bindtap="beOk">{{okText}}</button>
+    <button class="beOk" bindtap="cancel">取消</button>
+    
   </view>
 </view>

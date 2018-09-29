@@ -33,4 +33,8 @@ module.exports = {
   searchBase: '/api/tms/base',    // 查询基地列表
   upLogin: '/api/wechatUser/updateUserLogTime',    // 更新用户登录时间
   userDetail: '/api/tms/user/{id}',    // 获取用户详情
+  lastWay: '/api/tms/waybill/last/status',    // 车辆最后一趟是否为空载
+  filterMethod: '/api/tms/query/util',    // 黄红莲模糊搜索接口
+  changeStatus: '/api/tms/waybill/update/status',    // 修改调度单状态（慎用）
+  menuList: '/api/tms/webMenu/current',    // 获取当前用户的菜单权限
 }

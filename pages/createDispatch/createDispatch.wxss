@@ -160,3 +160,52 @@
   /* color: #bad6c1; */
   color: #fff!important;
 }
+.mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #666;
+  z-index: 999;
+  opacity: 0.8;
+}
+.lastWay {
+  width: 90%;
+  height: 190px;
+  background: #fff;
+  border-radius: 5px;
+  position: fixed;
+  z-index: 99999;
+  left: 50%;
+  top:50%;
+  transform: translateX(-50%);
+  margin-top: -100px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.lastWay button {
+  width: 75px;
+  height: 38px;
+  float: right;
+  margin-left: 15px;
+  margin-top: 45px;
+  line-height: 38px;
+  font-size: 14px;
+}
+.cancel {
+  border: none!important;
+}
+.beOk {
+  background: #2d8cf0;
+  color: #fff;
+}
+.kongText {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 13px;
+  color: #999;
+  line-height: 55px;
+  padding-left: 10px;
+}

@@ -21,7 +21,8 @@ Page({
       { title: '借款审核', pageUrl: '../borrowMoney/borrowMoney', imageUrl:'../image/borrow@2x.png' },
       { title: '在途维修', pageUrl: '../onwayRepair/onwayRepair', imageUrl:'../image/way@2x.png' },
       { title: '请假审核', pageUrl: '../driverLeave/driverLeave', imageUrl:'../image/leave@2x.png' },
-      { title: '单据审核', pageUrl: '../documentReview/documentReview', imageUrl:'../image/type@2x.png' }
+      { title: '单据审核', pageUrl: '../documentReview/documentReview', imageUrl:'../image/type@2x.png' },
+      { title: '更新状态', pageUrl: '../changeStatus/changeStatus', imageUrl:'../image/changeWayBill.png' }
     ],
     opsList: [],
     userId: ''
@@ -96,7 +97,6 @@ Page({
   // 更新用户登录时间
   uplogin() {
     request.getRequest(api.upLogin).then(res=> {
-      console.log(res)
     })
   },
   // 获取用的详情(获取用户可使用小程序的功能)
@@ -109,7 +109,6 @@ Page({
     }, 5000);
     this.data.opsList = []
     const userId = this.data.userId;
-    console.log(userId)
     let url = utils.apiFormat(api.userDetail, { id: userId })
     request.getRequest(url).then(res=> {
       setTimeout(()=> {
@@ -121,7 +120,6 @@ Page({
             this.data.opsList.push(item)
           }
         })
-        console.log(this.data.opsList)
         this.setData({
           opsList: this.data.opsList
         })

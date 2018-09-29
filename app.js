@@ -26,6 +26,7 @@ App({
           const token = wx.getStorageSync('token');
           if (token) {
             request.header['x-auth-token'] = token;
+            // request.header['X-Auth-Token'] = token;
           }
           return request
         },
@@ -35,6 +36,7 @@ App({
         },
         response(response) {
           const token = response.header['x-auth-token']
+          // const token = response.header['X-Auth-Token']
           if (token) {
             response.data.token = token;
             wx.setStorageSync('token', token);
