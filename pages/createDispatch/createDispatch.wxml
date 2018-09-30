@@ -9,7 +9,7 @@
         <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
     </view>
     <view class="weui-tab__panel">
-      <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+      <view class="weui-tab__content" hidden="{{activeIndex != 0}}" style="padding-bottom:15px">
         <form>
           <view class="weui-cells weui-cells_after-title zebra">
             <radio-group bindchange="radioChange">
@@ -63,6 +63,21 @@
                     </navigator>
                   </view>
               </view>
+
+              <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                  <view class="weui-label blue">发车时间</view>
+                </view>
+                <view class="weui-cell__bd ontime" >
+                  <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+                    <view class="weui-input ondate blue" style="{{date==='请选择发车时间'?'color:#999':'color:#2292DD'}}">{{date}}</view>
+                  </picker>
+                  <picker mode="time" value="{{time}}" bindchange="bindTimeChange">
+                    <view class="weui-input blue">{{time}}</view>
+                  </picker>
+                </view>
+            </view>
+
           </view>
           <view class="weui-cells weui-cells_after-title zebra">
               <view class="weui-cell weui-cell_select carBox">

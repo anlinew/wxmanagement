@@ -24,12 +24,19 @@ Page({
     fcDate: '',
     fcdateTime: '',
     overloadFcTime: '',
-    overloadDdTime: ''
+    overloadDdTime: '',
+    fcPzTime: -3
   },
   onLoad(option) {
     console.log(option)
-    let routeName = option.routeName.split('-');
-    let startName = routeName[routeName.length-1]
+    var routeName = option.routeName.split('-');
+    var startSite = routeName[routeName.length-1]
+    var startName = ''
+    if (startSite.includes('(空)')) {
+      startName = startSite.split('(')[0]
+    } else {
+      startName = startSite
+    }
     this.setData({
       driver: option.driverName,
       phone: option.driverPhone,
@@ -77,6 +84,18 @@ Page({
     })
   },
   addEmptyFun(){
+    const fcTime = new Date((this.data.fcDate + ' ' + this.data.fcdateTime).replace(/\-/g, '/'));
+    // 三天前的日期时间
+    const threeDateAgo = moment().add(this.data.fcPzTime,'day').startOf('day').toDate();
+    const threeDate = moment().add(this.data.fcPzTime,'day').startOf('day').format('YYYY-MM-DD');
+    if (fcTime.getTime()-threeDateAgo.getTime()<0) {
+      wx.showModal({
+        confirmColor: '#666',
+        content: '发车时间不可早于' + threeDate + ' 00:00:00',
+        showCancel: false,
+      })
+      return false
+    }
     wx.showLoading({
       title: '正在创建下发...',
       mask: true
@@ -139,7 +158,6 @@ Page({
   },
   getRoutes(startName) {
     console.log(startName, this.data.startName)
-    
     request.getRequest(api.routeListApi, { data: { pageNo: 1, pageSize: 100, namePre: startName, dispatchType: 1, enabled: false}}).then(res => {
       const routeList = res.data;
       routeList.forEach(item=>{

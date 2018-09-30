@@ -16,7 +16,7 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
     date: moment().format('YYYY-MM-DD'),
-    time: "12:00:00",
+    time: moment().format('YYYY-MM-DD HH:mm:ss').slice(11,19),
     license:'',
     liceniseid:'',
     routeid:'',
@@ -35,6 +35,7 @@ Page({
     endSiteId: '',
     waybillList:[],
     pzTime: '',
+    fcPzTime: -3,
     pageNo: 1,
     pageSize: 10,
     radioItems: [
@@ -64,7 +65,9 @@ Page({
       success: function (res) {
         that.setData({
           sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
-          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex,
+          date: moment().format('YYYY-MM-DD'),
+          time: moment().format('YYYY-MM-DD HH:mm:ss').slice(11,19)
         });
       }
     });
@@ -130,6 +133,19 @@ Page({
       wx.showModal({
         confirmColor: '#666',
         content: '车牌号不可为空',
+        showCancel: false,
+      })
+      return false
+    }
+    const fcTime = new Date((this.data.date + ' ' + this.data.time).replace(/\-/g, '/'));
+    // 三天前的日期时间
+    const threeDateAgo = moment().add(this.data.fcPzTime,'day').startOf('day').toDate();
+    const threeDate = moment().add(this.data.fcPzTime,'day').startOf('day').format('YYYY-MM-DD');
+    console.log(fcTime,threeDateAgo,threeDate)
+    if (fcTime.getTime()-threeDateAgo.getTime()<0) {
+      wx.showModal({
+        confirmColor: '#666',
+        content: '发车时间不可早于' + threeDate + ' 00:00:00',
         showCancel: false,
       })
       return false
@@ -207,7 +223,7 @@ Page({
         // 每个途径点的时间
         res.data.routeSites.forEach((item, index)=> {
           if (index === 0) {
-            schedule[index] = moment().add(this.data.pzTime + item.driveTime, 'hour').format('YYYY-MM-DD HH:mm:ss');
+            schedule[index] = this.data.date + ' ' + this.data.time;
           } else {
             schedule[index] = this.DateFormat((new Date((new Date(schedule[index - 1].replace(/\-/g, '/')).getTime() + (item.driveTime * 60 * 60 * 1000) + (item.restTime * 60 * 60 * 1000)))), 'yyyy-MM-dd hh:mm:ss');
           }
@@ -308,7 +324,7 @@ Page({
         var resData = menuRes.data;
         const wayRes = await request.getRequest(api.waybillList, { data: payload});
         wayRes.data.forEach(function (item, i) {
-          if (hasBaseList.includes(item.toBaseId)) {
+          if (hasBaseList.includes(item.toBaseId+'')) {
             item.hasBase = true;
           } else {
             item.hasBase = false;
@@ -499,6 +515,18 @@ Page({
       })
       this.getWaybillList();
     }
+  },
+  // 发车时间
+  bindDateChange(e) {
+    this.setData({
+      date: e.detail.value
+    })
+  },
+  bindTimeChange(e) {
+    console.log(e)
+    this.setData({
+      time: e.detail.value + ':00'
+    })
   },
   DateFormat (str, fmt) {
     let o = {

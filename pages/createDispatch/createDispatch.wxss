@@ -209,3 +209,6 @@
   line-height: 55px;
   padding-left: 10px;
 }
+.blue {
+  color: #2292DD;
+}
