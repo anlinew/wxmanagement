@@ -700,7 +700,7 @@ icon {
   padding: .15em .4em;
   min-width: 8px;
   border-radius: 18px;
-  background-color: rgb(20, 180, 177);
+  background-color: #19be6b;
   color: #FFFFFF;
   line-height: 1.4;
   text-align: center;

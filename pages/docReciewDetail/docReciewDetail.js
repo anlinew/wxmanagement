@@ -18,7 +18,9 @@ Page({
     examineMoney: '',
     pageNo: 1,
     pageSize: 10,
-    unit: ''
+    unit: '',
+    money: '',
+    disabled: false
   },
   initValidate() {
     // 验证字段的规则
@@ -30,7 +32,7 @@ Page({
       },
       remark: {
         required: true,
-        maxlength: 30
+        maxlength: 100
       }
     }
     // 验证字段的提示信息，若不传则调用默认的信息
@@ -42,7 +44,7 @@ Page({
       },
       remark: {
         required: '审批备注不能为空',
-        maxlength: '审批备注最多可以输入30位'
+        maxlength: '审批备注最多可以输入100位'
       }
     }
     // 创建实例对象
@@ -56,6 +58,13 @@ Page({
     this.initValidate()
   },
   getdetails(){
+    wx.showLoading({
+      title: '数据加载中',
+      mask: true
+    })
+    setTimeout(function(){
+      wx.hideLoading()
+    },6000)
     let params = {
       waybillId: this.data.waybillId,
       examineStatus: '1,2,3',
@@ -74,11 +83,11 @@ Page({
         switch (item.examineStatus) {
           case 0:
             item.examineStatus = '待提交';
-            item.color = '#f49f13'
+            item.color = '#888888'
             break;
           case 1:
             item.examineStatus = '待审核';
-            item.color = '#4a9cf2'
+            item.color = '#FF9900'
             break;
           case 2:
             item.examineStatus = '已通过';
@@ -97,6 +106,9 @@ Page({
       this.setData({
         list: res.data
       });
+      setTimeout(function(){
+        wx.hideLoading()
+      },500)
     })
   },
   showM: function (e) {
@@ -114,7 +126,9 @@ Page({
       examineStatus: e.target.dataset.examinestatus,
       id: e.target.dataset.id,
       showModal: true,
-      unit: e.target.dataset.unit
+      unit: e.target.dataset.unit,
+      disabled: false,
+      money: e.target.dataset.money
     })
   },
   examine(e) {
@@ -128,6 +142,9 @@ Page({
       })
       return false
     }
+    this.setData({
+      disabled: true
+    })
     const params = {
       examineMoney: this.data.unit === '元'?e.detail.value.examineMoney * 100:e.detail.value.examineMoney,
       remark: e.detail.value.remark,
@@ -142,14 +159,11 @@ Page({
     }).then(res => {
       console.log(res)
       if (res.result) {
+        this.getdetails();
         wx.showToast({
           title: '审核成功',
           icon: 'success'
         })
-        this.getdetails();
-        // setTimeout(function () {
-        //   wx.navigateTo({ url: '../documentReview/documentReview' })
-        // }, 1000)
       } else {
         wx.showModal({
           confirmColor: '#666',
@@ -173,7 +187,8 @@ Page({
   handleOpen(e) {
     console.log(e);
     const imgids = e.currentTarget.dataset.imgids.split(',');
-    const urls = imgids.map((item) => item = 'http://boyu.cmal.com.cn/api/pub/objurl/name?id=' + item + '&compress=true')
+    // const urls = imgids.map((item) => item = 'http://boyu.cmal.com.cn/api/pub/objurl/name?id=' + item + '&compress=true')
+    const urls = imgids.map((item) => item = 'http://182.61.48.201:8080/api/pub/objurl/name?id=' + item + '&compress=true')
     console.log(urls);
     this.setData({
       visible: true,

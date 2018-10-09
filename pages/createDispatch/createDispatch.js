@@ -235,7 +235,8 @@ Page({
           routeId: res.data.id, // 线路ID 必填
           schedule: schedule, // 每个站点计划时间
           truckId: this.data.liceniseid, // 车辆ID
-          remark: ''
+          remark: '',
+          createFrom: 1
         };
         console.log(params)
         wx.showModal({

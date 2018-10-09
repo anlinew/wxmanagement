@@ -34,7 +34,7 @@
                 <view class="weui-form-preview__label">审核时间：{{item.examineTime}}</view>
             </view>
             <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">审核备注：{{item.remark}}</view>
+                <view class="weui-form-preview__label">审核备注：{{item.examineRemark}}</view>
             </view>
         </view>
         <view class="weui-form-preview__ft" wx:else>
@@ -51,7 +51,7 @@
     <form bindsubmit="examine">
       <view class='mtitle'><text>维修申请-{{examineStatus==='1'?"拒绝":"同意"}}</text><text class='iconfont icon-cc-close-circle close' bindtap='close'></text></view>
       <view class='content'>
-        <view><textarea class="weui-textarea" placeholder-class="phcolor" value='{{examineRemark}}' name="examineRemark" placeholder="请输入备注" style="height: 180rpx" /></view>
+        <view><textarea class="weui-textarea" placeholder-class="phcolor" value='{{remark}}' name="remark" placeholder="请输入备注" style="height: 180rpx" /></view>
         <view>备注筛选</view>
         <view class='license'>
           <block wx:for-items="{{examineStatus==='1'?disagreeArr:agreeArr}}" wx:key="{{index}}">
@@ -59,7 +59,7 @@
               </block>
         </view>
      </view>
-      <button class="weui-btn exmbtn {{examineStatus==='1'?'disagreeexm':''}}" type="primary" formType="submit">{{examineStatus==='1'?"拒绝":"同意"}}申请</button>
+      <button disabled="{{disabled}}" class="weui-btn exmbtn {{examineStatus==='1'?'disagreeexm':''}}" type="primary" formType="submit">{{examineStatus==='1'?"拒绝":"同意"}}申请</button>
     </form>
   </view>
 </view>

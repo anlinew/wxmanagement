@@ -17,13 +17,20 @@ Page({
     this.getLoanList()
   },
   getLoanList() {
+    wx.showLoading({
+      title: '数据加载中',
+      mask: true
+    })
+    setTimeout(function(){
+      wx.hideLoading()
+    },6000)
     request.getRequest(api.docreviewList,{data:{pageNo:this.data.pageNo,pageSize:this.data.pageSize}}).then(res => {
       res.data.forEach(function (item, i) {
         item.routesite = item.routeName.split('-');
         switch (item.waybillStatus) {
           case 0:
             item.waybillStatus = '待审核';
-            item.color = '#f49f13'
+            item.color = '#FF9900'
             break;
           case 1:
             item.waybillStatus = '已审核';
@@ -31,15 +38,15 @@ Page({
             break;
           case 2:
             item.waybillStatus = '预结算';
-            item.color = '#40ab00'
+            item.color = '#19be6b'
             break;
           case 3:
             item.waybillStatus = '已结算';
-            item.color = '#25b4b0'
+            item.color = '#09BB07'
             break;
           case 4:
             item.waybillStatus = '已关账';
-            item.color = '#59cac8'
+            item.color = '#888888'
             break;
           default:
             item.waybillStatus = null;
@@ -49,6 +56,9 @@ Page({
       this.setData({
         loanList: res.data
       });
+      setTimeout(function(){
+        wx.hideLoading()
+      },500)
     })
   },
   // 下拉刷新

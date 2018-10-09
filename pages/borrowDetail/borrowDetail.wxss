@@ -26,6 +26,8 @@
   color: #000;
   font-size:14px;
   padding-left: 10px;
+  text-align: left;
+  text-align-last: left;
 }
 .weui-form-preview__value_in-hd {
   font-size: 14px;
@@ -85,7 +87,7 @@
   padding-top:20rpx;
 }
 .disagree{
-  background:rgb(248, 81, 64);
+  background:#FF6600;
 }
 
 .mask{

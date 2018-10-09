@@ -28,8 +28,8 @@
   text-align-last: left;
 }
 .weui-form-preview__value_in-hd {
-  font-size: 14px;
-  color: #999;
+  font-size: 14px!important;
+  color: #666;
   text-align: right;
 }
 .liceniseNum {
@@ -65,7 +65,7 @@
   text-align: left;
 }
 .boroowtype {
-  color: #999;
+  color: #666;
   margin-left: 6px;
 }
 .boroowresaze {
@@ -183,7 +183,7 @@
   border-top: 1px solid #eaeaea;
   padding: 10px 15px;
 }
-.auditInfo .weui-form-preview__item {
+.auditInfo .otner__item {
   height: 30px;
   line-height: 30px;
 }

@@ -40,7 +40,7 @@
               <text class="iconfont icon-fukuanshenqing" style="font-size: 80rpx;;color:#fff"></text>
           </view>
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-              <view class="weui-media-box__desc">{{details.driverName}}<text class="weui-badge {{status==='已驳回'?'disagree':''}}" style="margin-left: 5px;">{{status}}</text></view>
+              <view class="weui-media-box__desc">{{details.driverName}}<text class="weui-badge {{status==='已驳回'?'disagree':''}}" style="margin-left: 5px;padding: 2px 7px">{{status}}</text></view>
               <view class="weui-media-box__desc">申请{{details.money?details.money/100:''}}元  <text class='boroowtype'>({{details.typeName}})</text></view>
           </view>
         </view>

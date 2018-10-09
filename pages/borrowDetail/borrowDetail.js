@@ -28,7 +28,7 @@ Page({
       },
       examineRemark: {
         required: true,
-        maxlength: 30
+        maxlength: 100
       }
     }
     // 验证字段的提示信息，若不传则调用默认的信息
@@ -40,7 +40,7 @@ Page({
       },
       examineRemark: {
         required: '审批备注不能为空',
-        maxlength: '审批备注最多可以输入30位'
+        maxlength: '审批备注最多可以输入100位'
       }
     }
     // 创建实例对象

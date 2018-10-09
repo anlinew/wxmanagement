@@ -132,7 +132,8 @@ Page({
       routeId: this.data.routeId, // 线路id
       schedule: schedule,
       waybillId: this.data.waybillId, // 调度单id
-      issue: true
+      issue: true,
+      createFrom: 1
     };
     console.log(opt)
     request.postRequest(api.addEmptyFunWaybill, {

@@ -65,4 +65,6 @@
   padding: 2px 7px;
   border-radius: 12px;
   margin-right: 3px;
+  line-height: 18px;
+  height: 18px;
 }

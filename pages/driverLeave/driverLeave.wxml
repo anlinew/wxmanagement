@@ -4,7 +4,7 @@
     <block wx:for-items="{{list}}" wx:key="{{index}}">
       <view class="preview" wx:if="{{item.examineStatus==='待审批'}}">
         <view class="leaveTitle">
-            <view class="weui-form-preview__item">
+            <view class="weui-form-preview__item otner__item">
                 <view class="weui-form-preview__label">申请日期</view>
                 <view class="weui-form-preview__value_in-hd">{{item.createTime}}</view>
             </view>
@@ -19,7 +19,7 @@
                     <view class="weui-media-box__desc">共{{item.duration}}天<text class='boroowtype'>( {{item.startTime}} 至 {{item.endTime}} )</text></view>
                 </view>
             </view>
-            <view class="weui-form-preview__item boroowresaze">
+            <view class="weui-form-preview__item boroowresaze otner__item">
                 <view class="weui-form-preview__label">请假原因：{{item.description}}</view>
             </view>
         </view>
@@ -31,7 +31,7 @@
       </view>
       <view class="preview" wx:if="{{item.examineStatus!=='待审批'}}">
         <view class="leaveTitle">
-            <view class="weui-form-preview__item">
+            <view class="weui-form-preview__item otner__item">
                 <view class="weui-form-preview__label">申请日期</view>
                 <view class="weui-form-preview__value_in-hd">{{item.createTime}}</view>
             </view>
@@ -46,15 +46,15 @@
                   <view class="weui-media-box__desc">共{{item.duration}}天<text class='boroowtype'>( {{item.startTime}} 至 {{item.endTime}} )</text></view>
               </view>
             </view>
-            <view class="weui-form-preview__item boroowresaze">
+            <view class="weui-form-preview__item boroowresaze otner__item">
               <view class="weui-form-preview__label">请假原因：{{item.description}}</view>
             </view>
         </view>
         <view class="auditInfo">
-            <view class="weui-form-preview__item">
+            <view class="weui-form-preview__item otner__item">
                 <view class="weui-form-preview__label">审核人员：{{item.examineUserName?item.examineUserName:''}}</view>
             </view>
-            <view class="weui-form-preview__item">
+            <view class="weui-form-preview__item otner__item">
                 <view class="weui-form-preview__label">审核时间：{{item.examineTime?item.examineTime:''}}</view>
             </view>
             <view class="weui-form-preview__item">
@@ -78,7 +78,7 @@
               </block>
         </view>
      </view>
-      <button class="weui-btn exmbtn {{examineStatus==='3'?'disagreeexm':''}}" type="primary" formType="submit">{{examineStatus==='3'?"拒绝":"同意"}}申请</button>
+      <button disabled="{{disabled}}" class="weui-btn exmbtn {{examineStatus==='3'?'disagreeexm':''}}" type="primary" formType="submit">{{examineStatus==='3'?"拒绝":"同意"}}申请</button>
     </form>
   </view>
 </view>

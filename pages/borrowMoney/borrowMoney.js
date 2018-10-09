@@ -29,22 +29,22 @@ Page({
         item.routesite = item.routeName.split('-');
         if (item.examineStatus === 0) {
           item.examineStatus = '待审核';
-          item.color = '#f49f13'
+          item.color = '#FF9900 '
         } else if (item.examineStatus === 2) {
           item.examineStatus = '已审批';
-          item.color = '#40ab00'
+          item.color = '#19be6b'
         } else if (item.examineStatus === 3) {
           item.examineStatus = '已驳回';
-          item.color = '#fc8473'
+          item.color = '#FF6600'
         } else if (item.examineStatus === 4) {
           item.examineStatus = '已打款';
-          item.color = '#25b4b0'
+          item.color = '#09BB07'
         } else if (item.examineStatus === 5) {
           item.examineStatus = '已还款';
-          item.color = '#59cac8'
+          item.color = '#2F9833'
         } else if (item.examineStatus === 6) {
           item.examineStatus = '已作废';
-          item.color = '#999'
+          item.color = '#B4B4B4'
         }
       });
       this.setData({

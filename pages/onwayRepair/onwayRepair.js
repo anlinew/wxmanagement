@@ -19,21 +19,22 @@ Page({
     disagreeArr: ['该维修暂不能通过', '该维修有异议', '无法同意，请配合工作'],
     agreeArr: ['同意在途维修', '同意申请', '路上注意安全', '谢谢'],
     examineStatus: '',
-    examineRemark: '',
+    remark: '',
+    disabled: false
   },
   initValidate() {
     // 验证字段的规则
     const rules = {
-      examineRemark: {
+      remark: {
         required: true,
-        maxlength: 30
+        maxlength: 100
       }
     }
     // 验证字段的提示信息，若不传则调用默认的信息
     const messages = {
-      examineRemark: {
+      remark: {
         required: '审批备注不能为空',
-        maxlength: '审批备注最多可以输入30位'
+        maxlength: '审批备注最多可以输入100位'
       }
     }
     // 创建实例对象
@@ -65,11 +66,11 @@ Page({
         item.createTime = item.createTime.slice(5, 16);
         item.planDepartureTime = item.planDepartureTime.slice(5, 16);
         if (item.examineStatus === 1) {
-          item.examineStatus = '驳回'
-          item.backColor = '#ff9800'
+          item.examineStatus = '已驳回'
+          item.backColor = '#FF6600'
         } else if (item.examineStatus === 0) {
-          item.examineStatus = '通过'
-          item.backColor = '#00c853'
+          item.examineStatus = '已通过'
+          item.backColor = '#19be6b'
         }
       })
       this.setData({
@@ -120,7 +121,8 @@ Page({
   handleOpen(e) {
     console.log(e);
     const imgids = e.currentTarget.dataset.imgids.split(',');
-    const urls = imgids.map((item) => item = 'http://boyu.cmal.com.cn/api/pub/objurl/name?id=' + item + '&compress=true')
+    // const urls = imgids.map((item) => item = 'http://boyu.cmal.com.cn/api/pub/objurl/name?id=' + item + '&compress=true')
+    const urls = imgids.map((item) => item = 'http://182.61.48.201:8080/api/pub/objurl/name?id=' + item + '&compress=true')
     console.log(urls);
     this.setData({
       visible: true,
@@ -179,7 +181,8 @@ Page({
     this.setData({
       examineStatus: e.target.dataset.examinestatus,
       id: e.target.dataset.id,
-      showModal: true
+      showModal: true,
+      disabled: false,
     })
   },
   examine(e) {
@@ -192,8 +195,11 @@ Page({
       })
       return false
     }
+    this.setData({
+      disabled: true
+    })
     const params = {
-      examineRemark: e.detail.value.examineRemark,
+      remark: e.detail.value.remark,
       status: Number(this.data.examineStatus),
       id: this.data.id
     }
@@ -223,12 +229,12 @@ Page({
   close() {
     this.setData({
       showModal: false,
-      examineRemark: ''
+      remark: ''
     })
   },
   getLicense(e) {
     this.setData({
-      examineRemark: e.currentTarget.dataset.remark
+      remark: e.currentTarget.dataset.remark
     })
   },
 })
