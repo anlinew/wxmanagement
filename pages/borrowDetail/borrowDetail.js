@@ -16,7 +16,8 @@ Page({
       details:{},
       examineStatus:'',
       examineRemark:'',
-      examineMoney:''
+      examineMoney:'',
+      disabled: false
   },
   initValidate() {
     // 验证字段的规则
@@ -60,6 +61,26 @@ Page({
           id: this.data.id,
         }
       }).then(res=>{
+        const details = res.data[0]
+        if (details.examineStatus === 0) {
+          details.examineStatus = '待审核';
+          details.color = '#FF9900 '
+        } else if (details.examineStatus === 2) {
+          details.examineStatus = '已审批';
+          details.color = '#19be6b'
+        } else if (details.examineStatus === 3) {
+          details.examineStatus = '已驳回';
+          details.color = '#FF6600'
+        } else if (details.examineStatus === 4) {
+          details.examineStatus = '已打款';
+          details.color = '#09BB07'
+        } else if (details.examineStatus === 5) {
+          details.examineStatus = '已还款';
+          details.color = '#2F9833'
+        } else if (details.examineStatus === 6) {
+          details.examineStatus = '已作废';
+          details.color = '#B4B4B4'
+        }
         this.setData({
           details:res.data[0],
           examineMoney: res.data[0].money * 0.01,
@@ -72,12 +93,14 @@ Page({
       this.setData({
         examineStatus: e.target.dataset.examinestatus,
         showModal: true,
+        disabled: false,
         examineMoney: '0'
       })
     } else {
       this.setData({
         examineStatus: e.target.dataset.examinestatus,
         showModal: true,
+        disabled: false,
         examineMoney: this.data.details.money * 0.01
       })
     }
@@ -96,6 +119,9 @@ Page({
       })
       return false
     }
+    this.setData({
+      disabled: true
+    })
     const params = {
       examineMoney: e.detail.value.examineMoney*100,
       examineRemark: e.detail.value.examineRemark,

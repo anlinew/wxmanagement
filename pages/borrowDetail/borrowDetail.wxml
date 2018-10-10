@@ -40,7 +40,7 @@
               <text class="iconfont icon-fukuanshenqing" style="font-size: 80rpx;;color:#fff"></text>
           </view>
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-              <view class="weui-media-box__desc">{{details.driverName}}<text class="weui-badge {{status==='已驳回'?'disagree':''}}" style="margin-left: 5px;padding: 2px 7px">{{status}}</text></view>
+              <view class="weui-media-box__desc">{{details.driverName}}<text class="weui-badge" style="margin-left:5px;padding:2px 7px;background-color:{{details.color}}">{{details.examineStatus}}</text></view>
               <view class="weui-media-box__desc">申请{{details.money?details.money/100:''}}元  <text class='boroowtype'>({{details.typeName}})</text></view>
           </view>
         </view>
@@ -49,6 +49,9 @@
         </view>
     </view>
     <view class="weui-form-preview__bd" style="border-top:1px solid #e2e2e2;">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label" wx:if="{{details.examineMoney}}">审批金额：<text style="color:#09BB07 ;font-weight:700">{{details.examineMoney?details.examineMoney/100:''}}元</text></view>
+        </view>
         <view class="weui-form-preview__item">
             <view class="weui-form-preview__label">审核人员：{{details.examineUserName?details.examineUserName:''}}</view>
         </view>
@@ -80,7 +83,7 @@
             </block>
       </view>
      </view>
-      <button class="weui-btn exmbtn {{examineStatus==='3'?'disagreeexm':''}}" type="primary" formType="submit">{{examineStatus==='3'?"拒绝":"同意"}}申请</button>
+      <button disabled="{{disabled}}" class="weui-btn exmbtn {{examineStatus==='3'?'disagreeexm':''}}" type="primary" formType="submit">{{examineStatus==='3'?"拒绝":"同意"}}申请</button>
     </form>
   </view>
 </view>

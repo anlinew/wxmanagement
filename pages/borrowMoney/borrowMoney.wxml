@@ -17,7 +17,7 @@
         <view class="weui-panel__bd">
         
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg applyMoney">
-              <view class="weui-media-box__desc">申请金额：{{item.money*0.01}}元</view>
+              <view class="weui-media-box__desc"><text>申请金额：{{item.money*0.01}}元</text><text style="margin-left: 10px" wx:if="{{item.examineStatus === '已审批' || item.examineStatus === '已驳回' || item.examineStatus === '已打款' || item.examineStatus === '已还款' || item.examineStatus === '已作废'}}">（审批金额：{{item.examineMoney*0.01}}元）</text></view>
             </view>
 
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg applyMoney">
