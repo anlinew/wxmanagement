@@ -15,6 +15,7 @@
 }
 .weui-form-preview {
   margin-top: 10px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 }
 .weui-form-preview__label {
   color: #000;
@@ -31,16 +32,12 @@
   color: #666;
 }
 .driverBtn {
-  border-color:rgb(252, 101, 81) !important;
   border-radius:28px;
-  color:rgb(252, 101, 81)  !important;
   font-size: 14px;
   margin-right:10px;
 }
 .createdfull {
-  border-color:#3E85FF !important;
   border-radius:28px;
-  color:#3E85FF !important;
   font-size: 14px;
   margin-right:10px;
 }

@@ -1,5 +1,5 @@
 <view class='page' style="padding-top:10px">
-  <view class="preview" wx:if="{{details.examineStatus==='待审核'}}">
+  <view class="preview" wx:if="{{status==='待审核'}}">
     <view class="applyDate">
         <view class="weui-form-preview__item">
             <view class="weui-form-preview__label">借款时间</view>
@@ -20,13 +20,8 @@
             <view class="weui-form-preview__label">借款原因：{{details.description?details.description:''}}</view>
         </view>
     </view>
-    <view class="weui-form-preview__ft" hidden="{{details.cancel}}">
-      <button hover-class="callClick" class="weui-btn mini-btn driverBtn" style="border-color:rgb(252, 101, 81);color:rgb(252, 101, 81)" type="primary" plain="true" bindtap="showM" data-examineStatus='3'>拒绝申请</button>
-        <view><button hover-class="agreeClick"  class="weui-btn mini-btn createdfull" style="border-color:rgb(20, 180, 177);color:rgb(20, 180, 177)" type="primary" plain="true"  bindtap="showM" data-examineStatus='2'>同意申请</button></view>
-        
-    </view>
   </view>
-  <view class="preview" wx:if="{{details.examineStatus!=='待审核'}}">
+  <view class="preview" wx:if="{{status!=='待审核'}}">
     <view class="applyDate">
       <view class="weui-form-preview__item">
           <view class="weui-form-preview__label">借款时间</view>
@@ -62,9 +57,10 @@
         </view>
     </view>
 
-    <view class="weui-form-preview__ft" wx:if="{{details.examineStatus === '已审批' || details.examineStatus === '已驳回'}}">
-      <button hover-class="cancelClick" class="weui-btn mini-btn driverBtn" style="border-color:#ff9900;color:#ff9900" type="primary" plain="true" bindtap="backAudit" data-loanid="{{details.id}}">回退审核</button>
-        
+    <view class="weui-form-preview__ft">
+      <button  wx:if="{{details.examineStatus === '已审批'}}" hover-class="reportClick" class="weui-btn mini-btn driverBtn" style="border-color:#3e85ff;color:#3e85ff" type="primary" plain="true" bindtap="showPay" data-loanid="{{details.id}}" data-loantype="{{details.type}}">确认打款</button>
+       
+      <button   wx:if="{{details.examineStatus === '已打款'}}" hover-class="cancelClick" class="weui-btn mini-btn driverBtn" style="border-color:#ff9900;color:#ff9900" type="primary" plain="true" bindtap="backPay" data-loanid="{{details.id}}">回退打款</button>
     </view>
 
   </view>
@@ -72,26 +68,26 @@
   
 </view>
 
-<!--审核-->
-<view class="mask" catchtouchmove="ture" wx:if="{{showModal}}"></view>
-  <view class="modalDlg" wx:if="{{showModal}}" catchtouchmove="ture">
-   <form bindsubmit="examine">
-     <view class='mtitle'><text>借款明细-{{examineStatus==='3'?"拒绝":"同意"}}</text><text class='iconfont icon-cc-close-circle close' bindtap='close'></text></view>
-     <view class='content'>
-      <view>申请类型：{{details.typeName}}</view>
-      <view>申请金额：{{details.money/100}}元</view>
-      <view class='exmoney' wx:if="{{examineStatus==='3'}}" style="position:relative"><text>审批金额：</text><input disabled="true" style="padding-left:3px;width: 150px;border:none" class="weui-input" placeholder-class="phcolor" value="{{examineMoney?examineMoney:0}}" name="examineMoney" placeholder="请输入审批金额"/><text class="bhUnit">元</text></view>
-      <view class='exmoney' wx:else><text>审批金额：</text><input type="digit" style="padding-left:3px;width: 150px" class="weui-input" placeholder-class="phcolor" value="{{examineMoney?examineMoney:0}}" name="examineMoney" placeholder="请输入审批金额"/>元</view>
-      <view>
-       <textarea fixed="true" show-confirm-bar="{{false}}" class="weui-textarea" placeholder-class="phcolor" value='{{examineRemark}}' name="examineRemark" placeholder="请输入审批备注" style="height: 180rpx;box-sizing: border-box" />
+
+<!--确认打款弹框-->
+<view class="mask" catchtouchmove="ture" wx:if="{{payModal}}"></view>
+<view class="modalDlg" catchtouchmove="ture" wx:if="{{payModal}}">
+  <form bindsubmit="conPay">
+    <view class='mtitle'><text>确认打款</text><text class='iconfont icon-cc-close-circle close' bindtap="payClose"></text></view>
+    <view class='content' style="padding: 30rpx 0 30rpx 30rpx;border-bottom:1px solid #D5D5D6;">
+     
+      <view class='item inline' style="padding: 0 0 0 150rpx;">
+        <view class='item-name'>打款方式</view>
+        <view class='item-con'>
+          <view class="weui-cell__bd  weui-select wayStatus">
+            <picker bindchange="bindPickerChange" range-key="label" value="{{value}}" range="{{payList}}">
+              <view class="picker" style="{{statusLabel?'color: black':'color: #999'}}">{{statusLabel?statusLabel:'请选择打款方式'}}</view>
+            </picker>
+          </view>
+        </view>
       </view>
-      <view>备注审批</view>
-      <view class='license'>
-        <block wx:for-items="{{examineStatus==='3'?disagreeArr:agreeArr}}" wx:key="{{index}}">
-            <view bindtap="getLicense" data-remark="{{item}}"><text>{{item}}</text></view>
-            </block>
-      </view>
-     </view>
-      <button hover-class="navigator-hover" disabled="{{disabled}}" class="weui-btn exmbtn {{examineStatus==='3'?'disagreeexm':''}}" type="primary" formType="submit">{{examineStatus==='3'?"拒绝":"同意"}}申请</button>
-    </form>
-  </view>
+
+    </view>
+     <button hover-class="navigator-hover" disabled="{{disabled}}" class="weui-btn exmbtn" type="primary" formType="submit">确认打款</button>
+   </form>
+ </view>

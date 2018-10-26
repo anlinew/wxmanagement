@@ -21,11 +21,11 @@
   </view>
   <view class='action'>
     <navigator url='../changePwd/changePwd' hover-class="none" class='navbtn'>
-     <button class="weui-btn createdDispatch" type="primary">修改密码</button>
+     <button hover-class="navigator-hover" class="weui-btn createdDispatch" type="primary">修改密码</button>
     </navigator>
     <view>
-      <button class="weui-btn createdDispatch" type="primary" bindtap='logout'>退出登录</button>
+      <button hover-class="navigator-hover" class="weui-btn createdDispatch" type="primary" bindtap='logout'>退出登录</button>
     </view>
   </view>
-  <view class="bb">V 1.9.18a</view>
+  <view class="bb">V 1.10.26a</view>
 </view>

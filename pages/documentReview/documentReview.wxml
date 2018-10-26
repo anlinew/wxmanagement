@@ -5,7 +5,7 @@
       <view class="weui-panel weui-panel_access">
         <view class="weui-panel__ft">
 
-          <navigator url="../docReciewDetail/docReciewDetail?waybillId={{item.waybillId}}" class="navGo weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" style='border-bottom: 1px solid #e9e9e9'>
+          <navigator url="../docReciewDetail/docReciewDetail?waybillId={{item.waybillId}}&wayStatus={{item.waybillStatus}}" class="navGo weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" style='border-bottom: 1px solid #e9e9e9'>
           <view class="weui-cell weui-cell_access weui-cell_link waybill">
             <view class="weui-cell__bd">调度单号：{{item.waybillNum}}({{item.mileage}}KM)</view>
             <text style="{{'background:'+item.color}}" class='wayStatus'>{{item.waybillStatus}}</text>
@@ -23,9 +23,9 @@
               <view class="weui-media-box__desc">未审核单据数量：{{item.unExamineBillCount}}</view>
             </view>
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg  routeClass">
-              <block wx:for="{{item.routesite}}" wx:key="{{index}}" wx:for-item="items">
+              <block wx:for="{{item.taskDetails}}" wx:key="{{index}}" wx:for-item="items">
                 <view class="weui-media-box__desc wayRoute">
-                <text class='texticon {{index===0?"":index===item.routesite.length-1?"end":way}}'>{{index===0?'起':index===item.routesite.length-1?'终':'途'}}</text>{{items}}<text class='time'>{{item.createTime}}</text>
+                <text class='texticon {{index===0?"":index===item.taskDetails.length-1?"end":"way"}}'>{{index===0?'起':index===item.taskDetails.length-1?'终':'途'}}</text>{{items.siteName}}<text class='time'>{{items.arriveTime?items.arriveTime:items.scheduleTime}}</text>
                 </view>
               </block>
             </view>

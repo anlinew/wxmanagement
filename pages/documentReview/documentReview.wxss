@@ -68,3 +68,6 @@
   line-height: 18px;
   height: 18px;
 }
+.weui-panel_access {
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+}

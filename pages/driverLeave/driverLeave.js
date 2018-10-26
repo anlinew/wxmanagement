@@ -122,7 +122,8 @@ Page({
       }
     })
     this.setData({
-      showModal: false
+      showModal: false,
+      examineRemark: ''
     })
   },
   close() {

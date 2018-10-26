@@ -79,3 +79,27 @@ page{
   padding-top:100px;
   color:#888;
 }
+.reportClick {
+  background-color: #3982ff!important;
+  color: #fff!important;
+}
+.currentClick {
+  background: #d9d9d9!important;
+  color: #5a5a5a!important;
+}
+.callClick {
+  background: rgb(252, 101, 81) !important;
+  color: #fff!important;
+}
+.agreeClick {
+  background-color: rgb(20, 180, 177)!important;
+  color: #fff!important;
+}
+.payClick {
+  background-color: #19be6b!important;
+  color: #fff!important;
+}
+.cancelClick {
+  background-color: #ff9900!important;
+  color: #fff!important;
+}

@@ -363,6 +363,7 @@ Page({
             item.status = '已作废';
             item.background = '#919293';
           }
+          item.createTime = item.createTime.slice(0,16)
         });
         this.setData({
           waybillList:wayRes.data

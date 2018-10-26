@@ -26,14 +26,14 @@ Page({
     },6000)
     request.getRequest(api.docreviewList,{data:{pageNo:this.data.pageNo,pageSize:this.data.pageSize}}).then(res => {
       res.data.forEach(function (item, i) {
-        item.routesite = item.routeName.split('-');
+        // item.routesite = item.routeName.split('-');
         switch (item.waybillStatus) {
           case 0:
             item.waybillStatus = '待审核';
             item.color = '#FF9900'
             break;
           case 1:
-            item.waybillStatus = '已审核';
+            item.waybillStatus = '已完成';
             item.color = '#40ab00'
             break;
           case 2:
@@ -85,7 +85,8 @@ Page({
       wx.hideLoading();
       wx.showToast({
         title: '加载完毕',
-        icon: 'success'
+        icon: 'success',
+        duration: 700
       })
     },500)
   },

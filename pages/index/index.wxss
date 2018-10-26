@@ -45,8 +45,9 @@
   padding: 30px 10px 23px;
   width: 50%;
   box-sizing: border-box;
-  border-right: 1rpx solid #D2D2D2;
-  border-bottom: 1rpx solid #D2D2D2;
+  /* border-right: 1rpx solid #D2D2D2; */
+  /* border-bottom: 1rpx solid #D2D2D2; */
+  height: 113px;
 }
 .weui-grid_active {
   background-color: #ECECEC;

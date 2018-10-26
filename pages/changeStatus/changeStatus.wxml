@@ -1,7 +1,7 @@
 <view class="weui-tab__content" >
   <form bindsubmit="torepair">
     <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_select checkCar">
+      <view class="weui-cell weui-cell_select checkCar" hover-class="currentClick">
           <view class="weui-cell__hd weui-cell__hd_in-select-after">
             <view class="weui-label">调度单号</view>
           </view>
@@ -52,8 +52,8 @@
   </view>
 
     </view>
-    <button class="weui-btn createdDispatch" type="primary" bindtap="beChange">确定修改</button>
-    <button class="weui-btn createdDispatch1" type="primary" bindtap="goBack">返回</button>
+    <button hover-class="navigator-hover" class="weui-btn createdDispatch" type="primary" bindtap="beChange">确定修改</button>
+    <button hover-class="navigator-hover" class="weui-btn createdDispatch1" type="primary" bindtap="goBack">返回</button>
      </form>
   </view>
   

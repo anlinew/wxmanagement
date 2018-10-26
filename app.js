@@ -10,8 +10,8 @@ App({
   },
   WxRequest() {
     this.WxRequest = new WxRequest({
-      // baseURL: 'https://boyu.cmal.com.cn',
-      baseURL: 'http://182.61.48.201:8080',
+      baseURL: 'https://boyu.cmal.com.cn',
+      // baseURL: 'http://182.61.48.201:8080',
     })
     this.interceptors()
     return this.WxRequest;

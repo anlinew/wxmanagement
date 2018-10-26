@@ -50,7 +50,14 @@ Page({
       })
       return false
     }
-    const params = { account: e.detail.value.account, password: e.detail.value.password };
+    const params = { account: e.detail.value.account, password: e.detail.value.password, rememberMe: true };
+    wx.showLoading({
+      title: '正在登录...',
+      mask: true
+    })
+    setTimeout(()=> {
+      wx.hideLoading()
+    },6000)
     request.postRequest(api.wechatlogin, {
       data: params,
       header: {
@@ -64,11 +71,15 @@ Page({
           data: res.data,
           success: (res)=> {
             console.log(res)
-            // app.globalData.userInfo = res.data; 
+            app.globalData.userInfo = res.data; 
           }
-        })   
-        wx.navigateTo({url: '../index/index'})
+        })
+        setTimeout(()=> {
+          wx.navigateTo({url: '../index/index'})
+          wx.hideLoading();
+        },1000)   
       }else{
+        wx.hideLoading();
         wx.showModal({
           confirmColor: '#666',
           content: res.message,

@@ -19,7 +19,7 @@
         </view>
       </view>
     </view>
-    <button class="weui-btn createdDispatch" type="primary" formType="submit">登录</button>
+    <button hover-class="navigator-hover" class="weui-btn createdDispatch" type="primary" formType="submit">登录</button>
   </form>
 </view>
 

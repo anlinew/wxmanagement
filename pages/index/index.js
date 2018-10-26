@@ -19,9 +19,10 @@ Page({
       { title: '车辆检测', pageUrl: '../carRepair/carRepair', imageUrl:'../image/rpair@2x.png' },
       { title: '生成调令', pageUrl:'../createDispatch/createDispatch',imageUrl:'../image/move@2x.png' },
       { title: '借款审核', pageUrl: '../borrowMoney/borrowMoney', imageUrl:'../image/borrow@2x.png' },
+      { title: '打款审核', pageUrl: '../confirmPay/confirmPay', imageUrl:'../image/conPay.png' },
+      { title: '单据审核', pageUrl: '../documentReview/documentReview', imageUrl:'../image/type@2x.png' },
       { title: '在途维修', pageUrl: '../onwayRepair/onwayRepair', imageUrl:'../image/way@2x.png' },
       { title: '请假审核', pageUrl: '../driverLeave/driverLeave', imageUrl:'../image/leave@2x.png' },
-      { title: '单据审核', pageUrl: '../documentReview/documentReview', imageUrl:'../image/type@2x.png' },
       { title: '更新状态', pageUrl: '../changeStatus/changeStatus', imageUrl:'../image/changeWayBill.png' }
     ],
     opsList: [],
@@ -113,6 +114,10 @@ Page({
     request.getRequest(url).then(res=> {
       setTimeout(()=> {
         wx.hideLoading();
+        wx.showToast({
+          title: '加载完毕',
+          icon: 'success'
+        })
       }, 1000)
       if (res.data.wechatOps) {
         this.data.grids.forEach(item => {
@@ -188,13 +193,7 @@ Page({
               success: function (res) {
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-                  wx.showToast({
-                    title: '更新完成!',
-                    icon: 'success'
-                  })
-                  setTimeout(()=> {
-                    updateManager.applyUpdate()
-                  }, 1000)
+                  updateManager.applyUpdate()
                 }
               }
             })

@@ -20,18 +20,19 @@ Page({
     pageSize: 10,
     unit: '',
     money: '',
-    disabled: false
+    disabled: false,
+    waybillStatus: ''
   },
   initValidate() {
     // 验证字段的规则
     const rules = {
       examineMoney: {
         required: true,
-        digits: true,
-        maxlength: 6
+        number: true,
+        maxlength: 8
       },
       remark: {
-        required: true,
+        // required: true,
         maxlength: 100
       }
     }
@@ -40,10 +41,10 @@ Page({
       examineMoney: {
         required: '审批数量不能为空',
         digits: '审批数量只能输入数字',
-        maxlength: '审批数量最多可以输入6位'
+        maxlength: '审批数量最多可以输入8位'
       },
       remark: {
-        required: '审批备注不能为空',
+        // required: '审批备注不能为空',
         maxlength: '审批备注最多可以输入100位'
       }
     }
@@ -52,8 +53,10 @@ Page({
   },
   onLoad: function (options) {
     this.setData({
-      waybillId: options.waybillId
+      waybillId: options.waybillId,
+      waybillStatus: options.wayStatus
     })
+    console.log(this.data.waybillStatus)
     this.getdetails()
     this.initValidate()
   },
@@ -114,9 +117,15 @@ Page({
   showM: function (e) {
     console.log(e)
     if (e.target.dataset.examinestatus === '2') {
-      this.setData({
-        examineMoney: ''
-      })
+      if (e.target.dataset.unit === '元') {
+        this.setData({
+          examineMoney: e.target.dataset.money / 100
+        })
+      } else {
+        this.setData({
+          examineMoney: e.target.dataset.money
+        })
+      }
     } else if (e.target.dataset.examinestatus === '3') {
       this.setData({
         examineMoney: 0
@@ -132,7 +141,7 @@ Page({
     })
   },
   examine(e) {
-    console.log(e)
+    console.log(e,this.data.unit)
     if (!this.WxValidate.checkForm(e)) {
       const error = this.WxValidate.errorList[0]
       wx.showModal({
@@ -141,6 +150,24 @@ Page({
         showCancel: false,
       })
       return false
+    }
+    if (this.data.examineStatus == 3 && !e.detail.value.remark) {
+      wx.showModal({
+        content: '请填写审批备注',
+        showCancel: false,
+        confirmColor: '#000000',
+      })
+      return false
+    }
+    if (this.data.unit !== '元') {
+      if (Math.round(e.detail.value.examineMoney) !== Number(e.detail.value.examineMoney)) {
+        wx.showModal({
+          confirmColor: '#666',
+          content: '里程或燃油类的审批数量请输入整数',
+          showCancel: false,
+        })
+        return false;
+      }
     }
     this.setData({
       disabled: true
@@ -160,6 +187,10 @@ Page({
       console.log(res)
       if (res.result) {
         this.getdetails();
+        var pages = getCurrentPages();
+        var Page = pages[pages.length - 1];//当前页
+        var prevPage = pages[pages.length - 2];  //上一个页面
+        prevPage.getLoanList();
         wx.showToast({
           title: '审核成功',
           icon: 'success'
@@ -187,8 +218,9 @@ Page({
   handleOpen(e) {
     console.log(e);
     const imgids = e.currentTarget.dataset.imgids.split(',');
+    const urls = imgids.map((item) => item = 'http://118.25.119.212/api/pub/objurl/name?id=' + item + '&compress=true')
     // const urls = imgids.map((item) => item = 'http://boyu.cmal.com.cn/api/pub/objurl/name?id=' + item + '&compress=true')
-    const urls = imgids.map((item) => item = 'http://182.61.48.201:8080/api/pub/objurl/name?id=' + item + '&compress=true')
+    // const urls = imgids.map((item) => item = 'http://182.61.48.201:8080/api/pub/objurl/name?id=' + item + '&compress=true')
     console.log(urls);
     this.setData({
       visible: true,
@@ -211,6 +243,44 @@ Page({
     wx.previewImage({
       current: current,
       urls: imgList
+    })
+  },
+  // 单据审核的回退
+  backReport (e) {
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确认回退审核状态？',
+      showCancel: true,
+      cancelText: '取消',
+      cancelColor: '#000000',
+      confirmText: '确定',
+      confirmColor: '#3CC51F',
+      success: async (res)=> {
+        if(res.confirm){
+          const id = e.currentTarget.dataset.id;
+          const res = await request.getRequest(api.backReport,{data:{id:id}})
+          console.log(res)
+          if (res.result) {
+            that.getdetails();
+            var pages = getCurrentPages();
+            var Page = pages[pages.length - 1];//当前页
+            var prevPage = pages[pages.length - 2];  //上一个页面
+            prevPage.getLoanList();
+            wx.showToast({
+              title: '回退审核成功',
+              icon: 'success'
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: res.message,
+              showCancel: false,
+              confirmColor: '#000000',
+            })
+          }
+        }
+      }
     })
   },
   // 下拉刷新

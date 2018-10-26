@@ -112,9 +112,9 @@
 .addNav{
   display: block;
   width: 100%;
-  margin: 0 auto;
-  position: fixed;
-  bottom: 50rpx;
+  margin: 80rpx auto;
+  /* position: fixed;
+  bottom: 50rpx; */
 }
 .check-btn{
   height: 90rpx;

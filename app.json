@@ -11,9 +11,13 @@
     "pages/dispatch_success/dispatch_success",
     "pages/empty_success/empty_success",
     
-   
+    "pages/searchDetection/searchDetection",
     "pages/changeStatus/changeStatus",
     "pages/waySearch/waySearch",
+
+    "pages/detail/detail",
+
+    "pages/confirmPay/confirmPay",
 
     "pages/searchDriver/searchDriver",
     "pages/searchWayBill/searchWayBill",
@@ -33,6 +37,7 @@
     "pages/logs/logs",
     "pages/borrowMoney/borrowMoney",
     "pages/borrowDetail/borrowDetail",
+    "pages/payDetail/payDetail",
     "pages/onwayRepair/onwayRepair",
     "pages/driverLeave/driverLeave",
     

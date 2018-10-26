@@ -10,7 +10,7 @@
         <view class="weui-msg__opr-area">
             <view class="weui-btn-area">
             <!-- <navigator url="../carRepair/carRepair"  hover-class="none"> -->
-              <button bindtap="back" class="weui-btn" type="primary">确定</button>
+              <button hover-class="navigator-hover" bindtap="back" class="weui-btn" type="primary">确定</button>
             <!-- </navigator>  -->
             </view>
         </view>

@@ -37,4 +37,9 @@ module.exports = {
   filterMethod: '/api/tms/query/util',    // 黄红莲模糊搜索接口
   changeStatus: '/api/tms/waybill/update/status',    // 修改调度单状态（慎用）
   menuList: '/api/tms/webMenu/current',    // 获取当前用户的菜单权限
+  dictApi: '/api/pub/dict',// 获取字典表
+  conPay: '/api/tms/loan/pay',// 确认打款
+  backPay: '/api/tms/loan/revert/pay',// 打款回退
+  backAudit: '/api/tms/loan/examine/cancel',// 借款审核回退
+  backReport: '/api/tms/orderreport/examine/regresses',// 单据审核回退
 }

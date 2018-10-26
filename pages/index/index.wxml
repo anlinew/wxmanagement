@@ -23,7 +23,7 @@
   <view class="weui-grids">
       <block wx:for-items="{{opsList}}" wx:key="{{index}}">
           <navigator url="{{item.pageUrl}}" class="weui-grid" hover-class="weui-grid_active">
-              <image class="weui-grid__icon" src="{{item.imageUrl}}" />
+              <image class="weui-grid__icon" src="{{item.imageUrl}}" style="{{index === 0?'height:24px;margin-top:4px':''}}"/>
               <view class="weui-grid__label">{{item.title}}</view>
           </navigator>
       </block>

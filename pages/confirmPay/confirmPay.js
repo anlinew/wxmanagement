@@ -10,7 +10,7 @@ var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 Page({
   data: {
     loanList:[],
-    tabs: ["借款审核", "油款审核"],
+    tabs: ["借款打款", "油款打款"],
     pageNo: 1,
     pageSize: 10,
     activeIndex: 0,
@@ -155,7 +155,6 @@ Page({
       oilTop: 0
     });
     if (e.currentTarget.id === '1') {
-      
       this.setData({
         oilPosition: 'absolute',
         loanPosition: 'fixed',
@@ -164,7 +163,6 @@ Page({
       })
       this.getIolList();
     } else if (e.currentTarget.id === '0') {
-      
       this.setData({
         oilPosition: 'fixed',
         loanPosition: 'absolute',

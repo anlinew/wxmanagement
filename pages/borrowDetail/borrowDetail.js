@@ -2,6 +2,7 @@ import api from '../../requests/api.js'
 import utils from '../../utils/util.js'
 import moment from '../../utils/moment.js'
 import WxValidate from '../../plugins/wx-validate/WxValidate';
+import regeneratorRuntime from '../../utils/regenerator-runtime/runtime.js';
 
 const app = getApp()
 const request = app.WxRequest;
@@ -9,7 +10,7 @@ const request = app.WxRequest;
 Page({
   data: {
      showModal: false,
-     disagreeArr: ['借款次数已使用完毕','请提供相关照片','不同意'],
+     disagreeArr: ['借款次数已使用完毕','请联系审核人员','不同意'],
      agreeArr: ['请合理使用资金，谢谢','同意','辛苦了，谢谢'],
       id:'',
       status:'',
@@ -17,14 +18,15 @@ Page({
       examineStatus:'',
       examineRemark:'',
       examineMoney:'',
-      disabled: false
+      disabled: false,
+      payList: [],
   },
   initValidate() {
     // 验证字段的规则
     const rules = {
       examineMoney: {
         required: true,
-        digits: true,
+        number: true,
         maxlength: 6
       },
       examineRemark: {
@@ -36,7 +38,7 @@ Page({
     const messages = {
       examineMoney: {
         required: '审批金额不能为空',
-        digits:'审批金额只能输入数字',
+        digits:'审批金额只能输入非负整数',
         maxlength:'审批金额最多可以输入6位'
       },
       examineRemark: {
@@ -53,7 +55,8 @@ Page({
       status: options.status
     });
     this.getDetails();
-    this.initValidate()
+    this.initValidate();
+    // this.getPayList();
   },
   getDetails(){
     request.getRequest(api.loanListApi, {
@@ -119,6 +122,14 @@ Page({
       })
       return false
     }
+    if (Math.round(e.detail.value.examineMoney) !== Number(e.detail.value.examineMoney)) {
+      wx.showModal({
+        confirmColor: '#666',
+        content: '审批金额请输入整数',
+        showCancel: false,
+      })
+      return false;
+    }
     this.setData({
       disabled: true
     })
@@ -139,6 +150,9 @@ Page({
             if (res.confirm) {
               this.confirmExamine(params)
             } else if (res.cancel) {
+              this.setData({
+                disabled: false
+              })
             }
           }
         })
@@ -158,19 +172,14 @@ Page({
       },
     }).then(res => {
       if (res.result) {
+        this.getDetails();
+        var pages = getCurrentPages();
+        var backPage = pages[pages.length-2]  // 上个页面
+        backPage.getLoanList();
+        backPage.getIolList();
         wx.showToast({
           title: '审核成功',
-          icon: 'success',
-          success: (e)=> {
-            var pages = getCurrentPages();
-            var backPage = pages[pages.length-2]  // 上个页面
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 1, // 回退前 delta(默认为1) 页面
-              })
-              backPage.getLoanList();
-            }, 1000)
-          }
+          icon: 'success'
         })
       } else {
         wx.showToast({
@@ -195,4 +204,43 @@ Page({
       examineRemark: e.currentTarget.dataset.remark
     })
   },
+  // 回退审核状态
+  backAudit (e) {
+    wx.showModal({
+      title: '提示',
+      content: '确认回退审核状态？',
+      showCancel: true,
+      cancelText: '取消',
+      cancelColor: '#000000',
+      confirmText: '确定',
+      confirmColor: '#3CC51F',
+      success: async (res)=> {
+        if(res.confirm){
+          console.log(e.currentTarget.dataset.loanid)
+          const loanid = e.currentTarget.dataset.loanid;
+          const res = await request.postRequest(api.backAudit,{data:{id:loanid}})
+          console.log(res)
+          if (res.result) {
+            this.getDetails();
+            var pages = getCurrentPages();
+            var Page = pages[pages.length - 1];//当前页
+            var prevPage = pages[pages.length - 2];  //上一个页面
+            prevPage.getLoanList();
+            prevPage.getIolList();
+            wx.showToast({
+              title: '回退审核成功',
+              icon: 'success'
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: res.message,
+              showCancel: false,
+              confirmColor: '#000000',
+            })
+          }
+        }
+      }
+    })
+  }
 })

@@ -8,7 +8,7 @@ Page({
   data: {
     startDate: "开始日期",
     endDate: "结束日期",
-    waybillNum: null,
+    wayBillNum: '',
     fromCity: '',
     toCity: '',
     fromId: null,
@@ -72,11 +72,10 @@ Page({
       url: '../searchBase/searchBase?base=' + this.data.endBase + '&type=2'
     })
   },
-  // 清空输入框
-  clearInput(e) {
-    console.log(e);
-    this.setData({
-      waybillNum: ''
+    // 跳转到调度单号选择页面
+  goWaybill(e) {
+    wx.navigateTo({
+        url: '../searchWayBill/searchWayBill?wayBillNum=' + this.data.wayBillNum
     })
   },
   // 点击确定搜索
@@ -89,6 +88,7 @@ Page({
     if (this.data.statusValue) { payload.statusIn = this.data.statusValue;}
     if (this.data.startBaseId) { payload.baseIdIn = this.data.startBaseId; }
     if (this.data.endBaseId) { payload.toBaseIdIn = this.data.endBaseId; }
+    if (this.data.wayBillNum) { payload.num = this.data.wayBillNum; }
     var pages = getCurrentPages();
     var prevPage = pages[pages.length - 2];  //上一个页面
     prevPage.setData({
